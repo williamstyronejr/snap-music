@@ -1,0 +1,146 @@
+.user {
+  margin: 1em 1em 0 1em;
+}
+
+.user__info {
+  display: -webkit-box;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 1.1em 0;
+}
+
+.layout-night .user__info {
+  background-color: #151728;
+}
+
+.user__options {
+  position: relative;
+  text-align: center;
+}
+
+.user__menu {
+  position: absolute;
+  width: 100px;
+  top: 10px;
+  left: -2px;
+  background-color: white;
+  color: black;
+  box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
+    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+}
+
+.layout-night .user__menu {
+  background-color: #151728;
+  color: white;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px,
+    rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
+}
+
+.user__options-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.user__header {
+  height: 100%;
+  text-align: center;
+}
+
+.user-info__header .display-name {
+  margin: 1em 0 0 0;
+  padding: 0;
+}
+
+.user__pic {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.user__details {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.details__heading {
+  text-align: center;
+}
+
+.user__stats {
+  width: 100%;
+}
+
+.user__stat {
+  margin: 0 10px;
+}
+
+.user__current {
+  width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.layout-night .user__current {
+  background-color: #151728;
+}
+
+.user__track-options {
+  padding: 10px 0;
+}
+
+.user__heading {
+  color: #000000;
+  margin-top: 0;
+}
+
+.layout-night .user__heading {
+  color: #ffffff;
+}
+
+.user--missing {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (min-width: 800px) {
+  .user__info {
+    flex-direction: row;
+    padding: 1.1em 1.3em;
+  }
+
+  .user__details {
+    display: -webkit-box;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    position: relative;
+    background-color: transparent;
+    padding: 0 1.3em;
+  }
+
+  .user__menu {
+    left: -102px;
+  }
+}

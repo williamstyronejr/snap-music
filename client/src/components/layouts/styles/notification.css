@@ -1,0 +1,38 @@
+.box {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 60px;
+}
+
+.box--center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.notification {
+  display: block;
+  position: relative;
+  width: 70%;
+  max-width: 300px;
+  padding: 20px;
+  margin: 0 0 0 60px; /* Accounts for header width */
+  background-color: #151728;
+  border-radius: 5px;
+  color: white;
+}
+
+.layout-night .notification {
+  background-color: #151728;
+}
+
+.notification__msg {
+  text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+  .notification {
+    margin: 0 0 0 200px; /* Accounts for header width */
+  }
+}

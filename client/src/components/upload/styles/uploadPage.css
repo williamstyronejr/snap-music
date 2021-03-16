@@ -1,0 +1,48 @@
+/* Track upload page */
+.upload {
+  width: 100%;
+  height: 100%;
+}
+
+.upload__field--file {
+  position: relative;
+  background-color: blue;
+}
+
+.field__drag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  width: 99%;
+  height: 200px;
+  padding: 1em 0;
+  border: 3px dashed #23b3e4;
+}
+
+.field__drag--over {
+  border: 3px solid #23b3e4;
+  background-color: rgba(37, 180, 228, 0.5);
+}
+
+.field__drag:hover {
+  border: 3px solid #23b3e4;
+  background-color: rgba(37, 180, 228, 0.5);
+}
+
+.btn--upload {
+  padding: 10px;
+  background-color: rgb(237, 237, 237);
+  border-radius: 5px;
+  margin: 10px auto -0 auto;
+}
+
+.layout-night .btn--upload {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
+
+.layout-night .btn--upload:hover {
+  background-color: #1b86f9;
+  color: white;
+}

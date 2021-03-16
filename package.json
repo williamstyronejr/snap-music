@@ -1,0 +1,30 @@
+{
+  "name": "snapmusic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "dev": "concurrently \"npm run watch:server\" \"npm run watch:client\" ",
+    "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
+    "start:server": "npm start --prefix server",
+    "start:client": "npm start --prefix client",
+    "watch:server": "npm run dev --prefix server",
+    "watch:client": "npm start --prefix client",
+    "test:server": "npm test --prefix server",
+    "test:client": "npm test --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williamstyronejr/snapmusic.git"
+  },
+  "author": "Tyrone Williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/williamstyronejr/snapmusic/issues"
+  },
+  "homepage": "https://github.com/williamstyronejr/snapmusic#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.0"
+  }
+}

@@ -1,0 +1,227 @@
+.audio {
+  display: none;
+}
+
+.player {
+  width: 100%;
+  margin: auto 0;
+}
+
+.player--footer {
+  display: flex;
+  flex-flow: row nowrap;
+  position: fixed;
+  bottom: 0;
+  z-index: 8;
+  width: 100%;
+  height: 60px;
+  background-color: #282828;
+}
+
+.player__info {
+  width: 100%;
+  text-align: center;
+}
+
+.player--footer .player__info {
+  flex: 0 1 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  text-align: left;
+  width: 100px;
+}
+
+.player__image {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.player--footer .player__image {
+  flex: 0 1 auto;
+  height: 100%;
+  width: auto;
+  margin: 0 5px 0 0;
+}
+
+.player__track {
+  margin: auto 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.player--footer .player__track {
+}
+
+.player__title {
+  display: block;
+  font-size: 1.2em;
+}
+
+.player--footer .player__title {
+  font-size: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.player__author {
+  font-size: 1em;
+  text-decoration: none;
+  color: white;
+}
+
+.player__author:hover {
+  color: #1771d6;
+}
+
+.player--footer .player__author {
+  font-size: 0.9em;
+}
+
+.player__options {
+  width: 100%;
+  text-align: center;
+}
+
+.player--footer .player__options {
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1 0 auto;
+  text-align: left;
+  width: auto;
+}
+
+.player--footer .player__stack {
+  flex: 1 0 auto;
+}
+
+.player__controls {
+}
+
+.player--footer .player__controls {
+  text-align: center;
+  color: white;
+}
+
+.player__control {
+  font-size: 1em;
+}
+
+.player--footer .player__control-group {
+  display: inline-block;
+}
+
+.player__control--medium {
+  font-size: 1.5em;
+}
+
+.player__control--large {
+  font-size: 2em;
+}
+
+.player__control--highlight {
+  color: #1b86f9;
+}
+
+.player--footer .player__control--large,
+.player--footer .player__control--medium {
+  font-size: 1em;
+}
+
+.player__duration {
+}
+
+.player--footer .player__duration {
+  flex: 1 0 auto;
+}
+
+.player__timeline {
+  display: block;
+  cursor: pointer; /* Needed to make mobile work with onclick */
+  width: 80%;
+  margin: 0 auto;
+}
+
+.player--footer .player__timeline {
+  width: 95%;
+}
+
+.player__time {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.player--footer .player__time {
+  width: 95%;
+  font-size: 10px;
+}
+
+.player__time-left {
+  text-align: left;
+  flex: 1 0 auto;
+}
+
+.player__time-right {
+  text-align: right;
+  flex: 1 0 auto;
+}
+
+.player--footer .player__time-left,
+.player--footer .player__time-right {
+  color: white;
+}
+
+.player__volume {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.player--footer .player__volume {
+  display: none;
+  height: 100%;
+  flex: 0 1 auto;
+  margin: auto 0;
+  width: auto;
+}
+
+.player__mute {
+  flex: 0 1 auto;
+  margin: 0;
+}
+
+.player__volume-bar {
+  flex: 1 0 auto;
+}
+
+.player--footer .btn--media {
+  color: white;
+}
+
+@media only screen and (min-width: 600px) {
+  .player {
+    display: flex;
+  }
+
+  .player__options {
+    margin: auto 0;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .player--footer .player__volume {
+    display: flex;
+  }
+
+  .player--footer .player__info {
+    width: 150px;
+  }
+}

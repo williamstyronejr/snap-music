@@ -1,0 +1,118 @@
+.settings {
+  display: flex;
+  flex-flow: column wrap;
+  background-color: white;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 3px;
+  margin: 0;
+}
+
+.layout-night .settings {
+  background-color: #151728;
+  border: none;
+}
+
+.settings__aside {
+  width: 100%;
+  border-right: none;
+}
+
+.settings__list {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settings__item {
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
+.settings__link {
+  display: block;
+  text-decoration: none;
+  padding: 1em;
+  color: black;
+  border-bottom: 2px solid transparent;
+}
+
+.layout-night .settings__link {
+  color: white;
+}
+
+.settings__link:hover {
+  border-bottom: 2px solid grey;
+}
+
+.settings__link--active {
+  border-bottom: 2px solid #0f0f0f;
+}
+
+.layout-night .settings__link--active {
+  border-bottom: 2px solid #ffffff;
+}
+
+.settings__content {
+  flex: 1 0 auto;
+  padding: 1em 0;
+}
+
+@media only screen and (min-width: 800px) {
+  .settings {
+    flex-flow: row nowrap;
+    margin: 1em 10px;
+  }
+
+  .settings__aside {
+    width: 200px;
+    border-right: 1px solid #dbdbdb;
+    color: black;
+  }
+
+  .settings__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .settings__item {
+    display: block;
+    text-align: center;
+    margin: 0;
+  }
+
+  .settings__link,
+  .settings__link:hover,
+  .layout-night .settings__link,
+  .layout-night .settings__link:hover {
+    border-bottom: none;
+  }
+
+  .settings__link {
+    border-right: 2px solid transparent;
+  }
+
+  .settings__item:hover :not(.settings__link--active) {
+    border-right: 2px solid grey;
+  }
+
+  .settings__link--active {
+    border-right: 2px solid #0f0f0f;
+  }
+
+  .layout-night .settings__link--active {
+    border-right: 2px solid #ffffff;
+  }
+
+  .layout-night .settings__link:hover :not(.settings__link--active) {
+    border-right: 2px solid #dbdbdb;
+  }
+}
+
+@media only screen and (min-width: 935px) {
+  .settings {
+    max-width: 735px;
+    margin: 1em auto;
+  }
+}

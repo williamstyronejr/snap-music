@@ -1,0 +1,43 @@
+.home {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  min-height: 100%;
+}
+
+.layout-night .home {
+  background-color: #181d2f;
+}
+
+.home__heading {
+  font-size: 2em;
+  margin: 2em 0;
+  text-align: center;
+}
+
+.home__list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.home__item {
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+.home__link {
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 80%;
+  margin: 0 auto;
+  color: black;
+  background-color: white;
+  text-align: center;
+}
+
+.home__link:hover {
+  background-color: blue;
+}
