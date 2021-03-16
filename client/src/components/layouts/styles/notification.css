@@ -21,10 +21,12 @@
   background-color: #151728;
   border-radius: 5px;
   color: white;
+  box-shadow: 0px 1px 9px #646464;
 }
 
 .layout-night .notification {
   background-color: #151728;
+  box-shadow: 0px 1px 9px #646464;
 }
 
 .notification__msg {
