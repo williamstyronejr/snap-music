@@ -81,6 +81,20 @@ const SigninPage = (props) => {
         </button>
 
         <hr />
+        <button
+          type="button"
+          className="btn btn--submit"
+          onClick={() => {
+            props.signin('guest', 'guest');
+          }}
+        >
+          Signin as Guest
+        </button>
+
+        <span className="form__footnote">
+          (Note: This is a shared account for demo purposes.)
+        </span>
+        <hr />
 
         <Link className="signin__forgot" to="/account/recovery">
           Forgot your password?
