@@ -270,6 +270,13 @@ hr {
 .form__input--check {
 }
 
+.form__footnote {
+  display: block;
+  color: grey;
+  font-size: 0.8em;
+  text-align: center;
+}
+
 .link {
   text-decoration: none;
   color: #23b3e4;
