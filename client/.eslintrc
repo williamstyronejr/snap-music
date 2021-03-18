@@ -10,7 +10,12 @@
     "no-unused-vars": "warn",
     "comma-dangle": 0,
     "arrow-body-style": 0,
+    "consistent-return": "warn",
+    "no-shadow": 0,
 
+    "react/prop-types": "warn",
+    "react/forbid-prop-types": "warn",
+    "react/destructuring-assignment": 0,
     "react/jsx-filename-extension": 0,
     "jsx-a11y/anchor-is-valid": [
       "off",
