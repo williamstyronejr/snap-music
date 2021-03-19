@@ -4,10 +4,16 @@ const redis = require('redis');
 let client;
 
 /**
- * Sets up connection with redis server and events on non-production runs.
+ * Sets up connection with redis server and events on non-production runs. WIll
+ *  use URL for connection if provided, otherwise uses hostname and port.
+ * @param {Number} port Port of redis server
+ * @param {String} host Host of redis server
+ * @param {String} URL Redix URL connection
+ * @returns {Promise<Object>} Returns a promise to resolve with a redis client
+ *  object.
  */
-exports.setupRedis = (port, host) => {
-  client = redis.createClient(port, host);
+exports.setupRedis = (port = 6379, host = 'localhost', URL = null) => {
+  client = URL ? redis.createClient(URL) : redis.createClient(port, host);
 
   return new Promise((res, rej) => {
     client.on('connect', () => {

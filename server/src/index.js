@@ -12,12 +12,13 @@ const {
   DB_URI,
   REDIS_HOST,
   REDIS_PORT,
+  REDIS_URL,
 } = process.env;
 
 // Connect to Database
 connectDatabase(DB_URI)
   .then(() => {
-    setupRedis(REDIS_PORT, REDIS_HOST).then(() => {
+    setupRedis(REDIS_PORT, REDIS_HOST, REDIS_URL).then(() => {
       // Set up scheduler
       jobs.setUpJobs();
 
