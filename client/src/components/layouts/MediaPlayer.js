@@ -174,6 +174,7 @@ const MediaPlayer = (props) => {
         onDurationChange={onDurationChange}
         onTimeUpdate={onTimeUpdate}
       >
+        <track kind="captions" />
         <source src={fileUrl} type="audio/mpeg" />
       </audio>
 
@@ -239,7 +240,7 @@ const MediaPlayer = (props) => {
               <div className="player__control-group">
                 <button
                   className="btn btn--inline btn--media"
-                  type="button "
+                  type="button"
                   onClick={props.toggleRepeat}
                   data-cy="repeat"
                 >

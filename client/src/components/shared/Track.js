@@ -7,20 +7,26 @@ const Track = (props) => {
   if (!props.id) return <div>No Track</div>;
 
   return (
-    <div
-      className={`track ${props.playing ? 'track--playing' : ''}`}
+    <button
+      className={`btn track ${props.playing ? 'track--playing' : ''}`}
       onClick={props.onClick}
+      type="button"
       data-cy="track"
     >
       <div className="track__controls">
-        <button className="btn">
+        <button className="btn" type="button">
           <i className="fa fa-play" />
         </button>
       </div>
 
       <div className="track__image">
-        <img className="track__cover" src={props.coverArt} />
+        <img
+          className="track__cover"
+          src={props.coverArt}
+          alt="Track cover art"
+        />
       </div>
+
       <div className="track-info">
         <p className="track-info__title">{props.title}</p>
         <Link
@@ -33,20 +39,18 @@ const Track = (props) => {
       </div>
 
       {props.explicit ? <div className="track__explicit">E</div> : null}
-    </div>
+    </button>
   );
 };
 
 Track.propTypes = {
-  id: PropTypes.string,
-  title: PropTypes.string,
-  artist: PropTypes.string,
-  onClick: PropTypes.func,
-  tags: PropTypes.string,
-  genre: PropTypes.string,
-  coverArt: PropTypes.string,
-  playing: PropTypes.bool,
-  explicit: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  artist: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  coverArt: PropTypes.string.isRequired,
+  playing: PropTypes.bool.isRequired,
+  explicit: PropTypes.bool.isRequired,
 };
 
 export default Track;

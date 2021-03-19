@@ -27,7 +27,7 @@ const AuthNav = ({
   footer,
   username,
   profileLink,
-  toggleNightMode,
+  toggleDisplayMode,
   nightMode,
   location,
 }) => {
@@ -40,7 +40,7 @@ const AuthNav = ({
 
   const triggerDisplayMode = () => {
     setActive(false);
-    toggleNightMode();
+    toggleDisplayMode();
   };
 
   return (
@@ -74,7 +74,7 @@ const AuthNav = ({
             </Link>
           </li>
 
-          <div className="menu__divider"></div>
+          <div className="menu__divider" />
 
           <li className="menu__item">
             <button
@@ -106,20 +106,24 @@ const AuthNav = ({
 };
 
 const Header = (props) => {
-  const [expand, setExpand] = React.useState(false);
+  const menuRef = React.useRef();
+  const [active, setActive] = useDetectOutsideClick(menuRef);
 
   // Close menu (mobile view) when route is changed
   React.useEffect(() => {
-    if (expand) setExpand(false);
+    if (active) setActive(false);
   }, [props.location.pathname]);
 
   return (
     <header className="page-header">
-      <div className={`menu ${expand ? 'menu-active' : 'menu-collapse'}`}>
+      <div
+        className={`menu ${active ? 'menu-active' : 'menu-collapse'}`}
+        ref={menuRef}
+      >
         <button
-          className={`btn btn--menu ${expand ? 'btn--menu--active' : ''}`}
+          className={`btn btn--menu ${active ? 'btn--menu--active' : ''}`}
           onClick={() => {
-            setExpand(!expand);
+            setActive(!active);
           }}
           type="button"
           role="menu"
@@ -177,19 +181,14 @@ const Header = (props) => {
             }
             username={props.user.username}
             profileLink={props.user.profilePicture}
-            toggleNightMode={props.toggleNightMode}
+            toggleDisplayMode={props.toggleNightMode}
             nightMode={props.user.nightMode}
             location={props.location.pathname}
           />
         )}
       </div>
 
-      <div
-        className={`overlay ${expand ? 'overlay--active' : ''}`}
-        onClick={() => {
-          setExpand(!expand);
-        }}
-      />
+      <div className={`overlay ${active ? 'overlay--active' : ''}`} />
     </header>
   );
 };

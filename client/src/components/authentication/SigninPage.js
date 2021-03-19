@@ -75,7 +75,7 @@ const SigninPage = (props) => {
           type="submit"
         >
           {props.user.authenticating ? (
-            <i className="fas fa-spinner fa-spin"></i>
+            <i className="fas fa-spinner fa-spin" />
           ) : null}{' '}
           Signin
         </button>

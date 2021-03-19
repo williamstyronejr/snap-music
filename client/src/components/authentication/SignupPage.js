@@ -120,7 +120,7 @@ const SignUpPage = (props) => {
         >
           {props.user.authenticating ? (
             <>
-              <i className="fas fa-spinner fa-spin"></i>
+              <i className="fas fa-spinner fa-spin" />
             </>
           ) : null}
           Signup

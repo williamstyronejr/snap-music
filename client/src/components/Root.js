@@ -22,7 +22,7 @@ import RecoveryPage from './recovery/RecoveryPage';
 import HomePage from './home/HomePage';
 import AccountResetPage from './recovery/AccountResetPage';
 
-const RedirectTo = () => <Redirect to={'/chart'} />;
+const RedirectTo = () => <Redirect to="/chart" />;
 
 const AuthApp = () => (
   <Router>

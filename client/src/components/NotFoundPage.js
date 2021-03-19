@@ -13,8 +13,8 @@ const NotFoundPage = () => {
           </h3>
 
           <p className="">
-            Sorry, it's seems this page does not exist.
-            <Link to={'/chart'}>Return Home</Link>
+            Sorry, it&apo;s seems this page does not exist.
+            <Link to="chart">Return Home</Link>
           </p>
         </div>
       </section>

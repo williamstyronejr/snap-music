@@ -132,7 +132,7 @@ const UploadPage = (props) => {
     if (!draggedFile) return; // Do nothing if no file (drag over text)
 
     if (isFileValid(draggedFile, 'audio')) {
-      if (title == '') setTitle(draggedFile.name);
+      if (title === '') setTitle(draggedFile.name);
       setFile(draggedFile);
       setErrors({ ...errors, track: null });
     } else {

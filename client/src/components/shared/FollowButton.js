@@ -17,6 +17,7 @@ const FollowButton = (props) => {
         if (props.isFollowing) setText('Following');
       }}
       data-cy="follow"
+      type="button"
     >
       {props.isFollowing ? text : 'Follow'}
     </button>

@@ -110,8 +110,9 @@ exports.getTopTracksByGenre = (
       if (!userId) return tracks;
 
       return tracks.map((track) => {
+        console.log(track._doc);
         return {
-          ...track._doc,
+          ...track.toJSON(),
           userLikes: !track.likes.every((like) => like.userId !== userId),
           likes: undefined,
         };

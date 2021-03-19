@@ -62,7 +62,7 @@ const UserPage = (props) => {
 
       {confirm ? (
         <ConfirmDialog
-          message={'Are you sure you want to delete you track?'}
+          message="Are you sure you want to delete you track"
           onCancel={() => setConfirm(false)}
           onConfirm={() => {
             props.removeTrack(props.profile.track.id);
@@ -87,7 +87,7 @@ const UserPage = (props) => {
 
             <div className="user__stats">
               <span className="user__stat" data-cy="follows">
-                {props.profile.user.followers + ' Follower'}
+                {`${props.profile.user.followers} Follower`}
               </span>
               <span className="user__stat">
                 {props.profile.user.meta.bestRating || 'No rating'}

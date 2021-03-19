@@ -4,9 +4,7 @@ import { Provider } from 'react-redux';
 import './styles/index.css';
 import Root from './components/Root';
 import store from './store/store';
-import { toggleNightMode } from './actions/user';
-import { getUserData } from './actions/user';
-import registerServiceWorker from './registerServiceWorker';
+import { toggleNightMode, getUserData } from './actions/user';
 
 // Try to get user data if availible
 store.dispatch(getUserData());
@@ -22,4 +20,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();

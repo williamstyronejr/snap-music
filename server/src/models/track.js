@@ -22,6 +22,13 @@ const TrackSchema = new mongoose.Schema({
   },
 });
 
+TrackSchema.set('toObject', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    delete ret._id;
+  },
+});
+
 TrackSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,

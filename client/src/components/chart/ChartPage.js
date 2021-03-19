@@ -16,7 +16,7 @@ const ChartPage = (props) => {
 
   const chartList = props.chart.visibileList.map((track, index) => {
     return (
-      <li className="track-list__item" key={'chart-item-' + index}>
+      <li className="track-list__item" key={`chart-item-${track.id}`}>
         <Track
           id={track.id}
           title={track.title}
@@ -25,7 +25,7 @@ const ChartPage = (props) => {
           explicit={track.explicit}
           playing={
             props.mediaPlayer.playlist.length > 0 &&
-            props.mediaPlayer.playlist[props.mediaPlayer.currentTrack].id ==
+            props.mediaPlayer.playlist[props.mediaPlayer.currentTrack].id ===
               track.id
           }
           onClick={() => {
