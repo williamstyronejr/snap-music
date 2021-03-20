@@ -6,14 +6,7 @@ const { setupRedis } = require('./services/redis');
 const app = require('./services/app');
 const logger = require('./services/winston');
 
-const {
-  SERVER_IP: IP,
-  SERVER_PORT: PORT,
-  DB_URI,
-  REDIS_HOST,
-  REDIS_PORT,
-  REDIS_URL,
-} = process.env;
+const { IP, PORT, DB_URI, REDIS_HOST, REDIS_PORT, REDIS_URL } = process.env;
 
 // Connect to Database
 connectDatabase(DB_URI)

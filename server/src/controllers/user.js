@@ -29,7 +29,7 @@ const {
 } = require('../services/follow');
 const { deleteFileFirebase } = require('../services/firebase');
 
-const { SERVER_IP: IP, SERVER_PORT: PORT } = process.env;
+const { IP, PORT } = process.env;
 
 /**
  * Hashs a password using bcrypt to generate salt(using 10 rounds) and a hash.
@@ -414,7 +414,7 @@ exports.resetPassword = async (req, res, next) => {
 
     const hash = await hashPassword(password);
     const user = await updateUserById(resetToken.userId, { hash });
-    removeToken(resetToken.id);
+    await removeToken(resetToken.id);
 
     // Email user that they made a request to change password
     // sendTemplateEmail(
