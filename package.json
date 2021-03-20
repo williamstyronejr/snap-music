@@ -13,7 +13,7 @@
     "watch:client": "npm start --prefix client",
     "test:server": "npm test --prefix server",
     "test:client": "npm test --prefix client",
-    "heroku-prebuild": "npm install --prefix server && npm install --prefix client"
+    "heroku-postbuild": "npm install --prefix server && npm install --prefix client"
   },
   "repository": {
     "type": "git",
