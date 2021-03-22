@@ -29,7 +29,8 @@ const {
 } = require('../services/follow');
 const { deleteFileFirebase } = require('../services/firebase');
 
-const { IP, PORT } = process.env;
+const { IP, PORT, DOMAIN } = process.env;
+const serverDomain = DOMAIN ? DOMAIN : `${IP}:${PORT}`;
 
 /**
  * Hashs a password using bcrypt to generate salt(using 10 rounds) and a hash.
@@ -368,7 +369,7 @@ exports.sendResetPasswordEmail = async (req, res, next) => {
       user.email,
       'Password Reset',
       {
-        link: `${IP}:${PORT}/account/reset?id=${id}&token=${token}`,
+        link: `${serverDomain}/account/reset?id=${id}&token=${token}`,
         username,
       },
       (err, mailData) => {
