@@ -27,12 +27,14 @@ app.use(
 );
 
 // Set up routes
+app.use('/img', express.static(path.join(__dirname, '../', 'public', 'img')));
+
 app.use(
   '/static',
-  express.static(path.join(__dirname, '../', 'app', 'build', 'static'))
+  express.static(
+    path.join(__dirname, '../', '../', '../', 'client', 'build', '/static')
+  )
 );
-
-app.use('/img', express.static(path.join(__dirname, '../', 'public', 'img')));
 
 RootRoutes(app);
 
