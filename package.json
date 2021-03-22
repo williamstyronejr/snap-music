@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "npm run start:server",
     "dev": "concurrently \"npm run watch:server\" \"npm run watch:client\" ",
