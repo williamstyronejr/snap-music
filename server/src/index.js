@@ -1,24 +1,36 @@
 require('dotenv').config();
 const http = require('http');
+const path = require('path');
 const jobs = require('./services/jobs');
 const { connectDatabase, disconnectDatabase } = require('./services/database');
 const { setupRedis } = require('./services/redis');
+const { verifyGcloudConfig } = require('./utils/utils');
 const app = require('./services/app');
 const logger = require('./services/winston');
 
-const { IP, PORT, DB_URI, REDIS_HOST, REDIS_PORT, REDIS_URL } = process.env;
+const {
+  IP,
+  PORT,
+  DB_URI,
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_URL,
+  GCLOUD_APPLICATION_CREDENTIALS,
+} = process.env;
 
-// Connect to Database
-connectDatabase(DB_URI)
+verifyGcloudConfig(path.join(__dirname, '../', GCLOUD_APPLICATION_CREDENTIALS))
   .then(() => {
-    setupRedis(REDIS_PORT, REDIS_HOST, REDIS_URL).then(() => {
-      // Set up scheduler
-      jobs.setUpJobs();
+    // Connect to Database
+    connectDatabase(DB_URI).then(() => {
+      setupRedis(REDIS_PORT, REDIS_HOST, REDIS_URL).then(() => {
+        // Set up scheduler
+        jobs.setUpJobs();
 
-      // Create http server
-      const server = http.createServer(app);
-      server.listen(PORT, IP, () => {
-        console.log(`Server running at ${IP}:${PORT}`);
+        // Create http server
+        const server = http.createServer(app);
+        server.listen(PORT, IP, () => {
+          console.log(`Server running at ${IP}:${PORT}`);
+        });
       });
     });
   })
