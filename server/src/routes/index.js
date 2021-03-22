@@ -8,7 +8,9 @@ module.exports = function router(app) {
   app.use(trackRouter);
 
   // Default to react app
-  app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../', 'public/index.html'));
+  app.use('/*', (req, res) => {
+    res.sendFile(
+      path.join(__dirname, '../', '../', '../', 'client', 'build', 'index.html')
+    );
   });
 };
