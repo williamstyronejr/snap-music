@@ -150,12 +150,12 @@ exports.getGenreChart = async (req, res, next) => {
     likes: { $elemMatch: { userId } },
   };
 
-  try {
-    const chart = await getChart(genre);
-    if (chart) return res.json(JSON.parse(chart));
-  } catch (err) {
-    // Log and continue as if no cache chart exists
-  }
+  // try {
+  //   const chart = await getChart(genre);
+  //   if (chart) return res.json(JSON.parse(chart));
+  // } catch (err) {
+  //   // Log and continue as if no cache chart exists
+  // }
 
   getTopTracksByGenre(genre, 10, projection, userId)
     .then(async (tracks) => {
