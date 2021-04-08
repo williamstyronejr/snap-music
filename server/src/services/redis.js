@@ -17,15 +17,12 @@ exports.setupRedis = (port = 6379, host = 'localhost', URL = null) => {
 
   return new Promise((res, rej) => {
     client.on('connect', () => {
-      if (process.NODE_ENV !== 'production') {
-        console.log('Redis server is connected');
-      }
-
       client.get = promisify(client.get).bind(client);
       client.set = promisify(client.set).bind(client);
       client.expire = promisify(client.expire).bind(client);
     });
 
+    // On connection ready
     client.on('ready', () => {
       // Requires redis client to be version 5
       if (client.server_info.versions[0] < 5) {
@@ -34,6 +31,9 @@ exports.setupRedis = (port = 6379, host = 'localhost', URL = null) => {
 
       return res(client);
     });
+
+    // On connection error
+    client.on('error', rej);
   });
 };
 
