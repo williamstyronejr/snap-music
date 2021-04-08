@@ -9,6 +9,8 @@ const logger = require('../services/winston');
  */
 exports.errorHandler = (err, req, res, next) => {
   if (err) {
+    logger.error(err);
+
     // Check for status to determine action
     if (err.status === 403) {
       if (err.to) {

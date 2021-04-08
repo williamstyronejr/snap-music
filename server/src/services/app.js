@@ -6,7 +6,7 @@ const morgan = require('morgan');
 
 const RootRoutes = require('../routes/index');
 const { errorHandler } = require('../middlewares/error_middleware');
-const winstonConfig = require('./winston');
+const logger = require('./winston');
 
 const { SECRET, DB_URI } = process.env;
 
@@ -26,6 +26,16 @@ app.use(
   })
 );
 
+app.use(
+  morgan('combined', {
+    stream: { write: (message) => logger.http(message) },
+    skip: () => {
+      const env = process.env.NODE_ENV || 'development';
+      return env !== 'development';
+    },
+  })
+);
+
 // Set up routes
 app.use('/img', express.static(path.join(__dirname, '../', 'public', 'img')));
 
@@ -39,7 +49,6 @@ app.use(
 RootRoutes(app);
 
 // Setup error handlers and logger
-// app.use(morgan('combined', { stream: winstonConfig.stream }));
 app.use(errorHandler);
 
 module.exports = app;
