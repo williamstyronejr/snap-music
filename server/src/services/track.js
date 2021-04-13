@@ -25,7 +25,10 @@ function getCurrentTrack(userId, projection = null) {
  *  pre-updated.
  */
 function expireTrack(trackId) {
-  return Track.findByIdAndUpdate(trackId, { isExpired: true }).exec();
+  return Track.findOneAndUpdate(
+    { _id: trackId, expirable: false },
+    { isExpired: true }
+  ).exec();
 }
 
 exports.getCurrentTrackByUser = getCurrentTrack;
@@ -110,7 +113,6 @@ exports.getTopTracksByGenre = (
       if (!userId) return tracks;
 
       return tracks.map((track) => {
-        console.log(track._doc);
         return {
           ...track.toJSON(),
           userLikes: !track.likes.every((like) => like.userId !== userId),
@@ -138,13 +140,13 @@ exports.expireCurrentTrack = async (userId) => {
 /**
  * Creates a new track with given values. Returns promise from mongoose's save
  *  function.
- * @param {string} title Title of track
- * @param {string} artist Artist or username of user uploading track
- * @param {string} artistId User id of user uploading track
- * @param {string} fileUrl Public url to the file
- * @param {string} genre Track's genre
- * @param {string} tags Track's tags stored as string with comma separation
- * @return Returns a promise to resolve with the new track.
+ * @param {String} title Title of track
+ * @param {String} artist Artist or username of user uploading track
+ * @param {String} artistId User id of user uploading track
+ * @param {String} fileUrl Public url to the file
+ * @param {String} genre Track's genre
+ * @param {String} tags Track's tags stored as string with comma separation
+ * @return {Promise<Object>} Returns a promise to resolve with the new track.
  */
 exports.createTrack = (
   title,
@@ -175,6 +177,7 @@ exports.createTrack = (
 exports.expireOldTracks = (date) => {
   return Track.find({
     isExpired: false,
+    expirable: true,
     meta: { $lte: { created: date } },
   })
     .updateMany({
@@ -204,6 +207,7 @@ exports.findExpiredTracks = () => {
  * Finds and deletes a track object by the id and deletes the track's
  *  accompanying files if they are not the default files.
  * @param {String} trackId Id of track to be deleted
+ * @param {String} userId Id of user
  * @return {Promise<Object>} Returns a promise to resolve with the deleted
  *  track, otherwise with null.
  */
