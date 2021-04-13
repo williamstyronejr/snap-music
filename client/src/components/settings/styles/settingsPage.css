@@ -1,6 +1,7 @@
 .settings {
   display: flex;
   flex-flow: column wrap;
+  position: relative;
   background-color: white;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 3px;
@@ -10,6 +11,20 @@
 .layout-night .settings {
   background-color: #151728;
   border: none;
+}
+
+.settings__overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(36, 39, 59, 0.8);
+  z-index: 2;
+  top: 0;
+  left: 0;
+  color: white;
 }
 
 .settings__aside {
