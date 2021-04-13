@@ -22,7 +22,8 @@ const validationCheck = (req, res, next) => {
 };
 
 /**
- * Validation rules for password.
+ * Validation rules for password. Password must exists and be at least 4
+ *  characters long.
  * @param {String} field Name of string to validate
  * @return {Object} Returns an express validator chain.
  */
@@ -34,15 +35,32 @@ const passwordCheck = (field) => {
     .withMessage('Password must be a minimum of 4 characters.');
 };
 
-exports.validateSignUp = [
-  body('username', 'Invalid Username')
+/**
+ * Validation rules for username
+ * @param {String} field Name of field in "body" to test
+ * @returns {Object} Returns a express validator chain.
+ */
+const usernameCheck = (field) => {
+  return body(field)
     .exists()
     .withMessage('Must provide username.')
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 16 })
-    .withMessage('Username must be between 4 and 16 characters'),
+    .isLength({ min: 4, max: 32 })
+    .withMessage('Username must be between 4 and 32 characters')
+    .custom((username) =>
+      getUserByUsername(username.toLowerCase()).then((user) => {
+        if (user) return Promise.reject('Username is already in use.');
+      })
+    );
+};
+
+/**
+ * Validation rules for signup
+ */
+exports.validateSignUp = [
+  usernameCheck('username'),
   body('email', 'Invalid Email')
     .exists()
     .withMessage('Must provide email.')
@@ -59,6 +77,9 @@ exports.validateSignUp = [
   validationCheck,
 ];
 
+/**
+ * Validation rules for updating password
+ */
 exports.validatePasswordUpdate = [
   passwordCheck('currentPass'),
   passwordCheck('newPass'),
@@ -84,6 +105,10 @@ exports.validateReport = [
   validationCheck,
 ];
 
+/**
+ * Validation rules for getting chart list.
+ *  genre: Must exist
+ */
 exports.validateCharts = [
   param('genre', 'Invalid Genre.')
     .exists()
@@ -92,21 +117,61 @@ exports.validateCharts = [
   validationCheck,
 ];
 
+/**
+ * Validation rules for password
+ */
 exports.validatePassword = [passwordCheck('password'), validationCheck];
 
+/**
+ * Validation rules for updating an account.
+ *  username: Optional, must only use letters, numbers, and underscores and can
+ *    not already belong to a user.
+ *  displayName: Optional, must only use letters, numbers, and underscores and
+ *    must match the username sent or current user's username
+ *  email: Optional, must be a valid email and can not already belong to an user.
+ *  bio: Optional, must be no longer than 200 characters.
+ */
 exports.validateAccountUpdate = [
   body('username', 'Invalid username')
     .optional()
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 16 })
-    .withMessage('Username must be between 4 and 16 characters')
+    .isLength({ min: 4, max: 32 })
+    .withMessage('Username must be between 4 and 32 characters')
     .custom((username) =>
-      getUserByUsername(username).then((user) => {
+      getUserByUsername(username.toLowerCase()).then((user) => {
         if (user) return Promise.reject('Username is already in use.');
       })
     ),
+  body('displayName', 'Invalid display name')
+    .optional()
+    .trim()
+    .matches(/^[A-Za-z0-9_ ]+$/)
+    .withMessage('Use only letters (a-z), numbers, and underscores.')
+    .custom((displayName, { req }) => {
+      let displayMatch = displayName.replace(/\s+/g, '').toLowerCase();
+      console.log(displayMatch);
+
+      if (
+        req.body.username &&
+        displayMatch !== req.body.username.toLowerCase()
+      ) {
+        console.log('here');
+        return Promise.reject(
+          'Display name can only change the spaces and capitalization of username.'
+        );
+      }
+
+      if (displayMatch !== req.user.username) {
+        console.log('testing');
+        return Promise.reject(
+          'Display Name can only different by spaces and capitalization.'
+        );
+      }
+
+      return Promise.resolve();
+    }),
   body('email', 'Invalid email')
     .optional()
     .trim()
@@ -117,7 +182,7 @@ exports.validateAccountUpdate = [
         if (user) {
           return Promise.reject('Email is already in use.');
         }
-        return false;
+        return Promise.resolve();
       })
     ),
   body('bio', 'Invalid bio')
@@ -128,21 +193,33 @@ exports.validateAccountUpdate = [
   validationCheck,
 ];
 
+/**
+ * Validation rules for track data when uploading.
+ *  Title: Must exist and have at least 1 character.
+ *  Genre: Must exist and have at least 1 character.
+ *  Tags: Optional
+ */
 exports.validateTrackUpload = [
-  body('title', 'Invalid title').trim().isLength({ min: 1 }),
-  body('genre', 'Invalid genre').trim().isLength({ min: 1 }),
-  body('tags', 'Invalid tags').trim(),
+  body('title', 'Invalid title').exists().trim().isLength({ min: 1 }),
+  body('genre', 'Invalid genre').exists().trim().isLength({ min: 1 }),
+  body('tags', 'Invalid tags').optional().trim(),
   validationCheck,
 ];
 
+/**
+ * Validation rules for testing username or email usage.
+ *  Username: Optional, Must only use letters, numbers, underscore, and can not
+ *    already belong to an user.
+ *  Email: Optional, Must be a valid email and can not already belong to an user.
+ */
 exports.validateInputs = [
   query('username', 'Invalid username')
     .optional()
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 16 })
-    .withMessage('Username must be between 4 and 16 characters')
+    .isLength({ min: 4, max: 32 })
+    .withMessage('Username must be between 4 and 32 characters')
     .custom((username) =>
       getUserByUsername(username).then((user) => {
         if (user) return Promise.reject('Username is already in use.');
@@ -158,12 +235,19 @@ exports.validateInputs = [
         if (user) {
           return Promise.reject('Email is already in use.');
         }
-        return false;
+
+        return Promise.resolve();
       })
     ),
   validationCheck,
 ];
 
+/**
+ * Validation rules for updating track info.
+ *  Title: Optional, but must have at least one character.
+ *  Genre: Optional, but must have at least one character.
+ *  Tag: Optional
+ */
 exports.validateTrackUpdate = [
   body('title', 'Invalid title')
     .trim()
@@ -179,6 +263,10 @@ exports.validateTrackUpdate = [
   validationCheck,
 ];
 
+/**
+ * Validation rules for recovering account.
+ *  Username: Must exist
+ */
 exports.validateRecovery = [
   body('username', 'You must provide an username').exists(),
   validationCheck,
