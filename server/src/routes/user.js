@@ -112,7 +112,12 @@ router.post('/signin', loggedOut, jsonParser, logUserIn);
 
 router.post('/signout', loggedIn, userLogout);
 
-router.post('/settings/account/deletion', loggedIn, deleteUserAccount);
+router.post(
+  '/settings/account/deletion',
+  loggedIn,
+  getCurrentUser,
+  deleteUserAccount
+);
 
 // Validator for user inputs like username and email
 router.get(
@@ -130,13 +135,7 @@ router.post(
   sendResetPasswordEmail
 );
 
-router.post(
-  '/account/reset',
-  urlencodedParser,
-  jsonParser,
-  validatePassword,
-  resetPassword
-);
+router.post('/account/reset', jsonParser, validatePassword, resetPassword);
 
 router.post(
   '/report/profile/:userId',
@@ -147,9 +146,9 @@ router.post(
 );
 
 // User profile routes
-router.get('/user/:username/data', urlencodedParser, userProfile);
+router.get('/user/:username/data', jsonParser, userProfile);
 
-router.post('/user/:userId/follow', loggedIn, urlencodedParser, updateFollow);
+router.post('/user/:userId/follow', loggedIn, jsonParser, updateFollow);
 
 router.get('/session/user', loggedIn, getUserData);
 
@@ -169,6 +168,7 @@ router.post(
 router.post(
   '/settings/password',
   loggedIn,
+  getCurrentUser,
   jsonParser,
   validatePasswordUpdate,
   updatePassword
