@@ -17,6 +17,7 @@ const initState = {
   nightMode: false,
   id: null,
   username: null,
+  displayName: null,
   email: null,
   profilePicture: null,
 };
@@ -43,6 +44,7 @@ const userReducer = (state = initState, action) => {
       return {
         ...state,
         id: action.payload.id,
+        displayName: action.payload.displayName,
         username: action.payload.username,
         email: action.payload.email,
         bio: action.payload.bio,
