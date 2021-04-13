@@ -50,6 +50,7 @@ function hashPassword(password) {
  */
 exports.getUserData = (req, res, next) => {
   const projection = {
+    displayName: true,
     username: true,
     email: true,
     profilePicture: true,
@@ -85,7 +86,8 @@ exports.getUserData = (req, res, next) => {
  * @param {Function} next Express next function to be called
  */
 exports.userSignup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
+  const username = req.body.username.toLowerCase();
 
   try {
     // If username is already in use, response with error message
@@ -131,15 +133,17 @@ exports.userSignup = async (req, res, next) => {
  * @param {Function} next Express next function to be called
  */
 exports.logUserIn = (req, res, next) => {
-  const { user, password } = req.body;
+  const { password } = req.body;
+  const username = req.body.user.toLowerCase();
 
-  authenticateUser(user, password)
+  authenticateUser(username, password)
     .then((user) => {
       req.session.userId = user.id;
       res.json({
         success: true,
         user: {
           id: user.id,
+          displayName: user.displayName,
           username: user.username,
           email: user.email,
           bio: user.bio,
@@ -154,9 +158,9 @@ exports.logUserIn = (req, res, next) => {
 
 /**
  * Route handler for logging the session user out.
- * @param {object} req Express request object
- * @param {object} res Express response object
- * @param {function} next Express next function to be called
+ * @param {Object} res Express response object
+ * @param {Object} req Express request object
+ * @param {Function} next Express next function to be called
  */
 exports.userLogout = (req, res, next) => {
   req.session.destroy((err) => {
@@ -321,6 +325,10 @@ exports.updateFollow = async (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   const { currentPass, newPass } = req.body;
 
+  // ONLY FOR DEMO
+  if (req.user.username === 'guest')
+    return next(new Error('Guest can not change password.'));
+
   try {
     const verified = await verifyPassword(req.session.userId, currentPass);
 
@@ -355,6 +363,10 @@ exports.updatePassword = async (req, res, next) => {
  */
 exports.sendResetPasswordEmail = async (req, res, next) => {
   const { username } = req.body;
+
+  // ONLY FOR DEMO
+  if (username === 'guest')
+    return next(new Error('Guest user can not be changed.'));
 
   try {
     const user = await getUserByUsername(username, { email: true });
@@ -406,6 +418,7 @@ exports.resetPassword = async (req, res, next) => {
 
     // Check if hash is correct
     const verified = await resetToken.verifyToken(token);
+
     if (!verified) {
       const err = new Error('Token expired');
       err.status = 400;
@@ -418,15 +431,15 @@ exports.resetPassword = async (req, res, next) => {
     await removeToken(resetToken.id);
 
     // Email user that they made a request to change password
-    // sendTemplateEmail(
-    //   'password_change.html',
-    //   user.email,
-    //   'Password Change',
-    //   {},
-    //   (err, mailData) => {
-    //     res.json({ success: true });
-    //   }
-    // );
+    sendTemplateEmail(
+      'password_change.html',
+      user.email,
+      'Password Change',
+      {},
+      (err, mailData) => {
+        res.json({ success: true });
+      }
+    );
   } catch (err) {
     next(err);
   }
@@ -440,12 +453,18 @@ exports.resetPassword = async (req, res, next) => {
  * @param {Function} next Express next function to be called.
  */
 exports.updateAccount = async (req, res, next) => {
-  const { username, email, bio } = req.body;
+  const { username, email, bio, displayName } = req.body;
+
+  // ONLY FOR DEMO
+  if (req.user.username === 'guest')
+    return next(new Error('Guest user can not be changed.'));
 
   // Check if username or email is already in use
   const params = {};
 
-  if (username) params.username = username;
+  if (username) params.username = username.toLowerCase();
+  if (displayName) params.displayName = displayName;
+  if (username && !displayName) params.displayName = username.toLowerCase();
   if (email) params.email = email;
   if (bio) params.bio = bio;
 
@@ -554,6 +573,10 @@ exports.validateInputs = async (req, res, next) => {
  */
 exports.deleteUserAccount = async (req, res, next) => {
   const { userId } = req.session;
+
+  // ONLY FOR DEMO
+  if (req.user.username === 'guest')
+    return next(new Error('Guest user can not be changed.'));
 
   try {
     // Delete any tracks that they own and then the user
