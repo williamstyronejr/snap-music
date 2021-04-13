@@ -15,7 +15,7 @@ const {
 const { sendTemplateEmail } = require('../../services/mailer');
 const { uploadFileFirebase } = require('../../services/firebase');
 
-const { DB_TEST_URI } = process.env;
+const { DB_TEST_URI: DB_URI } = process.env;
 
 // Mocked to prevent sending emails and uploading to firebase
 jest.mock('../../services/mailer');
@@ -43,7 +43,7 @@ beforeAll(async () => {
     createRandomField(6, '@email.com'),
   ]);
 
-  await connectDatabase(DB_TEST_URI);
+  await connectDatabase(DB_URI);
 
   // Create users and get session cookies and user data
   await Promise.all([
@@ -213,12 +213,12 @@ describe('POST /signin', () => {
   });
 
   test('Invalid parameter should throw 401 error', async () => {
-    const invalidUsername = '';
-    const invalidPassword = '';
+    const invalidUsername = 'r';
+    const invalidPassword = 'r';
 
     await request(app)
       .post(routeToTest())
-      .send({ username: invalidUsername, password: invalidPassword })
+      .send({ user: invalidUsername, password: invalidPassword })
       .expect(401)
       .then((res) => {
         expect(res.body).toBeDefined();
@@ -419,6 +419,34 @@ describe('POST /settings/account', () => {
       });
   });
 
+  test('Display name that differs from current user should throw 400 and error message', async () => {
+    await request(app)
+      .post(routeToTest())
+      .set('Cookie', userCookie1)
+      .set('Accept', 'application/json')
+      .send({ displayName: username1 + '1' })
+      .expect(400)
+      .catch((err) => {
+        expect(err.body).toBeDefined();
+        expect(err.body.errors.email).toBeDefined();
+      });
+  });
+
+  test('Non-matching username and displayName should throw 400 and error message', async () => {
+    const newUsername = 'testf';
+
+    await request(app)
+      .post(routeToTest())
+      .set('Cookie', userCookie1)
+      .set('Accept', 'application/json')
+      .send({ displayName: newUsername + 1, newUsername })
+      .expect(400)
+      .catch((err) => {
+        expect(err.body).toBeDefined();
+        expect(err.body.errors.email).toBeDefined();
+      });
+  });
+
   test('Valid params should response with 200 and updated parameters', async () => {
     const [bio, newUsername] = await Promise.all([
       createRandomField(8),
@@ -571,7 +599,6 @@ describe('POST /account/reset', () => {
   test('Invalid password should response with 400 and error message', async () => {
     await request(app)
       .post(routeToTest(query))
-      .type('form')
       .send({ password: 'p' })
       .expect(400)
       .then((res) => {
@@ -583,7 +610,6 @@ describe('POST /account/reset', () => {
   test('Invalid id or token should throw 500', async () => {
     await request(app)
       .post(routeToTest('id=dsa&token=12234'))
-      .type('form')
       .send({ password: 'pass1' })
       .expect(500);
   });
@@ -593,7 +619,6 @@ describe('POST /account/reset', () => {
 
     await request(app)
       .post(routeToTest(query))
-      .type('form')
       .send({ password: newPass })
       .expect(200)
       .then((res) => {
@@ -604,7 +629,7 @@ describe('POST /account/reset', () => {
     // Test logging in with new password
     const cookie = await logUserIn(app, username, newPass);
     expect(cookie).toBeDefined();
-  });
+  }, 10000);
 });
 
 describe('POST /upload/track', () => {
