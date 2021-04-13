@@ -106,6 +106,7 @@ const PasswordForm = ({ setNotificationError, setNotification }) => {
 
 const AccountForm = ({
   currentUsername,
+  currentDisplayName,
   currentEmail,
   currentBio,
   currentProfileImage,
@@ -115,6 +116,7 @@ const AccountForm = ({
   unauthUser,
 }) => {
   const [username, setUsername] = React.useState('');
+  const [displayName, setDisplayName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [bio, setBio] = React.useState('');
   const [errors, setErrors] = React.useState({});
@@ -129,6 +131,7 @@ const AccountForm = ({
     if (username) data.username = username;
     if (email) data.email = email;
     if (bio) data.bio = bio;
+    if (displayName) data.displayName = displayName;
 
     ajaxRequest('/settings/account', 'POST', {
       data,
@@ -282,6 +285,27 @@ const AccountForm = ({
         </fieldset>
 
         <fieldset className="form__field">
+          <label className="form__label" htmlFor="displayName">
+            <span className="form__labeling">Display Name</span>
+            <span className="form__labeling--error" data-cy="field-error">
+              {errors.displayName ? errors.displayName : null}
+            </span>
+
+            <input
+              id="displayName"
+              className={`form__input form__input--text ${
+                errors.displayName ? 'form__input--error' : ''
+              }`}
+              type="text"
+              data-cy="displayName"
+              value={displayName}
+              placeholder={currentDisplayName}
+              onChange={(evt) => setDisplayName(evt.target.value)}
+            />
+          </label>
+        </fieldset>
+
+        <fieldset className="form__field">
           <label className="form__label" htmlFor="email">
             <span className="form__labeling">Email</span>
             <span className="form__labeling--error" data-cy="field-error">
@@ -341,6 +365,7 @@ const SettingsPage = (props) => {
       content = (
         <AccountForm
           currentUsername={props.user.username}
+          currentDisplayName={props.user.displayName}
           currentEmail={props.user.email}
           currentBio={props.user.bio}
           currentProfileImage={props.user.profilePicture}
@@ -359,6 +384,11 @@ const SettingsPage = (props) => {
 
   return (
     <section className="settings">
+      {props.user.username === 'guest' ? (
+        <div className="settings__overlay">
+          <span>Guest user is not allow to make settings changes.</span>
+        </div>
+      ) : null}
       <aside className="settings__aside">
         <ul className="settings__list">
           <li className="settings__item">
