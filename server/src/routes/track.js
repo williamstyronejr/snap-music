@@ -7,9 +7,8 @@ const {
   getGenreChart,
   voteTrack,
 } = require('../controllers/track');
-const { pullGenreData, createGenre } = require('../controllers/genre');
+const { pullGenreData } = require('../controllers/genre');
 
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = bodyParser.json({});
 
 // Route for getting random tracks in a genre
@@ -21,7 +20,5 @@ router.post('/track/:id/vote', loggedIn, jsonParser, voteTrack);
 
 // Routes for genres (getting and creating)
 router.get('/genres', pullGenreData);
-
-router.post('/genre/create', urlencodedParser, createGenre);
 
 module.exports = router;
