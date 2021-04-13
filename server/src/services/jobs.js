@@ -4,6 +4,7 @@ const {
   expireOldTracks,
   findExpiredTracks,
 } = require('./track');
+const logger = require('./winston');
 
 /**
  * Finds and deletes all track that are set as expired.
@@ -20,8 +21,7 @@ async function deleteExpiredTracks() {
 
     await Promise.allSettled(proms);
   } catch (err) {
-    // Log error
-    console.log('Error occurred when deleting tracks');
+    logger.error('Corn', err);
   }
 }
 
@@ -35,7 +35,7 @@ async function updateExpiredTracks() {
 
     await expireOldTracks(currentTime);
   } catch (err) {
-    // Log error
+    logger.error('Corn', err);
   }
 }
 
