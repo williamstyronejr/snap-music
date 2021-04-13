@@ -14,9 +14,9 @@ const { cacheChart, getChart } = require('../services/redis');
 /**
  * Route handler for liking/unliking a track. Responses with the track's current
  *  rating, if updated.
- * @param {object} req Express request object
- * @param {object} res Express response object
- * @param {function} next Express next function
+ * @param {Object} req Express request object
+ * @param {Object} res Express response object
+ * @param {Function} next Express next function
  */
 exports.voteTrack = async (req, res, next) => {
   const { userId } = req.session;
@@ -64,7 +64,7 @@ exports.getTrackInfo = async (req, res, next) => {
 exports.uploadTrack = async (req, res, next) => {
   const { files, fileLoc } = req;
   const { title, genre, tags } = req.body;
-  const { id: userId, username } = req.user;
+  const { id: userId, displayName } = req.user;
 
   // Validate file was uploaded
   if (!files || (files && !files.track)) {
@@ -87,7 +87,7 @@ exports.uploadTrack = async (req, res, next) => {
 
     await createTrack(
       title,
-      username,
+      displayName,
       userId,
       trackLocation,
       genre,
@@ -105,7 +105,7 @@ exports.uploadTrack = async (req, res, next) => {
  * Route handler for getting a discovery track list.
  * @param {Object} req Express request object
  * @param {Object} res Express response object
- * @param {Object} next Express next function to be called
+ * @param {Function} next Express next function to be called
  */
 exports.discoverByGenre = (req, res, next) => {
   const { genre } = req.params;
@@ -133,7 +133,7 @@ exports.discoverByGenre = (req, res, next) => {
  *  containing the highest rated tracks for the provided genre.
  * @param {Object} req Request object
  * @param {Object} res Response object
- * @param {Object} next Next function to be called
+ * @param {Function} next Next function to be called
  */
 exports.getGenreChart = async (req, res, next) => {
   const { genre } = req.params;
@@ -169,7 +169,7 @@ exports.getGenreChart = async (req, res, next) => {
  * Route handler for deleting a track.
  * @param {Object} req Request object
  * @param {Object} res Response object
- * @param {Object} next Next function to be called
+ * @param {Function} next Next function to be called
  */
 exports.deleteUserTrack = async (req, res, next) => {
   const { id: userId } = req.user;
@@ -192,7 +192,7 @@ exports.deleteUserTrack = async (req, res, next) => {
  *  parameters on successful update.
  * @param {Object} req Request object
  * @param {Object} res Response Object
- * @param {Object} next Next function to be called
+ * @param {Function} next Next function to be called
  */
 exports.updateUserTrack = async (req, res, next) => {
   const { userId } = req.session;
