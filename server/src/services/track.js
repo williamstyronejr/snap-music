@@ -278,8 +278,8 @@ exports.updateTrack = (trackId, param) => {
  * @param {String} userId Id of user
  * @param {Object} params Parameters to update
  * @param {Object} options Query options
- * @return {Promise<Object>} Returns a promise to resolve with a track object
- *  if one is found.
+ * @return {Promise<Object|Null>} Returns a promise to resolve with a track
+ *   object if one is found.
  */
 exports.updateTrackById = (trackId, userId, params, options = null) => {
   return Track.findOneAndUpdate(
@@ -287,6 +287,22 @@ exports.updateTrackById = (trackId, userId, params, options = null) => {
     params,
     options
   );
+};
+
+/**
+ * Finds and updates a user's current non-expired track with a new artist name.
+ * @param {String} userId Id of user
+ * @param {String} artist New artist name
+ * @param {Object} options Object containing query options
+ * @returns {Promise<Object|Null>} Returns a promise to resolve with an track
+ *  object if found, otherwise null.
+ */
+exports.updateTrackAristByUserId = (userId, artist, options = null) => {
+  return Track.findOneAndUpdate(
+    { artistId: userId, isExpired: false },
+    { artist },
+    options
+  ).exec();
 };
 
 /**
