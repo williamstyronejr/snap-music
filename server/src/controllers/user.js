@@ -17,8 +17,8 @@ const {
 const {
   getCurrentTrackByUser,
   deleteTracksByUserId,
-  deleteTrackById,
   deleteActiveTrackByUserId,
+  updateTrackAristByUserId,
 } = require('../services/track');
 const { createReport } = require('../services/report');
 const { sendTemplateEmail } = require('../services/mailer');
@@ -35,7 +35,7 @@ const serverDomain = DOMAIN ? DOMAIN : `${IP}:${PORT}`;
 /**
  * Hashs a password using bcrypt to generate salt(using 10 rounds) and a hash.
  * @param {String} password A password to be hashed.
- * @return {Promise} A promise to resolve with hash for given password.
+ * @return {Promise<String>} A promise to resolve with hash for given password.
  */
 function hashPassword(password) {
   return bcrypt.genSalt(10).then((salt) => bcrypt.hash(password, salt));
@@ -217,7 +217,7 @@ exports.reportProfile = async (req, res, next) => {
  * @param {Function} next Express next function to be called
  */
 exports.userProfile = async (req, res, next) => {
-  const { username } = req.params;
+  const { userId } = req.params;
 
   const userProjection = {
     hash: false,
@@ -229,10 +229,10 @@ exports.userProfile = async (req, res, next) => {
   };
 
   try {
-    const user = await getUserByUsername(username, userProjection);
+    const user = await getUserById(userId, userProjection);
 
     if (!user) {
-      const userErr = new Error(`No user by the username, ${username}`);
+      const userErr = new Error(`No user by the id, ${userId}`);
       userErr.status = 404;
       userErr.msg = 'User does not exist';
       return next(userErr);
@@ -250,6 +250,7 @@ exports.userProfile = async (req, res, next) => {
         following: following ? true : false,
         isCurrent: user.id === req.session.userId,
         username: user.username,
+        displayName: user.displayName,
         profilePicture: user.profilePicture,
         meta: user.meta,
         followers: user.followers,
@@ -470,11 +471,15 @@ exports.updateAccount = async (req, res, next) => {
 
   try {
     await updateUserById(req.session.userId, params);
+
+    // If displayName was updated, change any tracks by that user's id
+    if (params.displayName)
+      await updateTrackAristByUserId(req.session.userId, displayName);
+
+    res.json({ success: true, data: params });
   } catch (err) {
     return next(err);
   }
-
-  res.json({ success: true, data: params });
 };
 
 /**
