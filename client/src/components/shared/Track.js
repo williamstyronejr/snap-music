@@ -32,7 +32,7 @@ const Track = (props) => {
         <Link
           onClick={(evt) => evt.stopPropagation()}
           className="track-info__author"
-          to={`/user/${props.artist}`}
+          to={`/user/${props.artistId}`}
         >
           {props.artist}
         </Link>
@@ -47,6 +47,7 @@ Track.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
+  artistId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   coverArt: PropTypes.string.isRequired,
   playing: PropTypes.bool.isRequired,

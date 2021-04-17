@@ -36,8 +36,8 @@ const UserPage = (props) => {
 
   // Requests user data for profile everytime the username param changes
   React.useEffect(() => {
-    props.getUserData(props.match.params.username);
-  }, [props.match.params.username]);
+    props.getUserData(props.match.params.userId);
+  }, [props.match.params.userId]);
 
   React.useEffect(() => {
     if (props.genres.length === 0) {
@@ -79,7 +79,7 @@ const UserPage = (props) => {
               alt="User Profile"
               src={props.profile.user.profilePicture}
             />
-            <h3 className="diplay-name">{props.profile.user.username}</h3>
+            <h3 className="diplay-name">{props.profile.user.displayName}</h3>
           </header>
 
           <div className="user__details">
@@ -162,7 +162,8 @@ const UserPage = (props) => {
             <Track
               id={props.profile.track.id}
               title={props.profile.track.title}
-              artist={props.profile.user.username}
+              artist={props.profile.track.artist}
+              artistId={props.profile.track.artistId}
               coverArt={props.profile.track.coverArt}
               genre={props.profile.track.genre}
               tags={props.profile.track.tags}

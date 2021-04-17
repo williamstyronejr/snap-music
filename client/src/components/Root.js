@@ -30,7 +30,7 @@ const AuthApp = () => (
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/chart" component={ChartPage} />
-        <Route path="/user/:username" component={UserPage} />
+        <Route path="/user/:userId" component={UserPage} />
         <Route path="/settings/:type?" component={SettingsPage} />
         <Route path="/upload" component={UploadPage} />
         <Route exact path="/discovery" component={DiscoveryPage} />
@@ -55,7 +55,7 @@ const GuestApp = () => (
         <Route path="/signup" component={SignUpPage} />
         <Route path="/signin" component={SigninPage} />
         <Route path="/chart" component={ChartPage} />
-        <Route path="/user/:username" component={UserPage} />
+        <Route path="/user/:userId" component={UserPage} />
         <Route exact path="/discovery" component={DiscoveryPage} />
         <Route path="/account/recovery" component={RecoveryPage} />
         <Route path="/account/reset" component={AccountResetPage} />

@@ -21,6 +21,7 @@ const ChartPage = (props) => {
           id={track.id}
           title={track.title}
           artist={track.artist}
+          artistId={track.artistId}
           coverArt={track.coverArt}
           explicit={track.explicit}
           playing={

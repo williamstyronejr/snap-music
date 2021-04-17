@@ -154,10 +154,7 @@ const Header = (props) => {
             {props.user.authenticated ? (
               <>
                 <li className="menu__item">
-                  <Link
-                    className="menu__link"
-                    to={`/user/${props.user.username}`}
-                  >
+                  <Link className="menu__link" to={`/user/${props.user.id}`}>
                     Profile
                   </Link>
                 </li>
@@ -179,6 +176,7 @@ const Header = (props) => {
             footer={
               props.mediaPlayer.footer && props.mediaPlayer.playlist.length > 0
             }
+            userId={props.user.id}
             username={props.user.username}
             profileLink={props.user.profilePicture}
             toggleDisplayMode={props.toggleNightMode}

@@ -82,13 +82,13 @@ function resetProfile() {
 /**
  * Send request for user data (user & track) and dispatch updates. If the user
  *  isn't found (404), then an dispatch error.
- * @param {String} userName Username to request data
+ * @param {String} userId Id of user
  * @return {Function} Returns a function to dispatch a redux action.
  */
-export function getUserData(userName) {
+export function getUserData(userId) {
   return (dispatch) => {
     dispatch(resetProfile());
-    ajaxRequest(`/user/${userName}/data`, 'GET')
+    ajaxRequest(`/user/${userId}/data`, 'GET')
       .then((res) => {
         dispatch(updateUserData(res.data.user));
         dispatch(updateTrackData(res.data.track));
