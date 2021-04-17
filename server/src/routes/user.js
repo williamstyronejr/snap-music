@@ -146,7 +146,7 @@ router.post(
 );
 
 // User profile routes
-router.get('/user/:username/data', jsonParser, userProfile);
+router.get('/user/:userId/data', jsonParser, userProfile);
 
 router.post('/user/:userId/follow', loggedIn, jsonParser, updateFollow);
 
