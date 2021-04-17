@@ -151,20 +151,17 @@ exports.validateAccountUpdate = [
     .withMessage('Use only letters (a-z), numbers, and underscores.')
     .custom((displayName, { req }) => {
       let displayMatch = displayName.replace(/\s+/g, '').toLowerCase();
-      console.log(displayMatch);
 
       if (
         req.body.username &&
         displayMatch !== req.body.username.toLowerCase()
       ) {
-        console.log('here');
         return Promise.reject(
           'Display name can only change the spaces and capitalization of username.'
         );
       }
 
       if (displayMatch !== req.user.username) {
-        console.log('testing');
         return Promise.reject(
           'Display Name can only different by spaces and capitalization.'
         );
