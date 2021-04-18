@@ -90,7 +90,7 @@ exports.uploadTrack = async (req, res, next) => {
       displayName,
       userId,
       trackLocation,
-      genre,
+      genre.toLowerCase(),
       tags,
       coverLocation
     );
@@ -121,7 +121,7 @@ exports.discoverByGenre = (req, res, next) => {
     likes: { $elemMatch: { userId } },
   };
 
-  getRandomTracksByGenre(genre, 10, projection, userId)
+  getRandomTracksByGenre(genre.toLowerCase(), 10, projection, userId)
     .then((tracks) => {
       res.json(tracks);
     })
@@ -205,7 +205,7 @@ exports.updateUserTrack = async (req, res, next) => {
     explicit === 'true' ? { explicit: true } : null,
     explicit === 'false' ? { explicit: false } : null,
     title ? { title } : null,
-    genre ? { genre } : null,
+    genre ? { genre: genre.toLowerCase() } : null,
     tags ? { tags } : null
   );
 
