@@ -28,3 +28,25 @@ export function isFileValid(file, type) {
 
   return true;
 }
+
+/**
+ * List containing all genre
+ */
+export const genreList = [
+  'Hip Hop',
+  'Rap',
+  'Pop',
+  'Jazz',
+  'Rock',
+  'Punk',
+  'Metal',
+  'Country',
+  'Electronic',
+  'Funk',
+  'Blues',
+  'Folk',
+  'Alternative',
+  'Indie',
+  'R&B',
+  'Latin',
+];
