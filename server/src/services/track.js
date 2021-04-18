@@ -103,7 +103,7 @@ exports.getTopTracksByGenre = (
   const searchParams = { isExpired: false };
 
   // Only add genre condition if it's not "all genre"
-  if (genre !== 'all') searchParams.genre = genre;
+  if (genre != 'all') searchParams.genre = genre.toLowerCase();
 
   return Track.find(searchParams, projection)
     .sort({ rating: -1 })
