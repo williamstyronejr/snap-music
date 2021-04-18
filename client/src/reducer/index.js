@@ -4,7 +4,6 @@ import chart from './chartReducer';
 import profile from './profileReducer';
 import notification from './notificationReducer';
 import user from './userReducer';
-import genre from './genreReducer';
 
 const RootReducer = combineReducers({
   mediaPlayer,
@@ -12,7 +11,6 @@ const RootReducer = combineReducers({
   profile,
   notification,
   user,
-  genre,
 });
 
 export default RootReducer;
