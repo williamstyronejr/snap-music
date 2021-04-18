@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getGenreList } from '../../actions/genre';
-import { ajaxRequest, isFileValid } from '../../utils/utils';
+import { ajaxRequest, isFileValid, genreList } from '../../utils/utils';
 import {
   setNotification,
   setNotificationError,
@@ -37,12 +36,6 @@ const UploadPage = (props) => {
   const [requesting, setRequesting] = React.useState(false);
   const fileRef = React.useRef();
   const coverArtRef = React.useRef();
-
-  React.useEffect(() => {
-    if (props.genres.length === 0) {
-      props.getGenreList();
-    }
-  }, []);
 
   if (redirect) return <Redirect to={`/user/${props.user.username}`} />;
 
@@ -140,7 +133,7 @@ const UploadPage = (props) => {
     }
   };
 
-  const genreList = props.genres.map((genreItem) => (
+  const genreListItems = genreList.map((genreItem) => (
     <option key={genreItem.name} value={genreItem.name}>
       {genreItem.name}
     </option>
@@ -349,12 +342,10 @@ const UploadPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  genres: state.genre.genres,
   user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getGenreList: () => dispatch(getGenreList()),
   setNotification: (msg) => dispatch(setNotification(msg)),
   setNotificationError: (msg) => dispatch(setNotificationError(msg)),
 });

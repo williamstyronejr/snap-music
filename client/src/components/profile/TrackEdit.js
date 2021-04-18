@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { ajaxRequest, isFileValid } from '../../utils/utils';
+import { ajaxRequest, isFileValid, genreList } from '../../utils/utils';
+
 import '../shared/styles/track.css';
 
 const TrackEdit = ({
@@ -10,7 +11,6 @@ const TrackEdit = ({
   initialExplicit = '',
   initialTags = '',
   initialGenre = '',
-  genres,
   onSave,
   onCancel,
 }) => {
@@ -112,7 +112,7 @@ const TrackEdit = ({
       });
   }
 
-  const genreList = genres.map((genreItem) => (
+  const genreListItems = genreList.map((genreItem) => (
     <option key={genreItem.name} value={genreItem.name}>
       {genreItem.name}
     </option>
@@ -218,7 +218,7 @@ const TrackEdit = ({
               onChange={(evt) => setGenre(evt.target.value)}
               defaultValue={genre}
             >
-              {genreList}
+              {genreListItems}
               <option value="custom">Custom</option>
             </select>
 
@@ -273,7 +273,6 @@ TrackEdit.propTypes = {
   initialExplicit: PropTypes.bool.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  genres: PropTypes.array.isRequired,
 };
 
 export default TrackEdit;

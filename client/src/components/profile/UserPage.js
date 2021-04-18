@@ -16,7 +16,6 @@ import {
   setNotification,
   setNotificationError,
 } from '../../actions/notification';
-import { getGenreList } from '../../actions/genre';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import useDetectOutsideClick from '../shared/useDetectOutsideClick';
 import './styles/userPage.css';
@@ -38,12 +37,6 @@ const UserPage = (props) => {
   React.useEffect(() => {
     props.getUserData(props.match.params.userId);
   }, [props.match.params.userId]);
-
-  React.useEffect(() => {
-    if (props.genres.length === 0) {
-      props.getGenreList();
-    }
-  }, [props.getGenreList, props.genres]);
 
   // Check if an error occurred, or if loading
   if (props.profile.error === 404) return <UserNotFound />;
@@ -146,7 +139,6 @@ const UserPage = (props) => {
               initialGenre={props.profile.track.genre}
               initialCoverArt={props.profile.track.coverArt}
               initialExplicit={props.profile.track.explicit}
-              genres={props.genres}
               onClick={() => {
                 props.setPlaylist([props.profile.track]);
               }}
@@ -202,7 +194,6 @@ const UserPage = (props) => {
 const mapStateToProps = (state) => ({
   profile: state.profile,
   user: state.user,
-  genres: state.genre.genres,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -213,7 +204,6 @@ const mapDispatchToProps = (dispatch) => ({
   setPlaylist: (track) => dispatch(setPlaylist(track)),
   removeTrack: (trackId) => dispatch(removeTrack(trackId)),
   updateTrackData: (data) => dispatch(updateTrackData(data)),
-  getGenreList: () => dispatch(getGenreList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Track from '../shared/Track';
 import Loading from '../shared/Loading';
-import { getGenreList } from '../../actions/genre';
 import { getChartList } from '../../actions/chart';
 import { setPlaylist } from '../../actions/mediaPlayer';
 import './styles/chartPage.css';
@@ -57,13 +56,11 @@ const ChartPage = (props) => {
 
 const mapStateToProps = (state) => ({
   chart: state.chart,
-  genres: state.genre.genres,
   mediaPlayer: state.mediaPlayer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getChartList: (genre) => dispatch(getChartList(genre)),
-  getGenreList: () => dispatch(getGenreList()),
   setPlaylist: (tracks, src, currentTrack) =>
     dispatch(setPlaylist(tracks, src, currentTrack)),
 });
