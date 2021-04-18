@@ -23,14 +23,18 @@ exports.createRandomField = (length = 10, append = '') => {
  * @param {Object} app Express app to be used for test
  * @param {String} user Username or Email of user being logged in
  * @param {String} password Password of user being logged in
- * @return {Promise<String>} Returns a promise to resolve with the user's cookie
+ * @return {Promise<Object>} Returns a promise to resolve with an object
+ *  containing user data and cookie;
  */
-exports.logUserIn = (app, user, password) => {
+exports.userSignin = (app, user, password) => {
   return request(app)
     .post('/signin')
     .send({ user, password })
     .expect(200)
-    .then((res) => res.header['set-cookie'][0]);
+    .then((res) => ({
+      cookie: res.header['set-cookie'][0],
+      user: res.body.user,
+    }));
 };
 
 /**
@@ -75,13 +79,13 @@ exports.createTrack = (app, cookie, title, genre, tags, file) => {
  * Sends a request to get user's profile data and filters out the track data.
  * @param {Object} app Express app to send test through
  * @param {String} cookie Session cookie for any user
- * @param {String} username Username of user to get data for
+ * @param {String} userId Id of user to get data for
  * @return {Promise<Object>} Returns a promise to resolve with user's current
  *  track data.
  */
-exports.getTrackData = (app, cookie, username) => {
+exports.getTrackData = (app, cookie, userId) => {
   return request(app)
-    .get(`/user/${username}/data`)
+    .get(`/user/${userId}/data`)
     .set('Cookie', cookie)
     .expect(200)
     .then((res) => res.body.track);

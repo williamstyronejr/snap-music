@@ -9,7 +9,7 @@ const { setupRedis, closeConnection } = require('../../services/redis');
 const {
   createRandomField,
   createUser,
-  logUserIn,
+  userSignin,
   createTrack,
   getTrackData,
 } = require('./utils');
@@ -23,6 +23,8 @@ let email1;
 let email2;
 let userCookie1;
 let userCookie2;
+let userId1;
+let userId2;
 let uploadedTrack;
 
 // Parameters for creating track
@@ -49,10 +51,15 @@ beforeAll(async () => {
     setupRedis(REDIS_PORT, REDIS_HOST),
   ]);
 
-  [userCookie1, userCookie2] = await Promise.all([
-    logUserIn(app, username1, password),
-    logUserIn(app, username2, password),
+  const [user1, user2] = await Promise.all([
+    userSignin(app, username1, password),
+    userSignin(app, username2, password),
   ]);
+
+  userId1 = user1.user.id;
+  userCookie1 = user1.cookie;
+  userId2 = user2.user.id;
+  userCookie2 = user2.cookie;
 
   await createTrack(
     app,
@@ -64,7 +71,7 @@ beforeAll(async () => {
   );
 
   // Get uploaded track data
-  uploadedTrack = await getTrackData(app, userCookie1, username2);
+  uploadedTrack = await getTrackData(app, userCookie2, userId2);
 }, 15000);
 
 afterAll(async () => {
@@ -79,7 +86,6 @@ describe('GET /discovery/:genre/tracks', () => {
     const genre = 'rap';
     await request(app)
       .get(routeToTest(genre))
-      .set('Cookie', userCookie1)
       .expect(200)
       .then((res) => {
         expect(res.body).toBeDefined();
@@ -93,9 +99,9 @@ describe('GET /charts/:genre', () => {
 
   test('Valid parameters for nonexisting genre should return an empty array', async () => {
     const nonExistingGenre = 'fjdnkskfjnds3y78432';
+
     await request(app)
       .get(routeToTest(nonExistingGenre))
-      .set('Cookie', userCookie1)
       .expect(200)
       .then((res) => {
         expect(res.body).toBeDefined();
@@ -107,21 +113,6 @@ describe('GET /charts/:genre', () => {
   test('Valid parameter should return an array of tracks', async () => {
     await request(app)
       .get(routeToTest(trackGenre))
-      .set('Cookie', userCookie1)
-      .expect(200)
-      .then((res) => {
-        expect(res.body).toBeDefined();
-        expect(Array.isArray(res.body)).toBeTruthy();
-      });
-  });
-});
-
-describe('GET /genres', () => {
-  const routeToTest = () => '/genres';
-
-  test('Request responses with array of genres', async () => {
-    await request(app)
-      .get(routeToTest())
       .expect(200)
       .then((res) => {
         expect(res.body).toBeDefined();

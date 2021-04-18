@@ -9,7 +9,7 @@ const { createTrack } = require('../../services/track');
 const {
   createRandomField,
   createUser,
-  logUserIn,
+  userSignin,
   getUserData,
 } = require('./utils');
 const { sendTemplateEmail } = require('../../services/mailer');
@@ -32,9 +32,6 @@ let userCookie1;
 let userCookie2;
 
 beforeAll(async () => {
-  let user1;
-  let user2;
-
   // Create user fields
   [username1, username2, email1, email2] = await Promise.all([
     createRandomField(8),
@@ -51,15 +48,15 @@ beforeAll(async () => {
     createUser(app, username2, password, email2),
   ]);
 
-  [userCookie1, userCookie2, user1, user2] = await Promise.all([
-    logUserIn(app, username1, password),
-    logUserIn(app, username2, password),
-    getUserData(app, username1),
-    getUserData(app, username2),
+  const [user1, user2] = await Promise.all([
+    userSignin(app, username1, password),
+    userSignin(app, username2, password),
   ]);
 
   userId1 = user1.user.id;
   userId2 = user2.user.id;
+  userCookie1 = user1.cookie;
+  userCookie2 = user2.cookie;
 });
 
 afterAll(async () => {
@@ -95,17 +92,17 @@ describe('GET /session/user', () => {
   });
 });
 
-describe('GET /user/:username/data', () => {
-  const routeToTest = (user) => `/user/${user}/data`;
+describe('GET /user/:userId/data', () => {
+  const routeToTest = (userId) => `/user/${userId}/data`;
 
   test('Invalid username should response with 404', async () => {
-    const fakeUsername = createRandomField(5);
-    await request(app).get(routeToTest(fakeUsername)).expect(404);
+    const fakeUserId = createRandomField(5);
+    await request(app).get(routeToTest(fakeUserId)).expect(404);
   });
 
   test('Valid username should response with 200 and user data', async () => {
     await request(app)
-      .get(routeToTest(username1))
+      .get(routeToTest(userId1))
       .expect(200)
       .then((res) => {
         expect(res.body).toBeDefined();
@@ -197,7 +194,7 @@ describe('POST /signup', () => {
       });
 
     // Attempt to log in for new user
-    const newCookie = await logUserIn(app, validUsername, validPassword);
+    const newCookie = await userSignin(app, validUsername, validPassword);
     expect(newCookie).toBeDefined();
   });
 });
@@ -351,7 +348,7 @@ describe('POST /settings/password', () => {
       });
 
     // Attempt log in with new password
-    const cookie = await logUserIn(app, username1, newPassword);
+    const cookie = await userSignin(app, username1, newPassword);
     expect(cookie).toBeDefined();
   });
 });
@@ -627,7 +624,7 @@ describe('POST /account/reset', () => {
       });
 
     // Test logging in with new password
-    const cookie = await logUserIn(app, username, newPass);
+    const cookie = await userSignin(app, username, newPass);
     expect(cookie).toBeDefined();
   }, 10000);
 });
@@ -776,11 +773,11 @@ describe('POST /settings/account/deletion', () => {
   });
 
   test('Valid auth request should response with a 200 success message', async () => {
-    const cookie = await logUserIn(app, username2, password);
+    const user = await userSignin(app, username2, password);
 
-    await request(app).post(routeToTest).set('Cookie', cookie).expect(200);
+    await request(app).post(routeToTest).set('Cookie', user.cookie).expect(200);
 
     // Check that deleted user is no longer on server
-    await getUserData(app, username2, 404);
+    await getUserData(app, user.user.id, 404);
   });
 });
