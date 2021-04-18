@@ -71,6 +71,11 @@ hr {
   width: 100%;
 }
 
+/* General  */
+.spinner-space {
+  margin: 0 5px 0 0;
+}
+
 /* Default Form */
 .form {
   width: 90%;

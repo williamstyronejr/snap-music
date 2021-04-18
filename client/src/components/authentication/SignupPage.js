@@ -19,8 +19,15 @@ const SignUpPage = (props) => {
       props.user.authenticationError ? props.setAuthError(null) : null;
   }, [props.user.authenticationError, props.setAuthError]);
 
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+
+    // validation
+    props.signup(username, email, password, confirm);
+  };
+
   return (
-    <section className="signup">
+    <section className="signup" onSubmit={onSubmit}>
       <form className="form" method="POST">
         <header className="form__header">
           <h4 className="form__heading">Create your account</h4>
@@ -114,14 +121,11 @@ const SignUpPage = (props) => {
         <button
           className="btn btn--submit"
           data-cy="submit"
-          type="button"
+          type="submit"
           disabled={props.user.authenticating}
-          onClick={() => props.signup(username, email, password, confirm)}
         >
           {props.user.authenticating ? (
-            <>
-              <i className="fas fa-spinner fa-spin" />
-            </>
+            <i className="fas fa-spinner fa-spin spinner-space" />
           ) : null}
           Signup
         </button>
