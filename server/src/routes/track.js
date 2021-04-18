@@ -7,7 +7,6 @@ const {
   getGenreChart,
   voteTrack,
 } = require('../controllers/track');
-const { pullGenreData } = require('../controllers/genre');
 
 const jsonParser = bodyParser.json({});
 
@@ -17,8 +16,5 @@ router.get('/discovery/:genre/tracks', discoverByGenre);
 router.get('/charts/:genre', validateCharts, getGenreChart);
 
 router.post('/track/:id/vote', loggedIn, jsonParser, voteTrack);
-
-// Routes for genres (getting and creating)
-router.get('/genres', pullGenreData);
 
 module.exports = router;
