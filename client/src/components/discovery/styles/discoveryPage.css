@@ -31,14 +31,19 @@
 .grid__item {
   width: 175px;
   height: 150px;
+  position: relative;
   font-size: 1.3em;
   background-color: #ffffff;
   border-radius: 10px;
   margin: 5px auto;
 }
 
-.grid__item .genre {
+.grid__link {
   text-decoration: none;
+}
+
+.grid__item .genre {
+  display: block;
   color: #000000;
 }
 
@@ -50,7 +55,7 @@
   color: #ffffff;
 }
 
-.grid__item .genre:hover {
+.grid__link:hover .genre {
   color: #1771d6;
 }
 

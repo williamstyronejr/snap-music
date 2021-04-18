@@ -96,10 +96,12 @@
 
   .menu .menu__nav {
     opacity: 0;
+    transition: 0.8s;
   }
 
   .menu-collapse .menu__nav {
     visibility: hidden;
+    transition: 0.1s;
   }
 
   .menu-active .menu__nav {

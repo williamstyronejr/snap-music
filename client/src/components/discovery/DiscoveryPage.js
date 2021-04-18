@@ -6,8 +6,8 @@ import './styles/discoveryPage.css';
 const DiscoveryPage = (props) => {
   const genreListItems = genreList.map((genre) => (
     <div className="grid__item" key={`genre-${genre}`}>
-      <Link to={`/discovery/${genre}`} className="content-center genre">
-        {genre}
+      <Link to={`/discovery/${genre}`} className="grid__link content-center">
+        <span className="genre">{genre}</span>
       </Link>
     </div>
   ));
