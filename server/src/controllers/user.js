@@ -132,7 +132,7 @@ exports.userSignup = async (req, res, next) => {
  * @param {Object} res Express response object
  * @param {Function} next Express next function to be called
  */
-exports.logUserIn = (req, res, next) => {
+exports.userSignin = (req, res, next) => {
   const { password } = req.body;
   const username = req.body.user.toLowerCase();
 
@@ -259,6 +259,12 @@ exports.userProfile = async (req, res, next) => {
       track,
     });
   } catch (err) {
+    if (err.name === 'CastError' && err.kind === 'ObjectId') {
+      const error = new Error(`Invalid userId, ${userId}\n${err.stack}`);
+      error.status = 404;
+      return next(error);
+    }
+
     next(err);
   }
 };

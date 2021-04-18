@@ -24,7 +24,7 @@ const {
 const {
   deleteUserAccount,
   getUserData,
-  logUserIn,
+  userSignin,
   reportProfile,
   resetPassword,
   sendResetPasswordEmail,
@@ -108,7 +108,7 @@ const jsonParser = bodyParser.json();
 /** Routes for user signin, signout, signup */
 router.post('/signup', loggedOut, jsonParser, validateSignUp, userSignup);
 
-router.post('/signin', loggedOut, jsonParser, logUserIn);
+router.post('/signin', loggedOut, jsonParser, userSignin);
 
 router.post('/signout', loggedIn, userLogout);
 
