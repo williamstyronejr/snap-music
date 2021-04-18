@@ -51,6 +51,7 @@ exports.sendTemplateEmail = (templateName, to, subject, params, cb) => {
     transporter.sendMail(
       {
         to,
+        from: 'Snapmusic <noreply@snapmusic.com>',
         subject,
         html,
       },
