@@ -47,8 +47,8 @@ const usernameCheck = (field) => {
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 32 })
-    .withMessage('Username must be between 4 and 32 characters')
+    .isLength({ min: 4, max: 50 })
+    .withMessage('Username must be between 4 and 50 characters')
     .custom((username) =>
       getUserByUsername(username.toLowerCase()).then((user) => {
         if (user) return Promise.reject('Username is already in use.');
@@ -137,8 +137,8 @@ exports.validateAccountUpdate = [
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 32 })
-    .withMessage('Username must be between 4 and 32 characters')
+    .isLength({ min: 4, max: 50 })
+    .withMessage('Username must be between 4 and 50 characters')
     .custom((username) =>
       getUserByUsername(username.toLowerCase()).then((user) => {
         if (user) return Promise.reject('Username is already in use.');
@@ -215,8 +215,8 @@ exports.validateInputs = [
     .trim()
     .matches(/^[A-Za-z0-9_]+$/)
     .withMessage('Use only letters (a-z), numbers, and underscores.')
-    .isLength({ min: 4, max: 32 })
-    .withMessage('Username must be between 4 and 32 characters')
+    .isLength({ min: 4, max: 50 })
+    .withMessage('Username must be between 4 and 50 characters')
     .custom((username) =>
       getUserByUsername(username).then((user) => {
         if (user) return Promise.reject('Username is already in use.');
