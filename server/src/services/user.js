@@ -18,6 +18,7 @@ exports.createUser = (username, email, hash, rest = {}) => {
     displayName: username,
     email,
     hash,
+    bio: '',
     profilePicture: '/img/default.jpeg',
     ...rest,
   }).save();
