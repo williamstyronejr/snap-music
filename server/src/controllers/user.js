@@ -115,6 +115,7 @@ exports.userSignup = async (req, res, next) => {
       user: {
         id: user.id,
         username: user.username,
+        displayName: user.displayName,
         email: user.email,
         bio: user.bio,
         profilePicture: user.profilePicture,
