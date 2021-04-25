@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { closeNotification } from '../../actions/notification';
 import './styles/notification.css';
@@ -35,6 +36,15 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   closeNotification: () => dispatch(closeNotification()),
 });
+
+NotificationContainer.propTypes = {
+  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
+  closeNotification: PropTypes.func.isRequired,
+  notification: PropTypes.shape({
+    msg: PropTypes.string,
+    visible: PropTypes.bool,
+  }).isRequired,
+};
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(NotificationContainer)

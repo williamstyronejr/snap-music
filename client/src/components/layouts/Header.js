@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { toggleNightMode } from '../../actions/user';
 import useDetectOutsideClick from '../shared/useDetectOutsideClick';
@@ -93,6 +94,7 @@ const AuthNav = ({
             <form method="POST" action="/signout">
               <button
                 type="submit"
+                data-cy="signout"
                 className="btn btn--signout menu__link menu__link--sub "
               >
                 Signout
@@ -154,7 +156,11 @@ const Header = (props) => {
             {props.user.authenticated ? (
               <>
                 <li className="menu__item">
-                  <Link className="menu__link" to={`/user/${props.user.id}`}>
+                  <Link
+                    className="menu__link"
+                    to={`/user/${props.user.id}`}
+                    data-cy="profile-link"
+                  >
                     Profile
                   </Link>
                 </li>
@@ -199,5 +205,32 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   toggleNightMode: () => dispatch(toggleNightMode()),
 });
+
+AuthNav.propTypes = {
+  footer: PropTypes.bool.isRequired,
+  nightMode: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
+  profileLink: PropTypes.string.isRequired,
+  toggleDisplayMode: PropTypes.func.isRequired,
+  location: PropTypes.string.isRequired,
+};
+
+Header.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    nightMode: PropTypes.bool,
+    profilePicture: PropTypes.string,
+    username: PropTypes.string,
+    id: PropTypes.string,
+    authenticated: PropTypes.bool,
+  }).isRequired,
+  mediaPlayer: PropTypes.shape({
+    playlist: PropTypes.array,
+    footer: PropTypes.bool,
+  }).isRequired,
+  toggleNightMode: PropTypes.func.isRequired,
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

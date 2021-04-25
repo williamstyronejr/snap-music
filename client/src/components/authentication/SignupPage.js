@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signup, setAuthError } from '../../actions/user';
 import './styles/signupPage.css';
 
@@ -22,7 +23,6 @@ const SignUpPage = (props) => {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    // validation
     props.signup(username, email, password, confirm);
   };
 
@@ -143,5 +143,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(signup(username, email, password, confirm)),
   setAuthError: (err) => dispatch(setAuthError(err)),
 });
+
+SignUpPage.propTypes = {
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool,
+    authenticating: PropTypes.bool,
+    authenticationError: PropTypes.shape({
+      username: PropTypes.string,
+      password: PropTypes.string,
+      email: PropTypes.string,
+      confirm: PropTypes.string,
+    }),
+  }).isRequired,
+  setAuthError: PropTypes.func.isRequired,
+  signup: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

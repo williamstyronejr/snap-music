@@ -1,11 +1,9 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ajaxRequest, isFileValid, genreList } from '../../utils/utils';
-import {
-  setNotification,
-  setNotificationError,
-} from '../../actions/notification';
+import { setNotificationError } from '../../actions/notification';
 import './styles/uploadPage.css';
 
 /**
@@ -134,8 +132,8 @@ const UploadPage = (props) => {
   };
 
   const genreListItems = genreList.map((genreItem) => (
-    <option key={genreItem.name} value={genreItem.name}>
-      {genreItem.name}
+    <option key={genreItem} value={genreItem}>
+      {genreItem}
     </option>
   ));
 
@@ -162,7 +160,7 @@ const UploadPage = (props) => {
               className={`field__drag ${dragOver ? 'field__drag--over' : ''}`}
               onDrop={onDragDrop}
               onDragOver={(evt) => evt.preventDefault()}
-              onDragLeave={(evt) => setDragOver(false)}
+              onDragLeave={() => setDragOver(false)}
               onDragEnter={() => setDragOver(true)}
             >
               <span className="form__labeling form__drag-child">
@@ -301,7 +299,7 @@ const UploadPage = (props) => {
               <option disabled value="">
                 Select a genre
               </option>
-              {genreList}
+              {genreListItems}
               <option value="custom">Custom</option>
             </select>
           </label>
@@ -346,8 +344,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setNotification: (msg) => dispatch(setNotification(msg)),
   setNotificationError: (msg) => dispatch(setNotificationError(msg)),
 });
+
+UploadPage.propTypes = {
+  setNotificationError: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadPage);

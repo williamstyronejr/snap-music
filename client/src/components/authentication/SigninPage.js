@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signin, setAuthError } from '../../actions/user';
 import './styles/signinPage.css';
 
@@ -81,6 +82,7 @@ const SigninPage = (props) => {
         </button>
 
         <hr />
+
         <button
           type="button"
           className="btn btn--submit"
@@ -102,6 +104,16 @@ const SigninPage = (props) => {
       </form>
     </section>
   );
+};
+
+SigninPage.propTypes = {
+  signin: PropTypes.func.isRequired,
+  setAuthError: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    authenticating: PropTypes.bool,
+    authenticated: PropTypes.bool,
+    authenticationError: PropTypes.shape({}),
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({

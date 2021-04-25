@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Track from '../shared/Track';
 import ReportUser from './ReportUser';
 import FollowButton from '../shared/FollowButton';
@@ -153,6 +154,12 @@ const UserPage = (props) => {
           ) : (
             <Track
               id={props.profile.track.id}
+              playing={
+                props.mediaPlayer.playlist.length > 0 &&
+                props.mediaPlayer.src === '/user' &&
+                props.mediaPlayer.playlist[props.mediaPlayer.currentTrack]
+                  .id === props.profile.track.id
+              }
               title={props.profile.track.title}
               artist={props.profile.track.artist}
               artistId={props.profile.track.artistId}
@@ -161,7 +168,7 @@ const UserPage = (props) => {
               tags={props.profile.track.tags}
               explicit={props.profile.track.explicit}
               onClick={() => {
-                props.setPlaylist([props.profile.track]);
+                props.setPlaylist([props.profile.track], '/user');
               }}
             />
           )}
@@ -194,6 +201,7 @@ const UserPage = (props) => {
 const mapStateToProps = (state) => ({
   profile: state.profile,
   user: state.user,
+  mediaPlayer: state.mediaPlayer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -205,5 +213,52 @@ const mapDispatchToProps = (dispatch) => ({
   removeTrack: (trackId) => dispatch(removeTrack(trackId)),
   updateTrackData: (data) => dispatch(updateTrackData(data)),
 });
+
+UserPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      userId: PropTypes.string,
+    }),
+  }).isRequired,
+  mediaPlayer: PropTypes.shape({
+    playlist: PropTypes.array,
+    src: PropTypes.string,
+    currentTrack: PropTypes.number,
+  }).isRequired,
+  user: PropTypes.shape({ id: PropTypes.string }).isRequired,
+  profile: PropTypes.shape({
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      username: PropTypes.string,
+      following: PropTypes.bool,
+      isCurrent: PropTypes.bool,
+      followers: PropTypes.number,
+      bio: PropTypes.string,
+      displayName: PropTypes.string,
+      profilePicture: PropTypes.string,
+      meta: PropTypes.shape({
+        bestRating: PropTypes.string,
+      }),
+    }),
+    track: PropTypes.shape({
+      artistId: PropTypes.string,
+      explicit: PropTypes.bool,
+      tags: PropTypes.string,
+      genre: PropTypes.string,
+      coverArt: PropTypes.string,
+      id: PropTypes.string,
+      title: PropTypes.string,
+      artist: PropTypes.string,
+    }),
+    error: PropTypes.number.isRequired,
+  }).isRequired,
+  getUserData: PropTypes.func.isRequired,
+  toggleFollow: PropTypes.func.isRequired,
+  setNotification: PropTypes.func.isRequired,
+  setNotificationError: PropTypes.func.isRequired,
+  setPlaylist: PropTypes.func.isRequired,
+  removeTrack: PropTypes.func.isRequired,
+  updateTrackData: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

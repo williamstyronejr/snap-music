@@ -15,8 +15,8 @@ const TrackEdit = ({
   onCancel,
 }) => {
   // Flag to determine if the track's genre is custom or not
-  const isCustomGenre = !genres.some(
-    (genreItem) => genreItem.name === initialGenre
+  const isCustomGenre = !genreList.some(
+    (genre) => genre.toLowerCase() === initialGenre
   );
 
   const fileRef = React.useRef();
@@ -113,8 +113,8 @@ const TrackEdit = ({
   }
 
   const genreListItems = genreList.map((genreItem) => (
-    <option key={genreItem.name} value={genreItem.name}>
-      {genreItem.name}
+    <option key={genreItem} value={genreItem.toLowerCase()}>
+      {genreItem}
     </option>
   ));
 
@@ -256,7 +256,11 @@ const TrackEdit = ({
           Save
         </button>
 
-        <button className="btn btn--cancel" type="button" onClick={onCancel}>
+        <button
+          className="btn btn--cancel"
+          type="button"
+          onClick={() => onCancel()}
+        >
           Cancel
         </button>
       </form>

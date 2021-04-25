@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Switch,
@@ -74,5 +75,9 @@ const Root = (props) => {
 const mapStateToProps = (state) => ({
   user: state.user,
 });
+
+Root.propTypes = {
+  user: PropTypes.shape({ authenticated: true }).isRequired,
+};
 
 export default connect(mapStateToProps, null)(Root);

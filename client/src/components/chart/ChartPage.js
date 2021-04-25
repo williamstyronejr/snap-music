@@ -25,6 +25,7 @@ const ChartPage = (props) => {
           explicit={track.explicit}
           playing={
             props.mediaPlayer.playlist.length > 0 &&
+            props.mediaPlayer.src === '/chart' &&
             props.mediaPlayer.playlist[props.mediaPlayer.currentTrack].id ===
               track.id
           }
@@ -65,8 +66,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setPlaylist(tracks, src, currentTrack)),
 });
 
-ChartPage.propsTypes = {
-  chart: PropTypes.object,
+ChartPage.propTypes = {
+  setPlaylist: PropTypes.func.isRequired,
+  mediaPlayer: PropTypes.shape({
+    currentTrack: PropTypes.number,
+    src: PropTypes.string,
+    playlist: PropTypes.array,
+  }).isRequired,
+  chart: PropTypes.shape({
+    requesting: PropTypes.bool,
+    visibileList: PropTypes.array,
+  }).isRequired,
+  getChartList: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChartPage);

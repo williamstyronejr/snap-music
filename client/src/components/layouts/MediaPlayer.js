@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Loading from '../shared/Loading';
 import { likeTrack } from '../../actions/track';
 import {
   skipTrack,
   prevTrack,
   restartPlaylist,
-  emptyPlaylist,
   toggleRepeat,
   toggleShuffle,
   toggleMute,
@@ -35,20 +36,26 @@ const MediaPlayer = (props) => {
     duration,
     seeking,
     src,
+    requesting,
   } = props.mediaPlayer;
 
   React.useEffect(() => {
     // Load new audio on changes to playlist
-    if (audioRef.current) {
-      audioRef.current.load();
-    }
+    if (audioRef.current) audioRef.current.load();
   }, [src, currentTrack]);
 
+  if (requesting && !footer) return <Loading />;
   if (playlist.length === 0) return null;
 
-  const { title, artist, id, coverArt, fileUrl, userLikes } = playlist[
-    currentTrack
-  ];
+  const {
+    title,
+    artist,
+    artistId,
+    id,
+    coverArt,
+    fileUrl,
+    userLikes,
+  } = playlist[currentTrack];
 
   /**
    * Toggles audio element's to be paused or play
@@ -191,7 +198,7 @@ const MediaPlayer = (props) => {
             </span>
 
             <Link
-              to={`/user/${artist}`}
+              to={`/user/${artistId}`}
               className="player__author"
               title={artist}
             >
@@ -339,7 +346,6 @@ const mapDispatchToProps = (dispatch) => ({
   skipTrack: () => dispatch(skipTrack()),
   prevTrack: () => dispatch(prevTrack()),
   restartPlaylist: () => dispatch(restartPlaylist()),
-  emptyPlaylist: () => dispatch(emptyPlaylist()),
   toggleRepeat: () => dispatch(toggleRepeat()),
   toggleShuffle: () => dispatch(toggleShuffle()),
   toggleMute: () => dispatch(toggleMute()),
@@ -348,5 +354,33 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrentTime: (time) => dispatch(setCurrentTime(time)),
   toggleSeeking: () => dispatch(toggleSeeking()),
 });
+
+MediaPlayer.propTypes = {
+  likeTrack: PropTypes.func.isRequired,
+  skipTrack: PropTypes.func.isRequired,
+  prevTrack: PropTypes.func.isRequired,
+  restartPlaylist: PropTypes.func.isRequired,
+  toggleRepeat: PropTypes.func.isRequired,
+  toggleShuffle: PropTypes.func.isRequired,
+  toggleMute: PropTypes.func.isRequired,
+  setVolume: PropTypes.func.isRequired,
+  setDuration: PropTypes.func.isRequired,
+  setCurrentTime: PropTypes.func.isRequired,
+  toggleSeeking: PropTypes.func.isRequired,
+  mediaPlayer: PropTypes.shape({
+    requesting: PropTypes.bool,
+    playlist: PropTypes.array,
+    currentTime: PropTypes.number,
+    currentTrack: PropTypes.number,
+    volume: PropTypes.number,
+    duration: PropTypes.number,
+    src: PropTypes.string,
+    repeat: PropTypes.bool,
+    shuffle: PropTypes.bool,
+    footer: PropTypes.bool,
+    muted: PropTypes.bool,
+    seeking: PropTypes.bool,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MediaPlayer);

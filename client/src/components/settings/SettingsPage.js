@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import ConfirmDialog from '../shared/ConfirmDialog';
@@ -14,11 +15,15 @@ const PasswordForm = ({ setNotificationError, setNotification }) => {
   const [oldPassword, setOldPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
   const [confirm, setConfirm] = React.useState('');
+  const [requesting, setRequesting] = React.useState(false);
   const [errors, setErrors] = React.useState({});
 
   const onSubmit = (evt) => {
     evt.preventDefault();
     setErrors({});
+
+    if (requesting) return;
+    setRequesting(true);
 
     ajaxRequest('/settings/password', 'POST', {
       data: {
@@ -27,10 +32,12 @@ const PasswordForm = ({ setNotificationError, setNotification }) => {
         confirmPass: confirm,
       },
     })
-      .then((res) => {
+      .then(() => {
+        setRequesting(false);
         setNotification('Password updated.');
       })
       .catch((err) => {
+        setRequesting(false);
         if (err.response.status === 400) return setErrors(err.response.data);
         setNotificationError(
           'An error occurred when updating password, please try again later.'
@@ -97,7 +104,7 @@ const PasswordForm = ({ setNotificationError, setNotification }) => {
         </label>
       </fieldset>
 
-      <button className="btn btn--submit" type="submit">
+      <button className="btn btn--submit" type="submit" disabled={requesting}>
         Update Password
       </button>
     </form>
@@ -121,12 +128,16 @@ const AccountForm = ({
   const [bio, setBio] = React.useState('');
   const [errors, setErrors] = React.useState({});
   const [confirmVisibility, setConfirmVisibility] = React.useState(false);
+  const [requesting, setRequesting] = React.useState(false);
   const fileRef = React.useRef();
 
   const onSubmit = (evt) => {
     evt.preventDefault();
     setErrors({});
     const data = {};
+
+    if (requesting) return;
+    setRequesting(true);
 
     if (username) data.username = username;
     if (email) data.email = email;
@@ -137,6 +148,7 @@ const AccountForm = ({
       data,
     })
       .then((res) => {
+        setRequesting(false);
         if (res.data.success) {
           updateUser(data);
           return setNotification('User updated successfully');
@@ -145,6 +157,7 @@ const AccountForm = ({
         setErrors(res.data.errors);
       })
       .catch((err) => {
+        setRequesting(false);
         if (err.response && err.response.status === 400) {
           return setErrors(err.response.data);
         }
@@ -156,12 +169,17 @@ const AccountForm = ({
   };
 
   const onDelete = () => {
+    if (requesting) return;
+
+    setRequesting(true);
     ajaxRequest('/settings/account/deletion', 'POST')
-      .then((res) => {
+      .then(() => {
+        setRequesting(false);
         setConfirmVisibility(false);
         unauthUser();
       })
-      .catch((err) => {
+      .catch(() => {
+        setRequesting(false);
         setNotificationError(
           'An error has occurred during account deletion, please try again later.'
         );
@@ -172,6 +190,9 @@ const AccountForm = ({
     setErrors({});
     const data = new FormData();
 
+    if (requesting) return;
+    setRequesting(true);
+
     if (file) data.append('profile', file);
     if (remove) data.append('remove', remove);
 
@@ -181,8 +202,10 @@ const AccountForm = ({
     })
       .then((res) => {
         if (res.data.success && res.data.updated) updateUser(res.data.data);
+        setRequesting(false);
       })
       .catch((err) => {
+        setRequesting(false);
         if (err.response && err.response.status === 400) {
           return setErrors(err.response.data);
         }
@@ -202,6 +225,7 @@ const AccountForm = ({
             <button
               className="btn btn--image"
               type="button"
+              disabled={requesting}
               onClick={() => {
                 fileRef.current.click();
               }}
@@ -339,7 +363,7 @@ const AccountForm = ({
           </label>
         </fieldset>
 
-        <button className="btn btn--submit" type="submit">
+        <button className="btn btn--submit" type="submit" disabled={requesting}>
           Update Account
         </button>
       </form>
@@ -430,4 +454,41 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (msg) => dispatch(setNotification(msg)),
   unauthUser: () => dispatch(unauthUser()),
 });
+
+AccountForm.propTypes = {
+  currentUsername: PropTypes.string.isRequired,
+  currentDisplayName: PropTypes.string.isRequired,
+  currentEmail: PropTypes.string.isRequired,
+  currentBio: PropTypes.string.isRequired,
+  currentProfileImage: PropTypes.string.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  setNotificationError: PropTypes.func.isRequired,
+  setNotification: PropTypes.func.isRequired,
+  unauthUser: PropTypes.func.isRequired,
+};
+
+PasswordForm.propTypes = {
+  setNotification: PropTypes.func.isRequired,
+  setNotificationError: PropTypes.func.isRequired,
+};
+
+SettingsPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      type: PropTypes.string,
+    }),
+  }).isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    displayName: PropTypes.string,
+    email: PropTypes.string,
+    bio: PropTypes.string,
+    profilePicture: PropTypes.string,
+  }).isRequired,
+  updateUserData: PropTypes.func.isRequired,
+  setNotificationError: PropTypes.func.isRequired,
+  setNotification: PropTypes.func.isRequired,
+  unauthUser: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
