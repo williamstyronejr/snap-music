@@ -19,11 +19,83 @@ describe('Interactions with the discovery menu', () => {
       cy.url().should('include', '/discovery/');
     });
 
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/discovery/Latin/tracks',
+      },
+      {
+        statusCode: 200,
+        body: [
+          {
+            rating: 0,
+            title: 'latinExample1',
+            artist: 'username2',
+            artistId: '5fe10b5179be5568dd18055h',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe10b5279be5568dd18056f',
+          },
+          {
+            rating: 0,
+            title: 'latinExample2',
+            artist: 'username2',
+            artistId: '5fe117201eba856fc7040a2g',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe117271eba856fc9040a33',
+          },
+        ],
+      }
+    );
+
     cy.get('[data-cy=media-player]').should('exist');
   });
 
   it('Changing genres should load a different track', () => {
     let firstTrackTitle;
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/discovery/Latin/tracks',
+      },
+      {
+        statusCode: 200,
+        body: [
+          {
+            rating: 0,
+            title: 'latinExample1',
+            artist: 'username2',
+            artistId: '5fe10b5179be5568dd18055h',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe10b5279be5568dd18056f',
+          },
+          {
+            rating: 0,
+            title: 'latinExample2',
+            artist: 'username2',
+            artistId: '5fe117201eba856fc7040a2g',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe117271eba856fc9040a33',
+          },
+        ],
+      }
+    );
 
     cy.get('main').within(() => {
       cy.get('a').its('length').should('gte', 1);
@@ -48,6 +120,78 @@ describe('Interactions with the discovery menu', () => {
 describe('Interactions with the discovery media player page', () => {
   beforeEach(() => {
     cy.visit('/');
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/discovery/Latin/tracks',
+      },
+      {
+        statusCode: 200,
+        body: [
+          {
+            rating: 0,
+            title: 'latinExample1',
+            artist: 'username2',
+            artistId: '5fe10b5179be5568dd18055h',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe10b5279be5568dd18056f',
+          },
+          {
+            rating: 0,
+            title: 'latinExample2',
+            artist: 'username2',
+            artistId: '5fe117201eba856fc7040a2g',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'latin',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe117271eba856fc9040a33',
+          },
+        ],
+      }
+    );
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/discovery/Hip%20Hop/tracks',
+      },
+      {
+        statusCode: 200,
+        body: [
+          {
+            rating: 0,
+            title: 'title new',
+            artist: 'username2',
+            artistId: '5fe10b5179be5568dd180558',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'hip hop',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe10b5279be5568dd18055f',
+          },
+          {
+            rating: 0,
+            title: 'title new',
+            artist: 'username2',
+            artistId: '5fe117201eba856fc7040a2c',
+            fileUrl:
+              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+            genre: 'hip hop',
+            coverArt: '/img/default_cover.png',
+            likes: [],
+            id: '5fe117271eba856fc7040a33',
+          },
+        ],
+      }
+    );
 
     cy.contains('Discovery').click();
     cy.get('main').within(() => {

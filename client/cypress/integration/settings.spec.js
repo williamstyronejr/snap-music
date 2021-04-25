@@ -44,39 +44,39 @@ describe('UI Settings - Night mode', () => {
   });
 });
 
-describe('User settings  - Account', () => {
+describe('User settings - Account', () => {
   beforeEach(() => {
     cy.visit('/settings/account');
   });
 
-  // it('Updating with invalid parameters spawns error messages', () => {
-  //   const invalidEmail = 'test';
-  //   const invalidUsername = 't';
+  it('Updating with invalid parameters spawns error messages', () => {
+    const invalidEmail = 'test';
+    const invalidUsername = 't';
 
-  //   cy.get('[data-cy=email]').type(invalidEmail);
-  //   cy.get('[data-cy=username]').type(invalidUsername);
-  //   cy.get('button:visible[type="submit"]').click();
+    cy.get('[data-cy=email]').type(invalidEmail);
+    cy.get('[data-cy=username]').type(invalidUsername);
+    cy.get('button:visible[type="submit"]').click();
 
-  //   cy.get('span:visible[data-cy="field-error"]')
-  //     .should('have.length', 2)
-  //     .each(($el, index, $list) => {
-  //       expect($el.text()).to.have.length.greaterThan(0);
-  //     });
-  // });
+    cy.get('span:visible[data-cy="field-error"]')
+      .should('have.length', 2)
+      .each(($el, index, $list) => {
+        expect($el.text()).to.have.length.greaterThan(0);
+      });
+  });
 
-  // it('Changing username, bio, and  email', () => {
-  //   const newEmail = generateRandomString(8, '@email.com');
-  //   const newUsername = generateRandomString(8);
-  //   const newBio = generateRandomString();
+  it('Changing username, bio, and  email', () => {
+    const newEmail = generateRandomString(8, '@email.com');
+    const newUsername = generateRandomString(8);
+    const newBio = generateRandomString();
 
-  //   cy.get('[data-cy=email]').type(newEmail);
-  //   cy.get('[data-cy=username]').type(newUsername);
-  //   cy.get('[data-cy=bio]').type(newBio);
-  //   cy.get('button:visible[type="submit"]').click();
+    cy.get('[data-cy=email]').type(newEmail);
+    cy.get('[data-cy=username]').type(newUsername);
+    cy.get('[data-cy=bio]').type(newBio);
+    cy.get('button:visible[type="submit"]').click();
 
-  //   // Username on page should change
-  //   cy.get('[data-cy="name-display"]').should('have.text', newUsername);
-  // });
+    // Username on page should change
+    cy.get('[data-cy="name-display"]').should('have.text', newUsername);
+  });
 
   it('Deleting user account should unauth user locally and unable to signin', () => {
     cy.get('[data-cy=delete]').click();

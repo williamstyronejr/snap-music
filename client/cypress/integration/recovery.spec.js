@@ -57,11 +57,13 @@ describe('Requesting a password reset', () => {
 });
 
 describe('Password reset', () => {
+  let route;
   beforeEach(() => {
     const id = 'test';
     const token = 'test';
+    route = `/account/reset?id=${id}&token=${token}`;
 
-    cy.visit(`/account/reset?id=${id}&token=${token}`);
+    cy.visit(route);
   });
 
   it('Providing no password should spawn an error message', () => {
@@ -84,11 +86,11 @@ describe('Password reset', () => {
   });
 
   it('Valid request should spawn a success message', () => {
-    // Request is stub since it diffcult to truly test E2E
+    // Request is stub since its diffcult to truly test E2E
     cy.intercept(
       {
-        method: 'POST', // Route all GET requests
-        url: '/account/reset', // that have a URL that matches '/users/*'
+        method: 'POST', // Route all POST requests
+        url: route, // that have a URL that matches '/account/reset'
       },
       {
         statusCode: 200,

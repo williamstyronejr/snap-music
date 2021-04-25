@@ -7,6 +7,7 @@ function generateRandomString(len, append = '') {
 }
 
 let username;
+let profileUrl;
 
 // Sign up a user with each request (Slows down testing)
 beforeEach(() => {
@@ -24,6 +25,15 @@ beforeEach(() => {
   cy.get('[data-cy=submit]').click();
 
   cy.location('pathname').should('eq', '/chart');
+
+  // Get profile location
+  cy.get('[data-cy=profile-link]').click();
+
+  cy.url().then((url) => {
+    profileUrl = url;
+  });
+
+  cy.visit('/');
 });
 
 describe('Profile page', () => {
@@ -34,7 +44,7 @@ describe('Profile page', () => {
 
     // Sign existing user out, and log in another user
     cy.get('[data-cy=user-menu]').click();
-    cy.get('button[type=submit]').click();
+    cy.get('[data-cy=signout]').click();
     cy.get('[data-cy=signup]').click();
     cy.get('[data-cy=email]').type(email2);
     cy.get('[data-cy=username]').type(username2);
@@ -43,7 +53,7 @@ describe('Profile page', () => {
     cy.get('[data-cy=submit]').click();
     cy.location('pathname').should('eq', '/chart');
 
-    cy.visit(`/user/${username}`);
+    cy.visit(profileUrl);
 
     cy.get('[data-cy=profile-menu]').click();
     cy.get('[data-cy=report]').click();
@@ -62,7 +72,7 @@ describe('Profile page', () => {
 
     // Sign existing user out, and log in another user
     cy.get('[data-cy=user-menu]').click();
-    cy.get('button[type=submit]').click();
+    cy.get('[data-cy=signout]').click();
     cy.get('[data-cy=signup]').click();
     cy.get('[data-cy=email]').type(email2);
     cy.get('[data-cy=username]').type(username2);
@@ -71,7 +81,7 @@ describe('Profile page', () => {
     cy.get('[data-cy=submit]').click();
     cy.location('pathname').should('eq', '/chart');
 
-    cy.visit(`/user/${username}`);
+    cy.visit(profileUrl);
 
     cy.get('[data-cy=follow]').should('have.text', 'Follow').click();
     cy.get('[data-cy=follow]').should('have.text', 'Following');
