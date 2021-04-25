@@ -207,16 +207,30 @@
 }
 
 @media only screen and (min-width: 600px) {
-  .player {
-    display: flex;
-  }
-
   .player__options {
     margin: auto 0;
+  }
+
+  .player--full {
+    padding: 0 10px;
+  }
+
+  .player--full .player__info {
+    width: auto;
+    flex: 0 1 auto;
+  }
+
+  .player--full .player__options {
+    width: auto;
+    flex: 1 0 auto;
   }
 }
 
 @media only screen and (min-width: 800px) {
+  .player {
+    display: flex;
+  }
+
   .player--footer .player__volume {
     display: flex;
   }

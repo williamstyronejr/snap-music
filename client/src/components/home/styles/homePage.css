@@ -1,18 +1,28 @@
 .home {
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100%;
+  background-color: rgb(41, 65, 171);
+  background-image: url(https://www-growth.scdn.co/static/home/bursts-tablet.svg);
+  background-size: 130%;
+  background-position: right 40% center;
+  -webkit-box-pack: c;
+  background-repeat: no-repeat;
 }
 
 .layout-night .home {
   background-color: #181d2f;
+  background-color: rgb(41, 65, 171);
 }
 
 .home__heading {
   font-size: 2em;
   margin: 2em 0;
   text-align: center;
+  color: #1ed760;
 }
 
 .home__list {
@@ -25,6 +35,15 @@
 .home__item {
   text-align: center;
   margin: 10px 0 0 0;
+  font-size: 1.6em;
+  color: #1ed760;
+  font-weight: 600;
+}
+
+.home__item--small {
+  font-size: 1.3em;
+  margin: 20px;
+  font-weight: 400;
 }
 
 .home__link {
@@ -33,11 +52,37 @@
   padding: 10px;
   width: 80%;
   margin: 0 auto;
-  color: black;
-  background-color: white;
+  color: rgb(41, 65, 171);
+  background-color: #1ed760;
   text-align: center;
+  font-weight: 700;
 }
 
 .home__link:hover {
-  background-color: blue;
+  background-color: rgb(45, 226, 109);
+  transform: scale(1.04);
+}
+
+@media only screen and (min-width: 600px) {
+  .home__item {
+    font-size: 88px;
+  }
+
+  .home__item--small {
+    font-size: 1.6em;
+  }
+
+  .home__link {
+    width: auto;
+    padding: 20px 40px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .home {
+    background-image: url(https://www-growth.scdn.co/static/home/bursts-mobile.svg);
+    background-position: center top 30%;
+    background-repeat: no-repeat;
+    background-size: 250%;
+  }
 }
