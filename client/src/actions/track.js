@@ -21,7 +21,7 @@ export function likeTrack(trackId, remove = false) {
           dispatch(updateChartLike(trackId, remove));
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(
           setNotificationError(
             'An error occurred when updating like, please try again.'

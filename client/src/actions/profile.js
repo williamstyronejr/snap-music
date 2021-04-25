@@ -117,7 +117,7 @@ export function toggleFollow(userId) {
       .then((res) => {
         dispatch(updateFollow(res.data.increment));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(
           setNotificationError(
             'There was a problem with following this user. Please try again.'
@@ -136,10 +136,10 @@ export function toggleFollow(userId) {
 export function removeTrack(trackId) {
   return (dispatch) => {
     ajaxRequest('/user/track/delete', 'POST', { data: { trackId } })
-      .then((res) => {
+      .then(() => {
         dispatch(removeLocalTrack());
       })
-      .catch((err) => {
+      .catch(() => {
         setNotificationError(
           'There was a problem with deleting the track. Please refresh and try again.'
         );

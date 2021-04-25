@@ -175,7 +175,7 @@ export function getUserData() {
       .then((res) => {
         if (res.data.success) dispatch(setAuthData(res.data.user));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setAuthenticating(false));
       });
   };

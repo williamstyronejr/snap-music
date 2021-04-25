@@ -81,7 +81,7 @@ export function getRandomTracks(genre) {
       .then((res) => {
         dispatch(setPlaylist(res.data, `/discovery/${genre}`));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(
           setNotificationError('A server error has occurred, please try again.')
         );
