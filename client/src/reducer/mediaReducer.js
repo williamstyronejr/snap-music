@@ -41,7 +41,6 @@ function updateArrayElement(array, key, param) {
         ...elem,
         ...param,
       };
-      console.log(test);
       return test;
     }
 

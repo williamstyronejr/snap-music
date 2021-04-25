@@ -24,7 +24,7 @@ const ReportUser = (props) => {
         details,
       },
     })
-      .then((res) => {
+      .then(() => {
         // Give user notice that report was sent, and close report window
         props.setNotification('Report sent!');
         props.onCancel();

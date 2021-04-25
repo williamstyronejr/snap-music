@@ -23,7 +23,7 @@ const AccountReset = () => {
         password,
       },
     })
-      .then((res) => {
+      .then(() => {
         setStatus('success');
       })
       .catch((err) => {
