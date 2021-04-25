@@ -3,15 +3,29 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './styles/track.css';
 
-const Track = (props) => {
-  if (!props.id) return <div>No Track</div>;
+const Track = ({
+  id,
+  title,
+  artist,
+  artistId,
+  onClick,
+  coverArt,
+  playing,
+  explicit,
+}) => {
+  if (!id) return <div>No Track</div>;
 
   return (
-    <button
-      className={`btn track ${props.playing ? 'track--playing' : ''}`}
-      onClick={props.onClick}
+    <div
+      className={`track ${playing ? 'track--playing' : ''}`}
+      onClick={onClick}
+      onKeyDown={() => {
+        onClick();
+      }}
       type="button"
       data-cy="track"
+      tabIndex={0}
+      role="button"
     >
       <div className="track__controls">
         <button className="btn" type="button">
@@ -20,26 +34,22 @@ const Track = (props) => {
       </div>
 
       <div className="track__image">
-        <img
-          className="track__cover"
-          src={props.coverArt}
-          alt="Track cover art"
-        />
+        <img className="track__cover" src={coverArt} alt="Track cover art" />
       </div>
 
       <div className="track-info">
-        <p className="track-info__title">{props.title}</p>
+        <p className="track-info__title">{title}</p>
         <Link
           onClick={(evt) => evt.stopPropagation()}
           className="track-info__author"
-          to={`/user/${props.artistId}`}
+          to={`/user/${artistId}`}
         >
-          {props.artist}
+          {artist}
         </Link>
       </div>
 
-      {props.explicit ? <div className="track__explicit">E</div> : null}
-    </button>
+      {explicit ? <div className="track__explicit">E</div> : null}
+    </div>
   );
 };
 
