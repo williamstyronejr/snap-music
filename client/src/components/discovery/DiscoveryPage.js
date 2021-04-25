@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { genreList } from '../../utils/utils';
 import './styles/discoveryPage.css';
 
-const DiscoveryPage = (props) => {
+const DiscoveryPage = () => {
   const genreListItems = genreList.map((genre) => (
     <div className="grid__item" key={`genre-${genre}`}>
       <Link to={`/discovery/${genre}`} className="grid__link content-center">
