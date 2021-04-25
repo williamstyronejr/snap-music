@@ -9,10 +9,21 @@ import {
 } from '../actions/profile';
 
 const initState = {
-  error: null,
+  error: 0,
   lastUpdated: null,
-  user: {},
-  track: {},
+  user: {
+    username: '',
+    bio: '',
+  },
+  track: {
+    id: '',
+    title: '',
+    coverArt: '',
+    artist: '',
+
+    artistId: '',
+    explicit: false,
+  },
 };
 
 const userReducer = (state = initState, action) => {
@@ -23,7 +34,7 @@ const userReducer = (state = initState, action) => {
         user: {
           ...state.user,
           ...action.payload,
-          error: null,
+          error: 0,
         },
         lastUpdated: Date.now(),
       };
