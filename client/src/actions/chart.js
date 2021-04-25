@@ -55,7 +55,7 @@ export function getChartList(genre) {
       .then((res) => {
         dispatch(setChartList(res.data));
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setRequesting(false));
         dispatch(
           setNotificationError('An error has occured, try reloading the page.')
