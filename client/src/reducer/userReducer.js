@@ -15,11 +15,12 @@ const initState = {
 
   // User information "stuff"
   nightMode: false,
-  id: null,
-  username: null,
-  displayName: null,
-  email: null,
-  profilePicture: null,
+  id: '',
+  username: '',
+  displayName: '',
+  email: '',
+  profilePicture: '',
+  bio: '',
 };
 
 const userReducer = (state = initState, action) => {
