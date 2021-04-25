@@ -5,16 +5,14 @@ import './styles/homePage.css';
 const HomePage = () => {
   return (
     <section className="home">
-      <header className="home__header">
-        <h1 className="home__heading">Snapmusic</h1>
-      </header>
+      <header className="home__header" />
 
       <ul className="home__list">
         <li className="home__item">Create</li>
         <li className="home__item">Share</li>
         <li className="home__item">Discover</li>
-        <li className="home__item">
-          <p>New music all in a day!</p>
+        <li className="home__item home__item--small">
+          New music all in a day!
         </li>
       </ul>
 
