@@ -35,6 +35,7 @@ const {
   userLogout,
   userProfile,
   userSignup,
+  getUserFeed,
 } = require('../controllers/user');
 const {
   getTrackInfo,
@@ -144,6 +145,8 @@ router.post(
   validateReport,
   reportProfile
 );
+
+router.get('/user/feed', loggedIn, getCurrentUser, getUserFeed);
 
 // User profile routes
 router.get('/user/:userId/data', jsonParser, userProfile);
