@@ -781,3 +781,21 @@ describe('POST /settings/account/deletion', () => {
     await getUserData(app, user.user.id, 404);
   });
 });
+
+describe('GET /user/feed', () => {
+  const routeToTest = () => '/user/feed';
+
+  test('Unauth request should throw 401 error', async () => {
+    await request(app).get(routeToTest()).expect(401);
+  });
+
+  test('Valid request should response with 200 and an array', async () => {
+    await request(app)
+      .get(routeToTest())
+      .set('Cookie', userCookie1)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.tracks).toBeDefined();
+      });
+  });
+});
