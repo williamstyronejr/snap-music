@@ -1,0 +1,31 @@
+.feed__heading {
+  text-align: center;
+}
+
+.feed__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feed__item {
+  margin: 10px 0;
+  border-bottom: solid 1px rgb(96, 96, 96);
+  margin: 0 0.8em;
+  padding: 5px 0;
+  background-color: white;
+}
+
+.feed__item:hover {
+  background-color: #dfdfdf;
+  background-color: rgba(174, 174, 174, 0.1);
+}
+
+.layout-night .feed__item {
+  background-color: #151728;
+}
+
+.layout-night .feed__item:hover {
+  background-color: #dfdfdf;
+  background-color: rgba(174, 174, 174, 0.1);
+}
