@@ -41,3 +41,13 @@ exports.removeAllFollowing = (follower) => {
 exports.getFollowRelation = (followee, follower) => {
   return Follow.findOne({ followee, follower }).exec();
 };
+
+/**
+ * Gets all the users a user is following.
+ * @param {String} userId Id of a user
+ * @return {Promise<Array>} Returns a promise to resolve with an array user ids
+ *  the provided user is following.
+ */
+exports.getAllUserFollowing = (userId) => {
+  return Follow.distinct('followee', { follower: userId }).exec();
+};
