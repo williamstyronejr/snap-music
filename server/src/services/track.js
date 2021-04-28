@@ -347,3 +347,15 @@ exports.removeLike = (trackId, userId) => {
 exports.getUserLike = (trackId, userId, projection = null) => {
   return Track.findOne({ _id: trackId, 'likes.userId': userId }, projection);
 };
+
+/**
+ * Gets all non-expired tracks from artists in a list.
+ * @param {Array<String>} artists Array of artist id
+ * @return {Promise<Array>} Returns a promise to resolve with an array of track
+ *  objects from the artist if found, otherwise an empty list.
+ */
+exports.getTracksByArtists = (artists) => {
+  console.log(artists);
+
+  return Track.find({ isExpired: false, artistId: { $in: artists } }).exec();
+};
