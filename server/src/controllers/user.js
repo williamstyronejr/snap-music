@@ -19,6 +19,7 @@ const {
   deleteTracksByUserId,
   deleteActiveTrackByUserId,
   updateTrackAristByUserId,
+  getTracksByArtists,
 } = require('../services/track');
 const { createReport } = require('../services/report');
 const { sendTemplateEmail } = require('../services/mailer');
@@ -26,6 +27,7 @@ const {
   createFollow,
   removeFollowing,
   getFollowRelation,
+  getAllUserFollowing,
 } = require('../services/follow');
 const { deleteFileFirebase } = require('../services/firebase');
 
@@ -605,6 +607,25 @@ exports.deleteUserAccount = async (req, res, next) => {
 
       return res.json({ success: true });
     });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+/**
+ * Route handler for getting user's feed from following list.
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @param {Function} next Next function be called
+ */
+exports.getUserFeed = async (req, res, next) => {
+  const { userId } = req.session;
+
+  try {
+    const followingList = await getAllUserFollowing(userId);
+    const trackList = await getTracksByArtists(followingList);
+
+    return res.json({ tracks: trackList });
   } catch (err) {
     return next(err);
   }
