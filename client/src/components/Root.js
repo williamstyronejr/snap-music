@@ -77,7 +77,7 @@ const mapStateToProps = (state) => ({
 });
 
 Root.propTypes = {
-  user: PropTypes.shape({ authenticated: true }).isRequired,
+  user: PropTypes.shape({ authenticated: PropTypes.bool }).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Root);
