@@ -141,20 +141,26 @@ const Header = (props) => {
 
         <nav className="menu__nav" role="navigation">
           <ul className="menu__list">
-            <li className="menu__item">
-              <Link className="menu__link" to="/chart">
-                Charts
-              </Link>
-            </li>
-
-            <li className="menu__item">
-              <Link className="menu__link" to="/discovery">
-                Discovery
-              </Link>
-            </li>
-
             {props.user.authenticated ? (
               <>
+                <li className="menu__item">
+                  <Link className="menu__link" to="/home">
+                    Home
+                  </Link>
+                </li>
+
+                <li className="menu__item">
+                  <Link className="menu__link" to="/chart">
+                    Charts
+                  </Link>
+                </li>
+
+                <li className="menu__item">
+                  <Link className="menu__link" to="/discovery">
+                    Discovery
+                  </Link>
+                </li>
+
                 <li className="menu__item">
                   <Link
                     className="menu__link"
@@ -171,7 +177,21 @@ const Header = (props) => {
                   </Link>
                 </li>
               </>
-            ) : null}
+            ) : (
+              <>
+                <li className="menu__item">
+                  <Link className="menu__link" to="/chart">
+                    Charts
+                  </Link>
+                </li>
+
+                <li className="menu__item">
+                  <Link className="menu__link" to="/discovery">
+                    Discovery
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
 
