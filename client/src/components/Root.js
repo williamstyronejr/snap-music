@@ -22,6 +22,7 @@ import SignUpPage from './authentication/SignupPage';
 import RecoveryPage from './recovery/RecoveryPage';
 import HomePage from './home/HomePage';
 import AccountResetPage from './recovery/AccountResetPage';
+import UserFeedPage from './feed/UserFeedPage';
 
 const RedirectTo = () => <Redirect to="/chart" />;
 
@@ -30,6 +31,7 @@ const AuthApp = () => (
     <MainLayout>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={UserFeedPage} />
         <Route path="/chart" component={ChartPage} />
         <Route path="/user/:userId" component={UserPage} />
         <Route path="/settings/:type?" component={SettingsPage} />
