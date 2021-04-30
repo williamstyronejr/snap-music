@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { clearFeed, getFeedUpdates } from '../../actions/feed';
 import { setPlaylist } from '../../actions/mediaPlayer';
 import Track from '../shared/Track';
+import Loading from '../shared/Loading';
 import './styles/userFeedPage.css';
 
 const UserFeedPage = (props) => {
@@ -16,7 +17,7 @@ const UserFeedPage = (props) => {
     if (props.feed.items.length === 0) {
       props.getFeedUpdates();
     }
-  }, [props.feed.items, props.feed.lastUpdated]);
+  }, [props.feed.items]);
 
   const feedList = props.feed.items.map((item, index) => (
     <li className="feed__item" key={item.id}>
@@ -45,6 +46,15 @@ const UserFeedPage = (props) => {
       <header className="feed__header">
         <h2 className="feed__heading">Feed</h2>
       </header>
+      {props.feed.requesting && props.feed.items.length === 0 ? (
+        <Loading />
+      ) : null}
+
+      {!props.feed.requesting && props.feed.items.length === 0 ? (
+        <div className="feed__message">
+          <p>Follow users to see tracks in your feed</p>
+        </div>
+      ) : null}
 
       <ul className="feed__list">{feedList}</ul>
     </section>
@@ -67,6 +77,7 @@ UserFeedPage.propTypes = {
   feed: PropTypes.shape({
     items: PropTypes.array,
     lastUpdated: PropTypes.number,
+    requesting: PropTypes.bool,
   }).isRequired,
   mediaPlayer: PropTypes.shape({
     playlist: PropTypes.array,
