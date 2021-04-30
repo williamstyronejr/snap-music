@@ -351,11 +351,15 @@ exports.getUserLike = (trackId, userId, projection = null) => {
 /**
  * Gets all non-expired tracks from artists in a list.
  * @param {Array<String>} artists Array of artist id
+ * @param {Number} limit Number of tracks to limit to
+ * @param {Number} page Number of pages to skip (by multiples of limit)
  * @return {Promise<Array>} Returns a promise to resolve with an array of track
  *  objects from the artist if found, otherwise an empty list.
  */
-exports.getTracksByArtists = (artists) => {
-  console.log(artists);
-
-  return Track.find({ isExpired: false, artistId: { $in: artists } }).exec();
+exports.getTracksByArtists = (artists, limit = 10, page = 0) => {
+  return Track.find({ isExpired: false, artistId: { $in: artists } })
+    .sort({ 'meta.created': -1 })
+    .skip(page * limit)
+    .limit(limit)
+    .exec();
 };
