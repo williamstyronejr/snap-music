@@ -72,7 +72,7 @@
 .player__author {
   font-size: 1em;
   text-decoration: none;
-  color: white;
+  color: #000;
 }
 
 .player__author:hover {
@@ -81,6 +81,10 @@
 
 .player--footer .player__author {
   font-size: 0.9em;
+}
+
+.layout-night .player__author {
+  color: white;
 }
 
 .player__options {

@@ -29,3 +29,8 @@
   background-color: #dfdfdf;
   background-color: rgba(174, 174, 174, 0.1);
 }
+
+.feed__message {
+  text-align: center;
+  font-size: 1.2em;
+}
