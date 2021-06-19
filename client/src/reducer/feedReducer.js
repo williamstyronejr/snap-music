@@ -3,11 +3,13 @@ import {
   APPENDTOFEED,
   CLEARFEED,
   UPDATINGFEED,
+  SETFEEDSTATUS,
 } from '../actions/feed';
 
 const initState = {
   requesting: false,
   items: [],
+  endOfList: false,
   lastUpdated: Date.now(),
 };
 
@@ -19,7 +21,9 @@ const feedReducer = (state = initState, action) => {
         items: [],
         lastUpdated: Date.now(),
         requesting: false,
+        endOfList: false,
       };
+
     case APPENDTOFEED:
       return {
         ...state,
@@ -41,6 +45,14 @@ const feedReducer = (state = initState, action) => {
         ...state,
         requesting: true,
       };
+
+    case SETFEEDSTATUS:
+      return {
+        ...state,
+        endOfList: action.payload,
+        requesting: false,
+      };
+
     default:
       return state;
   }

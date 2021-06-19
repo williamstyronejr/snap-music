@@ -13,8 +13,9 @@ const UserFeedPage = (props) => {
       props.clearFeed();
     };
   }, []);
+
   React.useEffect(() => {
-    if (props.feed.items.length === 0) {
+    if (props.feed.items.length === 0 && !props.feed.endOfList) {
       props.getFeedUpdates();
     }
   }, [props.feed.items]);
@@ -78,6 +79,7 @@ UserFeedPage.propTypes = {
     items: PropTypes.array,
     lastUpdated: PropTypes.number,
     requesting: PropTypes.bool,
+    endOfList: PropTypes.bool,
   }).isRequired,
   mediaPlayer: PropTypes.shape({
     playlist: PropTypes.array,
