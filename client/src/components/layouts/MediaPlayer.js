@@ -47,15 +47,8 @@ const MediaPlayer = (props) => {
   if (requesting && !footer) return <Loading />;
   if (playlist.length === 0) return null;
 
-  const {
-    title,
-    artist,
-    artistId,
-    id,
-    coverArt,
-    fileUrl,
-    userLikes,
-  } = playlist[currentTrack];
+  const { title, artist, artistId, id, coverArt, fileUrl, userLikes } =
+    playlist[currentTrack];
 
   /**
    * Toggles audio element's to be paused or play
@@ -258,18 +251,20 @@ const MediaPlayer = (props) => {
                   />
                 </button>
 
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  data-cy="like"
-                  onClick={() => props.likeTrack(id, userLikes)}
-                >
-                  <i
-                    className={`player__control ${
-                      userLikes ? 'fas' : 'far'
-                    } fa-heart`}
-                  />
-                </button>
+                {props.user.authenticated ? (
+                  <button
+                    className="btn btn--inline btn--media"
+                    type="button"
+                    data-cy="like"
+                    onClick={() => props.likeTrack(id, userLikes)}
+                  >
+                    <i
+                      className={`player__control ${
+                        userLikes ? 'fas' : 'far'
+                      } fa-heart`}
+                    />
+                  </button>
+                ) : null}
 
                 <button
                   className="btn btn--inline btn--media"
@@ -339,6 +334,7 @@ const MediaPlayer = (props) => {
 
 const mapStateToProps = (state) => ({
   mediaPlayer: state.mediaPlayer,
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -367,6 +363,9 @@ MediaPlayer.propTypes = {
   setDuration: PropTypes.func.isRequired,
   setCurrentTime: PropTypes.func.isRequired,
   toggleSeeking: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    authenticated: PropTypes.bool,
+  }).isRequired,
   mediaPlayer: PropTypes.shape({
     requesting: PropTypes.bool,
     playlist: PropTypes.array,
