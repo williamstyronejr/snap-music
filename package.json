@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/williamstyronejr/snapmusic#readme",
   "devDependencies": {
-    "concurrently": "^6.0.1"
+    "concurrently": "^6.2.0"
   }
 }
