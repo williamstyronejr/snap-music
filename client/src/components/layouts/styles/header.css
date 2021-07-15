@@ -18,7 +18,8 @@
   width: inherit;
   z-index: 4;
   background-color: #151728;
-  transition: 0.3s;
+  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
 }
 
 .menu-active {
@@ -78,7 +79,12 @@
   height: 3px;
   background-color: white;
   margin: 0 auto 6px auto;
-  transition: 0.4s;
+
+  -webkit-transition: -webkit-transform 0.4s ease-in-out,
+    opacity 0.4s ease-in-out;
+  -o-transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  -moz-transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
   border-radius: 3px;
 }
 
@@ -113,12 +119,14 @@
 
   .menu .menu__nav {
     opacity: 0;
-    transition: 0.8s;
+    -webkit-transition: opacity 0.8s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
   }
 
   .menu-collapse .menu__nav {
     visibility: hidden;
-    transition: 0.1s;
+    -webkit-transition: visibility 0.1s ease-in-out;
+    transition: visibility 0.1s ease-in-out;
   }
 
   .menu-active .menu__nav {
@@ -137,7 +145,9 @@
     left: 0;
     opacity: 1;
     z-index: 3;
-    transition: 0.3s;
+
+    -webkit-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
     background-color: rgba(36, 39, 59, 0.8);
   }
 
@@ -188,9 +198,6 @@
   margin-bottom: 60px;
 }
 
-.menu__info {
-}
-
 .menu__profile {
   display: block;
   width: 50px;
@@ -235,10 +242,6 @@
 
 .menu__user .menu__item:hover {
   background-color: rgba(111, 111, 111, 0.1);
-}
-
-.layout-night .menu__user .menu__item:hover {
-  /* background-color: rgba(140, 140, 140, 0.1); */
 }
 
 .menu__item .btn {
