@@ -272,6 +272,10 @@ hr {
   resize: vertical;
 }
 
+.form__input-resize {
+  resize: none;
+}
+
 .form__input--check {
 }
 
