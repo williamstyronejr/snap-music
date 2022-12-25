@@ -70,6 +70,7 @@ config/*.config.js
 
 # production
 /build
+/server/public
 
 # Temp upload folder
 **/uploads

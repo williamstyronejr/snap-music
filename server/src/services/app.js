@@ -41,9 +41,7 @@ app.use('/img', express.static(path.join(__dirname, '../', 'public', 'img')));
 
 app.use(
   '/static',
-  express.static(
-    path.join(__dirname, '../', '../', '../', 'client', 'build', '/static')
-  )
+  express.static(path.join(__dirname, '../', '../', 'public', '/static'))
 );
 
 RootRoutes(app);
