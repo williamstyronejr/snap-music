@@ -16,7 +16,7 @@
     "watch:client": "npm start --prefix client",
     "test:server": "npm test --prefix server",
     "test:client": "npm test --prefix client",
-    "postinstall": "npm install --prefix server && npm install --prefix client",
+    "postinstall": "npm install --prefix server --omit=dev && npm install --prefix client --omit=dev",
     "build": "npm run build --prefix client"
   },
   "repository": {
