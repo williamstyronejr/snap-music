@@ -8,7 +8,7 @@ const RootRoutes = require('../routes/index');
 const { errorHandler } = require('../middlewares/error_middleware');
 const logger = require('./winston');
 
-const { SECRET, DB_URI } = process.env;
+const { SECRET, DB_URI, NODE_ENV } = process.env;
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(
   morgan('combined', {
     stream: { write: (message) => logger.http(message) },
     skip: () => {
-      const env = process.env.NODE_ENV || 'development';
+      const env = NODE_ENV || 'development';
       return env !== 'development';
     },
   })
