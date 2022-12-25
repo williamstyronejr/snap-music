@@ -95,6 +95,17 @@ exports.uploadTrack = async (req, res, next) => {
       coverLocation
     );
 
+    // Push update to redis
+    /**
+     * 1. store in redis for all following users when uploading a track
+     * 2. when user pulls for forward update check redis
+     *      if empty return nothing
+     *      if populated, clear redis and return data
+     * 3. when user pulls for backward update check redis
+     *      if populated, query tracks while skipping the number of tracks in redis
+     *      if empty, query tracks normally with pagination
+     */
+
     res.json({ success: true });
   } catch (err) {
     next(err);

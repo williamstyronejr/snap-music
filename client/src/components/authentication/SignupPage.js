@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signup, setAuthError } from '../../actions/user';
 import './styles/signupPage.css';
@@ -12,7 +12,7 @@ const SignUpPage = (props) => {
   const [confirm, setConfirm] = React.useState('');
 
   // Redirect if the user is already authenticated
-  if (props.user.authenticated) return <Redirect to="/chart" />;
+  if (props.user.authenticated) return <Navigate to="/chart" />;
 
   // Clear any errors when demounting
   React.useEffect(() => {

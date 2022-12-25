@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import './styles/index.css';
 import Root from './components/Root';
@@ -14,9 +14,9 @@ if (localStorage.getItem('nightMode') === 'true') {
   store.dispatch(toggleNightMode());
 }
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+root.render(
   <Provider store={store}>
     <Root />
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );

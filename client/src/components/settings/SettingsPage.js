@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import { updateUserData, unauthUser } from '../../actions/user';
 import { ajaxRequest } from '../../utils/utils';
@@ -403,7 +403,7 @@ const SettingsPage = (props) => {
 
     default:
       // Redirect to account settings on default
-      return <Redirect to="/settings/account" />;
+      return <Navigate to="/settings/account" />;
   }
 
   return (

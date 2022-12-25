@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect,
+  Navigate,
+  Routes,
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MainLayout from './layouts/MainLayout';
@@ -24,12 +24,12 @@ import HomePage from './home/HomePage';
 import AccountResetPage from './recovery/AccountResetPage';
 import UserFeedPage from './feed/UserFeedPage';
 
-const RedirectTo = () => <Redirect to="/chart" />;
+const RedirectTo = () => <Navigate to="/chart" />;
 
 const AuthApp = () => (
   <Router>
     <MainLayout>
-      <Switch>
+      <Routes>
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={UserFeedPage} />
         <Route path="/chart" component={ChartPage} />
@@ -45,7 +45,7 @@ const AuthApp = () => (
         <Route path="/account/recovery" component={RedirectTo} />
 
         <Route component={NotFoundPage} />
-      </Switch>
+      </Routes>
     </MainLayout>
   </Router>
 );
@@ -53,25 +53,25 @@ const AuthApp = () => (
 const GuestApp = () => (
   <Router>
     <MainLayout>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/signup" component={SignUpPage} />
-        <Route path="/signin" component={SigninPage} />
-        <Route path="/chart" component={ChartPage} />
-        <Route path="/user/:userId" component={UserPage} />
-        <Route exact path="/discovery" component={DiscoveryPage} />
-        <Route path="/account/recovery" component={RecoveryPage} />
-        <Route path="/account/reset" component={AccountResetPage} />
-        <Route path="/discovery/:genre" component={DiscoveryMediaPage} />
+      <Routes>
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signin" element={<SigninPage />} />
+        <Route path="/chart" element={<ChartPage />} />
+        <Route path="/user/:userId" element={<UserPage />} />
+        <Route exact path="/discovery" element={<DiscoveryPage />} />
+        <Route path="/account/recovery" element={<RecoveryPage />} />
+        <Route path="/account/reset" element={<AccountResetPage />} />
+        <Route path="/discovery/:genre" element={<DiscoveryMediaPage />} />
 
-        <Route component={NotFoundPage} />
-      </Switch>
+        <Route element={<NotFoundPage />} />
+      </Routes>
     </MainLayout>
   </Router>
 );
 
 const Root = (props) => {
-  return <>{props.user.authenticated ? <AuthApp /> : <GuestApp />}</>;
+  return props.user.authenticated ? <AuthApp /> : <GuestApp />;
 };
 
 const mapStateToProps = (state) => ({
