@@ -1,5 +1,6 @@
 const { promisify } = require('util');
 const redis = require('redis');
+const logger = require('./winston');
 
 let client;
 
@@ -12,29 +13,15 @@ let client;
  * @returns {Promise<Object>} Returns a promise to resolve with a redis client
  *  object.
  */
-exports.setupRedis = (port = 6379, host = 'localhost', URL = null) => {
-  client = URL ? redis.createClient(URL) : redis.createClient(port, host);
-
-  return new Promise((res, rej) => {
-    client.on('connect', () => {
-      client.get = promisify(client.get).bind(client);
-      client.set = promisify(client.set).bind(client);
-      client.expire = promisify(client.expire).bind(client);
-    });
-
-    // On connection ready
-    client.on('ready', () => {
-      // Requires redis client to be version 5
-      if (client.server_info.versions[0] < 5) {
-        return rej(new Error('Requires redis version >= 5.'));
-      }
-
-      return res(client);
-    });
-
-    // On connection error
-    client.on('error', rej);
-  });
+exports.setupRedis = async (port = 6379, host = 'localhost', URL = null) => {
+  client = redis.createClient({ url: URL ? URL : '' });
+  try {
+    await client.connect();
+    logger.info(`Connecting redis at ${URL ? URL : `${host}:${port}`}`);
+  } catch (err) {
+    logger.error(`Redis connection error`);
+    throw err;
+  }
 };
 
 /**
