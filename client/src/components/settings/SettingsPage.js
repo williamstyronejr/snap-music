@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import { updateUserData, unauthUser } from '../../actions/user';
 import { ajaxRequest } from '../../utils/utils';
@@ -372,7 +372,7 @@ const AccountForm = ({
 };
 
 const SettingsPage = (props) => {
-  const { type } = props.match.params;
+  const { type } = useSearchParams();
   let content;
 
   switch (type) {
@@ -473,11 +473,6 @@ PasswordForm.propTypes = {
 };
 
 SettingsPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      type: PropTypes.string,
-    }),
-  }).isRequired,
   user: PropTypes.shape({
     username: PropTypes.string,
     displayName: PropTypes.string,

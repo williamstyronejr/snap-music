@@ -1,24 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getRandomTracks, toggleDisplay } from '../../actions/mediaPlayer';
 import './styles/discoveryPage.css';
 
 const DiscoveryMediaPage = (props) => {
+  const { genre } = useParams();
   React.useEffect(() => {
     // Only get more tracks if the src of the playlist is being changed
     if (
       !props.mediaPlayer.requesting &&
-      props.mediaPlayer.src !== `/discovery/${props.match.params.genre}`
+      props.mediaPlayer.src !== `/discovery/${genre}`
     ) {
-      props.getRandomTracks(props.match.params.genre);
+      props.getRandomTracks(genre);
     }
-  }, [
-    props.mediaPlayer.requesting,
-    props.mediaPlayer.src,
-    props.match.params.genre,
-  ]);
+  }, [props.mediaPlayer.requesting, props.mediaPlayer.src, genre]);
 
   React.useEffect(() => {
     // Toggles media player to be full screen or footer
@@ -62,11 +59,6 @@ DiscoveryMediaPage.propTypes = {
     requesting: PropTypes.bool,
     playlist: PropTypes.array,
     src: PropTypes.string,
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      genre: PropTypes.string,
-    }),
   }).isRequired,
 };
 
