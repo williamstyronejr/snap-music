@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useResolvedPath } from 'react-router-dom';
 import { toggleNightMode } from '../../actions/user';
 import useDetectOutsideClick from '../shared/useDetectOutsideClick';
 import './styles/header.css';
@@ -108,13 +108,14 @@ const AuthNav = ({
 };
 
 const Header = (props) => {
+  const { pathname } = useResolvedPath();
   const menuRef = React.useRef();
   const [active, setActive] = useDetectOutsideClick(menuRef);
 
   // Close menu (mobile view) when route is changed
   React.useEffect(() => {
     if (active) setActive(false);
-  }, [props.location.pathname]);
+  }, [pathname]);
 
   return (
     <header className="page-header">
@@ -228,7 +229,7 @@ const Header = (props) => {
             profileLink={props.user.profilePicture}
             toggleDisplayMode={props.toggleNightMode}
             nightMode={props.user.nightMode}
-            location={props.location.pathname}
+            location={pathname}
           />
         )}
       </div>
@@ -257,9 +258,6 @@ AuthNav.propTypes = {
 };
 
 Header.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }).isRequired,
   user: PropTypes.shape({
     nightMode: PropTypes.bool,
     profilePicture: PropTypes.string,
@@ -274,4 +272,4 @@ Header.propTypes = {
   toggleNightMode: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

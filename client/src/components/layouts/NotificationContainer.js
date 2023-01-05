@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { useResolvedPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { closeNotification } from '../../actions/notification';
 import './styles/notification.css';
 
 const NotificationContainer = (props) => {
+  const { pathname } = useResolvedPath();
   // On route change, close notification
   React.useEffect(() => {
     if (props.notification.visible) props.closeNotification();
-  }, [props.location.pathname]);
+  }, [pathname]);
 
   if (!props.notification.visible) return null;
 
@@ -38,7 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 NotificationContainer.propTypes = {
-  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired,
   closeNotification: PropTypes.func.isRequired,
   notification: PropTypes.shape({
     msg: PropTypes.string,
@@ -46,6 +46,7 @@ NotificationContainer.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(NotificationContainer)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotificationContainer);

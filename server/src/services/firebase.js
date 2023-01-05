@@ -1,37 +1,46 @@
-const { Storage } = require('@google-cloud/storage');
+const admin = require('firebase-admin');
+const crypto = require('crypto');
 
 const {
-  GCLOUD_PROJECT_ID,
-  GCLOUD_STORAGE_BUCKET_URL,
-  GCLOUD_APPLICATION_CREDENTIALS,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_PRIVATE_KEY,
+  FIREBASE_CLIENT_EMAIL,
 } = process.env;
 
-const storage = new Storage({
-  projectId: GCLOUD_PROJECT_ID,
-  keyFilename: GCLOUD_APPLICATION_CREDENTIALS,
-});
+if (admin.apps.length === 0) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      // ENV adds \ to \n, need to replace otherwise error in format
+      privateKey: `${FIREBASE_PRIVATE_KEY?.replaceAll('\\n', '\n')}`,
+      projectId: FIREBASE_PROJECT_ID,
+      clientEmail: FIREBASE_CLIENT_EMAIL,
+    }),
+  });
+}
 
-const bucket = storage.bucket(GCLOUD_STORAGE_BUCKET_URL);
+const storage = admin.storage().bucket(FIREBASE_STORAGE_BUCKET);
 
 /**
- * Uploads a file to firebase storage.
- * @param {Object} file File object to upload
- * @param {String} fileName Name to store file under (uses originalname if null)
- * @param {String} folderPath Path to store file in
- * @return {Promise<Object>} Returns a promise to resolve when the file has
- *  been uploaded.
+ * Deletes a file at url location.
+ * @param {String} url Url of file to be deleted
+ * @returns {Promise<any>} Returns a promise to reslove with repsonse data from
+ *  firebase.
  */
-exports.uploadFileFirebase = (file, fileName = null, folderPath = '') => {
+exports.deleteFirebaseFile = async (url) => {
+  const internalUrl = url.split('/o/').slice(1).join('/o/').split('?')[0];
+  return await storage.file(internalUrl).delete();
+};
+
+exports.uploadFirebaseFile = (file) => {
   return new Promise((res, rej) => {
-    if (!file) {
-      const err = new Error('No file provided.');
-      throw err;
-    }
+    if (!file) rej(new Error('Filename not provided.'));
 
-    const blob = bucket.file(
-      `${folderPath}${fileName ? fileName : file.originalname}`
-    );
+    const newFileName = `${crypto.pseudoRandomBytes(8).toString('hex')}.${
+      fileName.split('.').slice(-1)[0]
+    }`;
 
+    const blob = storage.file(newFileName);
     const blobWriter = blob.createWriteStream({
       metadata: {
         contentType: file.mimetype,
@@ -43,7 +52,7 @@ exports.uploadFileFirebase = (file, fileName = null, folderPath = '') => {
     blobWriter.on('finish', () => {
       // Assembling public URL for accessing the file via HTTP
       const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${
-        bucket.name
+        storage.name
       }/o/${encodeURI(blob.name)}?alt=media`;
 
       // Return the file name and its public URL
@@ -55,25 +64,5 @@ exports.uploadFileFirebase = (file, fileName = null, folderPath = '') => {
     });
 
     blobWriter.end(file.buffer);
-  });
-};
-
-/**
- * Deletes a fire from firebase storage and returned the promise to resolve
- *  when deletion is completed.
- * @param {String} fileURL URL of file on firebase
- * @param {String} folderPath Firebase path
- * @return {Promise<Object>} Return a promise a results to resolve when the file
- *  is deleted.
- */
-exports.deleteFileFirebase = (fileURL, folderPath = '') => {
-  return new Promise((res, rej) => {
-    const urlSplit = fileURL.split('/');
-    const fileName = urlSplit[urlSplit.length - 1].split('?')[0];
-
-    bucket.file(`${folderPath}${fileName}`).delete((err, apiRes) => {
-      if (err) rej(err);
-      res(apiRes);
-    });
   });
 };

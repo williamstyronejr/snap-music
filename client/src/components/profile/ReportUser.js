@@ -120,10 +120,9 @@ const ReportUser = (props) => {
             ) : null}
 
             <textarea
-              className="form__input form__input--textarea"
+              className="form__input form__input--textarea form__input--resize"
               name="details"
               cols="6"
-              resizeable="false"
               maxLength="500"
               placeholder="Adding some details will help us take proper actions ..."
               value={details}

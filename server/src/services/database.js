@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+mongoose.set('strictQuery', false);
 /**
  * Sets-up connection to database.
  * @param {string} uri The connection URI for mongoose

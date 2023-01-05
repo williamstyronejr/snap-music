@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ajaxRequest, isFileValid, genreList } from '../../utils/utils';
 import { setNotificationError } from '../../actions/notification';
@@ -35,7 +35,7 @@ const UploadPage = (props) => {
   const fileRef = React.useRef();
   const coverArtRef = React.useRef();
 
-  if (redirect) return <Redirect to={`/user/${props.user.username}`} />;
+  if (redirect) return <Navigate to={`/user/${props.user.username}`} />;
 
   const onSubmit = (evt) => {
     evt.preventDefault(); // Stop form from submitting

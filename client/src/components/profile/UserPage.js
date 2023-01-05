@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 import Track from '../shared/Track';
 import ReportUser from './ReportUser';
 import FollowButton from '../shared/FollowButton';
@@ -29,6 +30,7 @@ const UserNotFound = () => (
 
 const UserPage = (props) => {
   const menuRef = React.useRef();
+  const { userId } = useSearchParams();
   const [editting, setEditting] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
   const [reportVisible, setReportVisible] = React.useState(false);
@@ -36,8 +38,8 @@ const UserPage = (props) => {
 
   // Requests user data for profile everytime the username param changes
   React.useEffect(() => {
-    props.getUserData(props.match.params.userId);
-  }, [props.match.params.userId]);
+    props.getUserData(userId);
+  }, [userId]);
 
   // Check if an error occurred, or if loading
   if (props.profile.error === 404) return <UserNotFound />;
@@ -215,11 +217,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 UserPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      userId: PropTypes.string,
-    }),
-  }).isRequired,
   mediaPlayer: PropTypes.shape({
     playlist: PropTypes.array,
     src: PropTypes.string,

@@ -1,5 +1,7 @@
 const winston = require('winston');
 
+const { SERVERLESS } = process.env;
+
 const levels = {
   error: 0,
   warn: 1,
@@ -10,7 +12,7 @@ const levels = {
 
 const level = () => {
   const env = process.env.NODE_ENV || 'development';
-  return env === 'development' ? 'debug' : 'warn';
+  return env === 'development' ? 'warn' : 'warn';
 };
 
 const format = winston.format.combine(
@@ -21,13 +23,13 @@ const format = winston.format.combine(
   )
 );
 
-const transports = [
-  new winston.transports.Console(),
-  new winston.transports.File({
-    level: 'error',
-    filename: '../logs/app.log',
-  }),
-];
+const fileTransport = new winston.transports.File({
+  level: 'error',
+  filename: '../app.log',
+});
+
+const transports = [new winston.transports.Console()];
+if (SERVERLESS === 'true') transports.push(fileTransport);
 
 const logger = winston.createLogger({
   level: level(),

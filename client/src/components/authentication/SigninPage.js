@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signin, setAuthError } from '../../actions/user';
 import './styles/signinPage.css';
@@ -16,7 +16,7 @@ const SigninPage = (props) => {
   }, [props.user.authenticationError, props.setAuthError]);
 
   if (props.user.authenticated) {
-    return <Redirect to="/chart" />;
+    return <Navigate to="/chart" />;
   }
 
   return (
