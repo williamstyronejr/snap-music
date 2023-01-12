@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "axios": "^1.2.1",
+    "axios": "^1.2.2",
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,10 +21,10 @@
   "devDependencies": {
     "@redux-devtools/core": "^3.13.1",
     "babel-preset-airbnb": "^5.0.0",
-    "cypress": "^12.2.0",
+    "cypress": "^12.3.0",
     "cypress-file-upload": "^5.0.8",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-react": "^7.26.1",
     "redux-logger": "^3.0.6"
