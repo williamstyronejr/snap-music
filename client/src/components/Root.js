@@ -30,21 +30,21 @@ const AuthApp = () => (
   <Router>
     <MainLayout>
       <Routes>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/home" component={UserFeedPage} />
-        <Route path="/chart" component={ChartPage} />
-        <Route path="/user/:userId" component={UserPage} />
-        <Route path="/settings/:type?" component={SettingsPage} />
-        <Route path="/upload" component={UploadPage} />
-        <Route exact path="/discovery" component={DiscoveryPage} />
-        <Route path="/discovery/:genre" component={DiscoveryMediaPage} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/home" element={<UserFeedPage />} />
+        <Route path="/chart" element={<ChartPage />} />
+        <Route path="/user/:userId" element={<UserPage />} />
+        <Route path="/settings/:type?" element={<SettingsPage />} />
+        <Route path="/upload" element={<UploadPage />} />
+        <Route exact path="/discovery" element={<DiscoveryPage />} />
+        <Route path="/discovery/:genre" element={<DiscoveryMediaPage />} />
 
         {/* Redirect guest routes to chart page when authenticated */}
-        <Route path="/signup" component={RedirectTo} />
-        <Route path="/signin" component={RedirectTo} />
-        <Route path="/account/recovery" component={RedirectTo} />
+        <Route path="/signup" element={<RedirectTo />} />
+        <Route path="/signin" element={<RedirectTo />} />
+        <Route path="/account/recovery" element={<RedirectTo />} />
 
-        <Route component={NotFoundPage} />
+        <Route element={<NotFoundPage />} />
       </Routes>
     </MainLayout>
   </Router>
