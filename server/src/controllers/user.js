@@ -28,6 +28,7 @@ const {
   removeFollowing,
   getFollowRelation,
   getAllUserFollowing,
+  getUserFollowingList,
 } = require('../services/follow');
 const { deleteFileFirebase } = require('../services/firebase');
 
@@ -623,9 +624,17 @@ exports.getUserFeed = async (req, res, next) => {
 
   try {
     const followingList = await getAllUserFollowing(userId);
-    const trackList = await getTracksByArtists(followingList);
+    console.log('tesitng');
+    const test = await getUserFollowingList(userId);
+    console.log({ following: test });
+    /**
+     * 1. Get user's following list
+     * 2. Get list of tracks by the user's following list
+     * 3. Combine lists and sort by order
+     */
+    // const trackList = await getTracksByArtists(followingList);
 
-    return res.json({ tracks: trackList });
+    return res.json({ tracks: [] });
   } catch (err) {
     return next(err);
   }

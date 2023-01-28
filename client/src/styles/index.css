@@ -37,27 +37,43 @@ hr {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  flex-flow: column nowrap;
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #f2f2f2;
+  background-color: #f4f4f8;
 }
 
 .layout-night {
-  background-color: #24273b;
+  background-color: #110d20;
   /* color: #ccc8db; */
   color: #ffffff;
 }
 
+.layout__wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 0;
+  flex: 1 0 auto;
+}
+
+.page-content {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 0 auto;
+  width: 0px;
+}
+
 .page-main {
   display: block;
-  /* height: 100%; */
+  height: 0;
   flex: 1 1 auto;
   overflow-y: auto;
 }
 
 .layout--footer .page-main {
-  margin-bottom: 60px;
+  padding-bottom: 20px;
 }
 
 .content-center {
@@ -76,18 +92,34 @@ hr {
   margin: 0 5px 0 0;
 }
 
+.transition-colors {
+  transition: none 0.2s ease-in-out;
+  transition-property: color, background-color, border-color;
+}
+
+.shadow--center {
+  box-shadow: 0px 0px 7px 1px rgb(195 191 191);
+}
+
+.layout-night .shadow--center {
+  box-shadow: 0px 0px 7px 1px rgb(53 53 53);
+}
+
 /* Default Form */
 .form {
   width: 90%;
   max-width: 600px;
   margin: 1.3em auto 0 auto;
   padding: 10px 10px 20px 10px;
-  background-color: #ffffff;
 }
 
-.layout-night .form {
-  background-color: #151728;
-  color: white;
+.form--standalone {
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.layout-night .form--standalone {
+  background-color: #1b1730;
 }
 
 .form__drag-child {
@@ -372,25 +404,8 @@ hr {
 }
 
 .btn--play {
-  width: 0;
-  height: 1 0px;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  border-color: transparent transparent transparent #202020;
-  cursor: pointer;
-  border-style: solid;
-  transition: 100ms all ease;
-  border-width: 23px 0 23px 25px;
-}
-
-.btn--play:hover {
-  border-color: transparent transparent transparent #404040;
-}
-
-.btn-player-pause {
-  border-style: double;
-  border-width: 0px 0 0 40px;
+  background-color: #2dd760;
+  border-radius: 100%;
 }
 
 .btn--close {
@@ -515,6 +530,13 @@ hr {
   opacity: 0.2;
   cursor: pointer;
   border-radius: 50%;
+}
+
+.btn--notification {
+  position: relative;
+  font-size: 1.3em;
+  padding: 0 5px;
+  margin: 0 5px;
 }
 
 @media only screen and (min-width: 600px) {

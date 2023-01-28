@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Track from '../shared/Track';
 import ReportUser from './ReportUser';
 import FollowButton from '../shared/FollowButton';
@@ -30,7 +30,7 @@ const UserNotFound = () => (
 
 const UserPage = (props) => {
   const menuRef = React.useRef();
-  const { userId } = useSearchParams();
+  const { userId } = useParams();
   const [editting, setEditting] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
   const [reportVisible, setReportVisible] = React.useState(false);

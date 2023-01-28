@@ -1,0 +1,244 @@
+.dashboard {
+}
+
+.dashboard__collections {
+  padding: 0 10px;
+}
+
+.dashboard__collection {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: pink;
+  text-align: left;
+  align-items: center;
+}
+
+.dashboard__collection:nth-child(1) {
+  background-color: #7770ff;
+}
+
+.dashboard__collection:nth-child(2) {
+  background-color: #234eff;
+}
+
+.dashboard__collection:nth-child(3) {
+  background-color: #fd9c02;
+}
+
+.dashboard__collection:nth-child(4) {
+  background-color: #fd6835;
+}
+
+.dashboard__play {
+  flex: 0 0 auto;
+  height: 50px;
+  width: 50px;
+  margin: 0 10px 0 0;
+  border-radius: 100%;
+  border-color: #efefef;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #2dd760;
+}
+
+.dashboard__play:hover {
+  background-color: #28be55;
+}
+
+.dashboard__collection-title {
+  margin: 0;
+  font-size: 1.3rem;
+  color: white;
+}
+
+.dashboard__collection-owner {
+  margin: 0;
+  font-size: 1rem;
+  color: #d4d4d4;
+}
+
+.dashboard__content {
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 20px 0;
+}
+
+.dashboard__subheading {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.dashboard__genres {
+  padding: 0 10px;
+}
+
+.dashboard__genres-list {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard__genres-item {
+  padding: 0 10px;
+  margin: 5px;
+}
+
+.dashboard__genres-link {
+  display: block;
+  background-color: #ffffff;
+  color: black;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.layout-night .dashboard__genres-link {
+  display: block;
+  color: white;
+  background-color: #1b1730;
+}
+
+.dashboard__genres-link:hover {
+  color: #82d938;
+}
+
+.layout-night .dashboard__genres-link:hover {
+  background-color: #120f1f;
+}
+
+.dashboard__genres-all {
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  margin-top: 15px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+}
+
+.dashboard__genres-all:hover {
+  background-color: #efefef;
+}
+
+.layout-night .dashboard__genres-all {
+  background-color: #1b1730;
+  color: white;
+}
+
+.layout-night .dashboard__genres-all:hover {
+  background-color: #120f1f;
+  color: #82d938;
+}
+
+.dashboard__top {
+  padding: 0 10px;
+}
+
+.dashboard__top-list {
+  background-color: #ffffff;
+  padding: 10px;
+  margin: 0;
+  border-radius: 20px;
+  list-style: none;
+}
+
+.layout-night .dashboard__top-list {
+  background-color: #1b1730;
+}
+
+.dashboard__trending {
+  padding: 0 10px;
+}
+
+.dashboard__trending-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  gap: 0 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dashboard__trending-item {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.layout-night .dashboard__trending-item {
+  background-color: #1b1730;
+}
+
+.dashboard__trending-link {
+  text-decoration: none;
+  color: black;
+}
+
+.layout-night .dashboard__trending-link {
+  text-decoration: none;
+  color: white;
+}
+
+.dashboard__trending-img {
+  width: 100%;
+}
+
+.dashboard__trending-username {
+  display: block;
+  flex: 1 0 auto;
+  width: 100%;
+  color: black;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 10px 8px;
+}
+
+.layout-night .dashboard__trending-username {
+  color: white;
+}
+
+@media only screen and (min-width: 1000px) {
+  .dashboard__collections {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 10px;
+  }
+
+  .dashboard__collection {
+    height: 325px;
+    align-items: flex-end;
+    padding: 0 10px 20px 10px;
+  }
+
+  .dashboard__content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    column-gap: 20px;
+  }
+
+  .dashboard__trending-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .dashboard__trending-img {
+    width: 100%;
+    height: 100%;
+  }
+}

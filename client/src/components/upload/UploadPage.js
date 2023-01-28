@@ -35,7 +35,7 @@ const UploadPage = (props) => {
   const fileRef = React.useRef();
   const coverArtRef = React.useRef();
 
-  if (redirect) return <Navigate to={`/user/${props.user.username}`} />;
+  if (redirect) return <Navigate to={`/user/${props.user.id}`} />;
 
   const onSubmit = (evt) => {
     evt.preventDefault(); // Stop form from submitting
@@ -140,7 +140,7 @@ const UploadPage = (props) => {
   return (
     <section className="upload">
       <form
-        className="form"
+        className="form form--standalone"
         action="/upload/track"
         method="POST"
         encType="multipart/form-data"
@@ -200,7 +200,7 @@ const UploadPage = (props) => {
 
             <button
               type="button"
-              className="btn btn--upload"
+              className="transition-colors btn btn--upload"
               onClick={(evt) => {
                 evt.preventDefault();
                 coverArtRef.current.click();
@@ -316,7 +316,7 @@ const UploadPage = (props) => {
         </fieldset>
 
         <button
-          className="btn btn--submit"
+          className="transition-colors btn btn--submit"
           data-cy="submit"
           type="button"
           disabled={requesting}
@@ -328,7 +328,7 @@ const UploadPage = (props) => {
 
         <button
           type="button"
-          className="btn btn--cancel"
+          className="transition-colors btn btn--cancel"
           disabled={requesting}
           onClick={() => setRedirect({ redirect: true })}
         >
@@ -350,7 +350,7 @@ const mapDispatchToProps = (dispatch) => ({
 UploadPage.propTypes = {
   setNotificationError: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    username: PropTypes.string,
+    id: PropTypes.string,
   }).isRequired,
 };
 

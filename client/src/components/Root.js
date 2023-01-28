@@ -8,11 +8,13 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MainLayout from './layouts/MainLayout';
+import ScrollToTop from './shared/ScrollTop';
 
 // Pages
 import DiscoveryPage from './discovery/DiscoveryPage';
 import DiscoveryMediaPage from './discovery/DiscoveryMediaPage';
 import UserPage from './profile/UserPage';
+import UserHomePage from './user/UserHomePage';
 import ChartPage from './chart/ChartPage';
 import UploadPage from './upload/UploadPage';
 import SettingsPage from './settings/SettingsPage';
@@ -28,11 +30,13 @@ const RedirectTo = () => <Navigate to="/chart" />;
 
 const AuthApp = () => (
   <Router>
+    <ScrollToTop />
     <MainLayout>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
-        <Route path="/home" element={<UserFeedPage />} />
-        <Route path="/chart" element={<ChartPage />} />
+        <Route path="/home" element={<UserHomePage />} />
+        <Route path="/feed" element={<UserFeedPage />} />
+        <Route path="/chart/:genre?" element={<ChartPage />} />
         <Route path="/user/:userId" element={<UserPage />} />
         <Route path="/settings/:type?" element={<SettingsPage />} />
         <Route path="/upload" element={<UploadPage />} />
@@ -52,9 +56,11 @@ const AuthApp = () => (
 
 const GuestApp = () => (
   <Router>
+    <ScrollToTop />
     <MainLayout>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
+        <Route path="/home" element={<UserHomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/chart" element={<ChartPage />} />

@@ -17,7 +17,7 @@
 }
 
 .layout-night .user__info {
-  background-color: #151728;
+  background-color: #1b1730;
 }
 
 .user__options {
@@ -37,7 +37,7 @@
 }
 
 .layout-night .user__menu {
-  background-color: #151728;
+  background-color: #1b1730;
   color: white;
   box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px,
     rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
@@ -97,7 +97,7 @@
 }
 
 .layout-night .user__current {
-  background-color: #151728;
+  background-color: #1b1730;
 }
 
 .user__track-options {
