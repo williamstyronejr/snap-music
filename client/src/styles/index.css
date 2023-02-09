@@ -168,6 +168,7 @@ hr {
 }
 
 .form__legend {
+  font-weight: 700;
 }
 
 .form__field--file {
@@ -197,6 +198,18 @@ hr {
   cursor: pointer;
 }
 
+.form__label--squash {
+  padding: 0 20px;
+}
+
+.form__flex-group {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 .form__image {
   display: block;
   width: 100px;
@@ -220,7 +233,6 @@ hr {
 
 .form__labeling--checkbox {
   position: relative;
-  top: -7px;
 }
 
 .form__labeling--center {
@@ -229,6 +241,11 @@ hr {
 
 .form__labeling--error {
   display: block;
+}
+
+.form__flex-group .form__labeling {
+  display: block;
+  flex: 1 0 auto;
 }
 
 .form__list {
@@ -290,6 +307,12 @@ hr {
   border: 2px solid #555;
   background-color: white;
 }
+
+.form__flex-group .form__input--checkbox {
+  flex: 0 1 auto;
+  width: auto;
+}
+
 .form__input--text:focus,
 .form__input--textarea:focus {
   box-shadow: 0 0 0 4px #23b3e4;
@@ -437,27 +460,23 @@ hr {
 .btn--options {
   color: black;
   font-size: 15px;
-  border: 1px solid #23b3e4;
+  border: 1px solid #efefef;
   border-radius: 9999px;
   min-width: 80px;
   padding: 10px 2px;
-  color: #23b3e4;
+  color: black;
   margin: 5px 5px 0 0;
-}
-
-.layout-night .btn--options {
-  background-color: #1b86f9;
-  box-shadow: 0 0 20px #1b86f9;
+  font-weight: 700;
 }
 
 .btn--options:hover {
   background-color: #e5f3f8;
-  background-color: rgba(35, 179, 228, 0.1);
+  background-color: rgba(46, 46, 46, 0.3);
 }
 
 .layout-night .btn--options:hover {
   background-color: #e5f3f8;
-  background-color: rgba(35, 179, 228, 0.3);
+  background-color: rgba(46, 46, 46, 0.3);
 }
 
 .btn--menu {
@@ -513,8 +532,31 @@ hr {
   width: 100%;
 }
 
-.btn--option:hover {
-  background-color: rgb(255, 255, 255, 0.05);
+.btn--follow {
+  background-color: #0e0e0e;
+  color: white;
+}
+
+.btn--follow:hover {
+  background-color: #2e2e2e;
+}
+
+.layout-night .btn--follow {
+  background-color: #efefef;
+  color: black;
+}
+.layout-night .btn--follow:hover {
+  background-color: #d4d4d4;
+}
+
+.btn--following {
+}
+
+.layout-night .btn--following:hover,
+.btn--following:hover {
+  border-color: red;
+  color: red;
+  background-color: rgba(136, 26, 26, 0.2);
 }
 
 .btn--delete:hover {

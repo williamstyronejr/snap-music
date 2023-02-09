@@ -8,6 +8,12 @@
   z-index: 5;
   left: 0;
   right: 0;
+  top: 0;
+  background-color: rgba(36, 39, 59, 0.8);
+}
+
+.layout-night .report {
+  color: white;
   background-color: rgba(36, 39, 59, 0.8);
 }
 
@@ -16,13 +22,31 @@
   position: relative;
   width: 100%;
   margin: 0 1.3em;
-  padding: 0 20px 40px 20px;
+  padding: 10px 20px 40px 20px;
   border-radius: 5px;
-  background-color: #151728;
-  color: white;
+  color: black;
+  background-color: #ffffff;
 }
 
 .layout-night .form--report {
-  background-color: #ffffff;
-  color: black;
+  background-color: #1b1730;
+  color: white;
+}
+
+.report__close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  font-size: 1.5rem;
+}
+
+.report__close:hover {
+  background-color: rgb(0, 0, 0, 0.1);
+}
+
+.layout-night .report__close:hover {
+  background-color: rgb(255, 255, 255, 0.1);
 }
