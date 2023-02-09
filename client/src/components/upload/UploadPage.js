@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ajaxRequest, isFileValid, genreList } from '../../utils/utils';
-import { setNotificationError } from '../../actions/notification';
 import './styles/uploadPage.css';
 
 /**
@@ -343,15 +342,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setNotificationError: (msg) => dispatch(setNotificationError(msg)),
-});
-
 UploadPage.propTypes = {
-  setNotificationError: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadPage);
+export default connect(mapStateToProps, null)(UploadPage);
