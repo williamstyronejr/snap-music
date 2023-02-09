@@ -6,7 +6,9 @@ const FollowButton = (props) => {
 
   return (
     <button
-      className={`btn ${props.className}`}
+      className={`btn ${props.className} ${
+        props.isFollowing ? 'btn--following' : 'btn--follow'
+      }`}
       onClick={(evt) => {
         props.onClick(evt);
       }}
