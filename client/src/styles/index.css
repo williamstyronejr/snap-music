@@ -380,10 +380,6 @@ hr {
   font-family: inherit;
 }
 
-.layout-night .btn {
-  color: white;
-}
-
 .btn--inline {
   display: inline-block;
 }

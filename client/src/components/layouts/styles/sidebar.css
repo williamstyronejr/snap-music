@@ -1,16 +1,23 @@
 .sidebar {
   position: relative;
+  width: 50px;
 }
 
 .sidebar--full {
   position: static;
 }
 
-.sidebar__btn {
+.sidebar__toggle {
   position: relative;
   font-size: 1.3em;
-  padding: 0 5px;
-  margin: 0 5px;
+  padding: 0;
+  margin: 0;
+  margin: 0 auto;
+  color: black;
+}
+
+.layout-night .sidebar__toggle {
+  color: white;
 }
 
 .sidebar__pulse {
@@ -127,6 +134,19 @@
 
 .sidebar__playable--missing {
   border-color: transparent;
+}
+
+.sidebar__link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #9c9cab;
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+.sidebar__link:hover {
+  color: #2dd760;
 }
 
 .sidebar__image {
