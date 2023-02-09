@@ -1,16 +1,21 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { ajaxRequest } from '../../utils/utils';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import './styles/reportUser.css';
 
 const ReportUser = (props) => {
-  const formRef = React.createRef();
   const [profile, setProfile] = React.useState(false);
   const [track, setTrack] = React.useState(false);
   const [details, setDetails] = React.useState('');
   const [errors, setErrors] = React.useState({});
-  const [active, setActive] = useDetectOutsideClick(formRef, true);
+  const menuRef = useOutsideClick({
+    active: true,
+    ignoreButton: true,
+    closeEvent: () => {
+      props.onCancel();
+    },
+  });
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -50,9 +55,6 @@ const ReportUser = (props) => {
       });
   };
 
-  // If user clicks outside of form, cancel report and close window
-  if (!active) props.onCancel();
-
   return (
     <div className="report">
       <form
@@ -60,23 +62,28 @@ const ReportUser = (props) => {
         method="POST"
         action={`/report/profile/${props.userId}`}
         onSubmit={onSubmit}
-        ref={formRef}
+        ref={menuRef}
       >
-        <button
-          type="button"
-          className="btn btn--close btn--close-invert"
-          onClick={props.onCancel}
-        >
-          X
-        </button>
+        <header>
+          <button
+            type="button"
+            className="transition-colors btn report__close"
+            onClick={() => props.onCancel()}
+          >
+            X
+          </button>
 
-        <h3 className="form__heading">Report User</h3>
+          <h3 className="form__heading">Report User</h3>
+        </header>
 
         <fieldset className="form__field">
           <legend className="form__legend">Reason</legend>
 
-          <label className="form__label form__label--space" htmlFor="profile">
-            <div className="form__indent">
+          <label
+            className="form__label form__label--space form__label--squash"
+            htmlFor="profile"
+          >
+            <div className="form__flex-group">
               <input
                 className="form__input form__input--checkbox"
                 type="checkbox"
@@ -92,8 +99,11 @@ const ReportUser = (props) => {
             </div>
           </label>
 
-          <label className="form__label form__label--space" htmlFor="track">
-            <div className="form__indent">
+          <label
+            className="form__label form__label--space form__label--squash"
+            htmlFor="track"
+          >
+            <div className="form__flex-group">
               <input
                 className="form__input form__input--checkbox"
                 type="checkbox"
@@ -132,15 +142,19 @@ const ReportUser = (props) => {
           </label>
         </fieldset>
 
-        <button className="btn btn--submit" type="submit" data-cy="submit">
+        <button
+          className="transition-colors btn btn--submit"
+          type="submit"
+          data-cy="submit"
+        >
           Submit
         </button>
 
         <button
-          className="btn btn--cancel"
+          className="transition-colors btn btn--cancel"
           type="button"
           data-cy="cancel"
-          onClick={props.onCancel}
+          onClick={() => props.onCancel()}
         >
           Cancel
         </button>

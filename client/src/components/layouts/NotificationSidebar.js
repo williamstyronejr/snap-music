@@ -5,13 +5,18 @@ import {
   deleteNotifications,
   getNotifications,
 } from '../../actions/notification';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import './styles/sidebar.css';
 
 const NotificationSidebar = (props) => {
-  const ref = React.useRef(null);
   const [newNotif, setNewNotif] = React.useState(false);
-  const [active, setActive] = useDetectOutsideClick(ref);
+  const [active, setActive] = React.useState(false);
+  const ref = useOutsideClick({
+    active,
+    closeEvent: () => {
+      setActive(false);
+    },
+  });
 
   React.useEffect(() => {
     props.getNotifications();
@@ -43,7 +48,6 @@ const NotificationSidebar = (props) => {
           <button
             className="transition-colors sidebar__clear"
             type="button"
-            disabled={props.notification.list.length === 0}
             onClick={() => {
               props.deleteNotifications();
             }}
