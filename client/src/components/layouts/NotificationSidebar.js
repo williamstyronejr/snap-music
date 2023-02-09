@@ -29,7 +29,7 @@ const NotificationSidebar = (props) => {
   return (
     <div className="sidebar" ref={ref}>
       <button
-        className="btn sidebar__btn"
+        className="btn sidebar__toggle"
         type="button"
         onClick={() => {
           setActive((old) => !old);
