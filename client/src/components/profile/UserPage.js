@@ -19,7 +19,8 @@ import {
   setNotificationError,
 } from '../../actions/notification';
 import ConfirmDialog from '../shared/ConfirmDialog';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+// import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import './styles/userPage.css';
 
 const UserNotFound = () => (
@@ -29,12 +30,15 @@ const UserNotFound = () => (
 );
 
 const UserPage = (props) => {
-  const menuRef = React.useRef();
   const { userId } = useParams();
   const [editting, setEditting] = React.useState(false);
   const [confirm, setConfirm] = React.useState(false);
   const [reportVisible, setReportVisible] = React.useState(false);
-  const [active, setActive] = useDetectOutsideClick(menuRef);
+  const [active, setActive] = React.useState(false);
+  const dropDownRef = useOutsideClick({
+    active,
+    closeEvent: () => setActive(false),
+  });
 
   // Requests user data for profile everytime the username param changes
   React.useEffect(() => {
@@ -47,15 +51,6 @@ const UserPage = (props) => {
 
   return (
     <>
-      {reportVisible ? (
-        <ReportUser
-          userId={props.profile.user.id}
-          setNotification={props.setNotification}
-          setNotificationError={props.setNotificationError}
-          onCancel={() => setReportVisible(!reportVisible)}
-        />
-      ) : null}
-
       {confirm ? (
         <ConfirmDialog
           message="Are you sure you want to delete you track"
@@ -64,6 +59,15 @@ const UserPage = (props) => {
             props.removeTrack(props.profile.track.id);
             setConfirm(false);
           }}
+        />
+      ) : null}
+
+      {reportVisible ? (
+        <ReportUser
+          userId={props.profile.user.id}
+          setNotification={props.setNotification}
+          setNotificationError={props.setNotificationError}
+          onCancel={() => setReportVisible(false)}
         />
       ) : null}
 
@@ -93,40 +97,42 @@ const UserPage = (props) => {
 
           {!props.profile.user.isCurrent ? (
             <div className="user__options">
-              <button
-                onClick={() => setActive(true)}
-                data-cy="profile-menu"
-                type="button"
-                className="btn btn--inline btn--options"
-              >
-                ...
-              </button>
+              <div ref={dropDownRef}>
+                <FollowButton
+                  className="transition-colors btn--inline btn--options"
+                  isFollowing={props.profile.user.following}
+                  onClick={() => props.toggleFollow(props.profile.user.id)}
+                />
 
-              {active ? (
-                <div className="user__menu" ref={menuRef}>
-                  <ul className="user__options-list">
-                    <li className="user__options-item">
-                      <button
-                        className="btn btn--option"
-                        type="button"
-                        data-cy="report"
-                        onClick={() => {
-                          setActive(false);
-                          setReportVisible(true);
-                        }}
-                      >
-                        Report
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              ) : null}
+                <button
+                  onClick={() => setActive((old) => !old)}
+                  data-cy="user-menu"
+                  type="button"
+                  className="transition-colors btn btn--inline btn--options"
+                >
+                  ...
+                </button>
 
-              <FollowButton
-                className="btn--inline btn--options"
-                isFollowing={props.profile.user.following}
-                onClick={() => props.toggleFollow(props.profile.user.id)}
-              />
+                {active ? (
+                  <div className="user__menu">
+                    <ul className="user__options-list">
+                      <li className="user__options-item">
+                        <button
+                          className="transition-colors btn user__option"
+                          type="button"
+                          data-cy="report"
+                          onClick={() => {
+                            setActive((old) => !old);
+                            setReportVisible((old) => !old);
+                          }}
+                        >
+                          Report
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
             </div>
           ) : null}
         </section>
