@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import './styles/aside.css';
 
 const NoAuthNav = () => (
@@ -23,10 +23,15 @@ const NoAuthNav = () => (
   </nav>
 );
 
-const Header = (props) => {
+const Aside = (props) => {
   const location = useLocation();
-  const menuRef = React.useRef();
-  const [active, setActive] = useDetectOutsideClick(menuRef);
+  const [active, setActive] = React.useState(false);
+  const menuRef = useOutsideClick({
+    active,
+    closeEvent: () => {
+      setActive(false);
+    },
+  });
 
   // Close menu (mobile view) when route is changed
   React.useEffect(() => {
@@ -157,7 +162,7 @@ const mapStateToProps = (state) => ({
   mediaPlayer: state.mediaPlayer,
 });
 
-Header.propTypes = {
+Aside.propTypes = {
   user: PropTypes.shape({
     nightMode: PropTypes.bool,
     profilePicture: PropTypes.string,
@@ -171,4 +176,4 @@ Header.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, null)(Aside);

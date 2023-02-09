@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updateActitityData } from '../../actions/activity';
 import useOutsideClick from '../shared/useOutsideClick';
-import './styles/sidebar.css';
 import { setPlaylist } from '../../actions/mediaPlayer';
+import './styles/sidebar.css';
 
 const ActivitySideBar = (props) => {
   const location = useLocation();
@@ -26,7 +26,7 @@ const ActivitySideBar = (props) => {
   return (
     <div className="sidebar sidebar--full" ref={ref}>
       <button
-        className="btn btn--notification"
+        className="btn btn--notification sidebar__toggle"
         type="button"
         onClick={() => {
           setActive((old) => !old);

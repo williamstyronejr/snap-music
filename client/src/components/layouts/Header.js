@@ -7,6 +7,7 @@ import NotificationSidebar from './NotificationSidebar';
 import ActivitySidebar from './ActivitySidebar';
 import { toggleNightMode } from '../../actions/user';
 import './styles/header.css';
+import './styles/sidebar.css';
 
 const Search = () => {
   const [search, setSearch] = React.useState('');
@@ -54,56 +55,47 @@ const AuthNav = ({
   }, [toggleDisplayMode]);
 
   return (
-    <div
-      className={`menu-user ${
-        active ? 'menu__user--active' : 'menu__user--collapse'
-      }`}
-      ref={menuRef}
-    >
-      <div className="menu__info">
-        <button
-          className="btn"
-          type="button"
-          data-cy="user-menu"
-          onClick={() => setActive(!active)}
-        >
-          <img className="menu__profile" alt="Profile" src={profileLink} />
-        </button>
+    <div className="sidebar" ref={menuRef}>
+      <button
+        className="btn sidebar__toggle"
+        type="button"
+        data-cy="user-menu"
+        onClick={() => setActive(!active)}
+      >
+        <img className="sidebar__image" alt="Profile" src={profileLink} />
+      </button>
 
-        <h4 className="menu__username">{username}</h4>
-      </div>
-
-      <nav className="menu__nav menu__nav--user shadow--center">
-        <ul className="menu__list">
-          <li className="menu__item">
-            <Link
-              className="menu__link menu__link--sub"
-              to="/settings"
-              data-cy="settings"
-            >
+      <nav
+        className={`shadow--center sidebar__content ${
+          active ? 'sidebar__content--active' : ''
+        }`}
+      >
+        <ul className="sidebar__list">
+          <li className="sidebar__item">
+            <Link className="sidebar__link" to="/settings" data-cy="settings">
               Settings
             </Link>
           </li>
 
-          <li className="menu__item">
+          <li className="sidebar__item">
             <button
               type="button"
               data-cy="night-mode"
               className={`btn ${
                 nightMode ? 'btn--night' : 'btn--light'
-              } menu__link menu__link--sub `}
+              } sidebar__link `}
               onClick={triggerDisplayMode}
             >
               {nightMode ? 'Light Mode' : 'Night Mode'}
             </button>
           </li>
 
-          <li className="menu__item">
+          <li className="sidebar__item">
             <form method="POST" action="/signout">
               <button
                 type="submit"
                 data-cy="signout"
-                className="btn btn--signout menu__link menu__link--sub "
+                className="btn btn--signout sidebar__link"
               >
                 Signout
               </button>
