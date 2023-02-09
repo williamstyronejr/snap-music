@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, useResolvedPath } from 'react-router-dom';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import NotificationSidebar from './NotificationSidebar';
 import ActivitySidebar from './ActivitySidebar';
 import { toggleNightMode } from '../../actions/user';
@@ -36,18 +36,22 @@ const AuthNav = ({
   nightMode,
   location,
 }) => {
-  const menuRef = React.useRef();
-  const [active, setActive] = useDetectOutsideClick(menuRef);
-  // const [active, setActive] = React.useState(false);
+  const [active, setActive] = React.useState(false);
+  const menuRef = useOutsideClick({
+    active,
+    closeEvent: () => {
+      setActive(false);
+    },
+  });
 
   React.useEffect(() => {
     if (active) setActive(false);
   }, [location]);
 
-  const triggerDisplayMode = () => {
+  const triggerDisplayMode = React.useCallback(() => {
     setActive(false);
     toggleDisplayMode();
-  };
+  }, [toggleDisplayMode]);
 
   return (
     <div
@@ -80,8 +84,6 @@ const AuthNav = ({
               Settings
             </Link>
           </li>
-
-          <div className="menu__divider" />
 
           <li className="menu__item">
             <button

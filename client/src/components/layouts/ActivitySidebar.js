@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updateActitityData } from '../../actions/activity';
-import useDetectOutsideClick from '../shared/useDetectOutsideClick';
+import useOutsideClick from '../shared/useOutsideClick';
 import './styles/sidebar.css';
 import { setPlaylist } from '../../actions/mediaPlayer';
 
 const ActivitySideBar = (props) => {
   const location = useLocation();
-  const ref = React.useRef(null);
-  const [active, setActive] = useDetectOutsideClick(ref);
+  const [active, setActive] = React.useState(false);
+  const ref = useOutsideClick({
+    active,
+    closeEvent: () => setActive(false),
+  });
 
   React.useEffect(() => {
     props.updateActivity();

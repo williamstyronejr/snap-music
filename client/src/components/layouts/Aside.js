@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, useLocation, useResolvedPath } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useDetectOutsideClick from '../shared/useDetectOutsideClick';
 import './styles/aside.css';
 
