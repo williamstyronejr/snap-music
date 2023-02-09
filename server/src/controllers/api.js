@@ -109,3 +109,20 @@ exports.deleteNotifications = async (req, res, next) => {
     return next(err);
   }
 };
+
+/**
+ * Gets genre data for all standard genres.
+ * @param {Object} req  Response Object
+ * @param {Object} res Response Object
+ * @param {Function} next Next function to be called
+ * @returns
+ */
+exports.getGenreData = async (req, res, next) => {
+  try {
+    const genres = await getStandardGenres();
+
+    return res.json({ genres });
+  } catch (err) {
+    return next(err);
+  }
+};
