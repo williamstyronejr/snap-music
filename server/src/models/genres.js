@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const GenreSchema = new mongoose.Schema({
   custom: { type: Boolean, default: false },
   name: { type: String, required: true },
-  displayImage: { type: String, default: '' },
+  image: { type: String, default: '' },
 });
 
 GenreSchema.set('toObject', {
