@@ -99,7 +99,7 @@ const UserPage = (props) => {
             <div className="user__options">
               <div ref={dropDownRef}>
                 <FollowButton
-                  className="transition-colors btn--inline btn--options"
+                  className="btn--inline btn--options"
                   isFollowing={props.profile.user.following}
                   onClick={() => props.toggleFollow(props.profile.user.id)}
                 />

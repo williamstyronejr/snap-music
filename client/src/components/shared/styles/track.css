@@ -83,7 +83,9 @@
 
 .layout-night .track__play {
   border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
 }
+
 .track:hover .track__play,
 .track--playing .track__play {
   background-color: #2dd760;

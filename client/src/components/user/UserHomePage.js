@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getDashboard } from '../../actions/dashboard';
 import Track from '../shared/Track';
+import { getDashboard } from '../../actions/dashboard';
 import { setPlaylist } from '../../actions/mediaPlayer';
 import './styles/userHomePage.css';
 

@@ -299,7 +299,7 @@ hr {
 .form__input--checkbox {
   display: inline-block;
   position: relative;
-  margin: 0 10px 0 0;
+  margin: 5px 10px 5px 0;
   width: 30px;
   height: 30px;
   background: white;
@@ -310,7 +310,6 @@ hr {
 
 .form__flex-group .form__input--checkbox {
   flex: 0 1 auto;
-  width: auto;
 }
 
 .form__input--text:focus,
@@ -366,6 +365,11 @@ hr {
 
   .form__input {
     width: 90%;
+  }
+
+  .form__input--checkbox {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -463,6 +467,10 @@ hr {
   color: black;
   margin: 5px 5px 0 0;
   font-weight: 700;
+}
+
+.layout-night .btn--options {
+  color: white;
 }
 
 .btn--options:hover {
