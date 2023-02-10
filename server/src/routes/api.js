@@ -16,12 +16,6 @@ router.get('/api/dashboard', getDashboardData);
 router.get('/api/activity', loggedIn, getCurrentUser, getUserActivityFeed);
 
 router.get('/api/notifications', loggedIn, getCurrentUser, getNotifications);
-router.post(
-  '/api/notifications',
-  loggedIn,
-  getCurrentUser,
-  deleteNotifications
-);
 
 router.post(
   '/api/notifications/clear',
