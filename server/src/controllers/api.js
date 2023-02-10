@@ -1,6 +1,10 @@
 const { getUserFollowingList } = require('../services/follow');
 const { getStandardGenres } = require('../services/genre');
 const {
+  getNotificationsForUser,
+  deleteAllNotificationForUser,
+} = require('../services/notification');
+const {
   getTopTracksByGenre,
   getTracksByArtists,
   getMostRecentTracks,
@@ -93,8 +97,11 @@ exports.getUserActivityFeed = async (req, res, next) => {
 
 exports.getNotifications = async (req, res, next) => {
   const { userId } = req.session;
+
   try {
-    return res.json({ notifications: [] });
+    const notifications = await getNotificationsForUser(userId);
+
+    return res.json({ notifications });
   } catch (err) {
     return next(err);
   }
@@ -104,6 +111,8 @@ exports.deleteNotifications = async (req, res, next) => {
   const { userId } = req.session;
 
   try {
+    const results = await deleteAllNotificationForUser(userId);
+
     return res.json({ success: true });
   } catch (err) {
     return next(err);
