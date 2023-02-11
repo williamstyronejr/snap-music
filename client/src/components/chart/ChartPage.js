@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import Track from '../shared/Track';
 import Loading from '../shared/Loading';
 import { getChartList } from '../../actions/chart';
@@ -8,34 +9,11 @@ import { setPlaylist } from '../../actions/mediaPlayer';
 import './styles/chartPage.css';
 
 const ChartPage = (props) => {
-  React.useEffect(() => {
-    // Get initial chart list
-    props.getChartList('all');
-  }, []);
+  const { genre } = useParams();
 
-  const chartList = props.chart.visibileList.map((track, index) => {
-    return (
-      <li className="track-list__item" key={`chart-item-${track.id}`}>
-        <Track
-          id={track.id}
-          title={track.title}
-          artist={track.artist}
-          artistId={track.artistId}
-          coverArt={track.coverArt}
-          explicit={track.explicit}
-          playing={
-            props.mediaPlayer.playlist.length > 0 &&
-            props.mediaPlayer.src === '/chart' &&
-            props.mediaPlayer.playlist[props.mediaPlayer.currentTrack].id ===
-              track.id
-          }
-          onClick={() => {
-            props.setPlaylist(props.chart.visibileList, '/chart', index);
-          }}
-        />
-      </li>
-    );
-  });
+  React.useEffect(() => {
+    props.getChartList(genre || 'all');
+  }, [genre]);
 
   return (
     <section className="chart">
@@ -49,7 +27,36 @@ const ChartPage = (props) => {
         ) : null}
 
         {props.chart.requesting ? <Loading /> : null}
-        <ul className="track-list">{chartList}</ul>
+
+        {props.chart.visibileList.length > 0 ? (
+          <ul className="track-list">
+            {props.chart.visibileList.map((track, index) => (
+              <li className="track-list__item" key={`chart-item-${track.id}`}>
+                <Track
+                  id={track.id}
+                  title={track.title}
+                  artist={track.artist}
+                  artistId={track.artistId}
+                  coverArt={track.coverArt}
+                  explicit={track.explicit}
+                  playing={
+                    props.mediaPlayer.playlist.length > 0 &&
+                    props.mediaPlayer.src === '/chart' &&
+                    props.mediaPlayer.playlist[props.mediaPlayer.currentTrack]
+                      .id === track.id
+                  }
+                  onClick={() => {
+                    props.setPlaylist(
+                      props.chart.visibileList,
+                      '/chart',
+                      index
+                    );
+                  }}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </section>
   );

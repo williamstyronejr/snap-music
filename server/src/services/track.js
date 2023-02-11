@@ -1,4 +1,5 @@
 const Track = require('../models/track');
+const User = require('../models/user');
 const { deleteFileFirebase } = require('./firebase');
 
 /**
@@ -103,7 +104,7 @@ exports.getTopTracksByGenre = (
   const searchParams = { isExpired: false };
 
   // Only add genre condition if it's not "all genre"
-  if (genre != 'all') searchParams.genre = genre.toLowerCase();
+  if (genre != 'all' && genre !== '') searchParams.genre = genre.toLowerCase();
 
   return Track.find(searchParams, projection)
     .sort({ rating: -1 })
@@ -120,6 +121,30 @@ exports.getTopTracksByGenre = (
         };
       });
     });
+};
+
+/**
+ * Gets all non-expired tracks from artists in a list.
+ * @param {Array<String>} artists Array of artist id
+ * @param {Number} limit Number of tracks to limit to
+ * @param {Number} page Number of pages to skip (by multiples of limit)
+ * @return {Promise<Array>} Returns a promise to resolve with an array of track
+ *  objects from the artist if found, otherwise an empty list.
+ */
+exports.getTracksByArtists = (artists, limit = 10, page = 0) => {
+  return Track.find({ isExpired: false, artistId: { $in: artists } })
+    .sort({ 'meta.created': -1 })
+    .skip(page * limit)
+    .limit(limit)
+    .exec();
+};
+
+exports.getMostRecentTracks = (limit = 10, page = 0) => {
+  return Track.find({ isExpired: false })
+    .sort({ 'meta.created': -1 })
+    .skip(page * limit)
+    .limit(limit)
+    .exec();
 };
 
 /**
@@ -346,20 +371,4 @@ exports.removeLike = (trackId, userId) => {
  */
 exports.getUserLike = (trackId, userId, projection = null) => {
   return Track.findOne({ _id: trackId, 'likes.userId': userId }, projection);
-};
-
-/**
- * Gets all non-expired tracks from artists in a list.
- * @param {Array<String>} artists Array of artist id
- * @param {Number} limit Number of tracks to limit to
- * @param {Number} page Number of pages to skip (by multiples of limit)
- * @return {Promise<Array>} Returns a promise to resolve with an array of track
- *  objects from the artist if found, otherwise an empty list.
- */
-exports.getTracksByArtists = (artists, limit = 10, page = 0) => {
-  return Track.find({ isExpired: false, artistId: { $in: artists } })
-    .sort({ 'meta.created': -1 })
-    .skip(page * limit)
-    .limit(limit)
-    .exec();
 };

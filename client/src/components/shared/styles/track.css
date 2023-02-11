@@ -3,34 +3,18 @@
   display: -ms-flex;
   display: -webkit-flex;
   display: flex;
-  width: 100%;
-  padding: 0 0.8em;
   text-align: left;
   align-items: center;
+  margin: 5px 0;
+  padding: 5px;
 }
 
 .track:hover {
   cursor: pointer;
 }
 
-.track__controls {
-  display: none;
-  padding-right: 10px;
-  opacity: 0;
-}
-
-.track:hover .track__controls {
-  opacity: 1;
-}
-
-.track .track-info {
-  flex: 1;
-  height: 100%;
-  overflow: hidden;
-}
-
 .track__image {
-  margin: 0 5px;
+  margin: 0 20px;
 }
 
 .track__cover {
@@ -43,9 +27,15 @@
 }
 
 .track__cover--interactive:hover {
-  background-color: grey;
+  /* background-color: grey; */
   opacity: 0.2;
   cursor: pointer;
+}
+
+.track .track-info {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
 }
 
 .track-info__title {
@@ -53,16 +43,12 @@
   color: #000000;
 }
 
-.track--playing .track-info__title {
-  color: #1b86f9;
-}
-
 .layout-night .track-info__title {
   color: #ffffff;
 }
 
-.layout-night .track--playing .track-info__title {
-  color: #1b86f9;
+.track--playing .track-info__title {
+  color: #2dd760;
 }
 
 .track-info__author {
@@ -80,6 +66,29 @@
 
 .layout-night .track-info__author:hover {
   color: #ffffff;
+}
+
+.track__controls {
+  padding-right: 10px;
+}
+
+.track__play {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border-color: #efefef;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.layout-night .track__play {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.track:hover .track__play,
+.track--playing .track__play {
+  background-color: #2dd760;
 }
 
 .track__explicit {

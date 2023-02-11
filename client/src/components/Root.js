@@ -8,11 +8,13 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MainLayout from './layouts/MainLayout';
+import ScrollToTop from './shared/ScrollTop';
 
 // Pages
 import DiscoveryPage from './discovery/DiscoveryPage';
 import DiscoveryMediaPage from './discovery/DiscoveryMediaPage';
 import UserPage from './profile/UserPage';
+import UserHomePage from './user/UserHomePage';
 import ChartPage from './chart/ChartPage';
 import UploadPage from './upload/UploadPage';
 import SettingsPage from './settings/SettingsPage';
@@ -28,23 +30,25 @@ const RedirectTo = () => <Navigate to="/chart" />;
 
 const AuthApp = () => (
   <Router>
+    <ScrollToTop />
     <MainLayout>
       <Routes>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/home" component={UserFeedPage} />
-        <Route path="/chart" component={ChartPage} />
-        <Route path="/user/:userId" component={UserPage} />
-        <Route path="/settings/:type?" component={SettingsPage} />
-        <Route path="/upload" component={UploadPage} />
-        <Route exact path="/discovery" component={DiscoveryPage} />
-        <Route path="/discovery/:genre" component={DiscoveryMediaPage} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/home" element={<UserHomePage />} />
+        <Route path="/feed" element={<UserFeedPage />} />
+        <Route path="/chart/:genre?" element={<ChartPage />} />
+        <Route path="/user/:userId" element={<UserPage />} />
+        <Route path="/settings/:type?" element={<SettingsPage />} />
+        <Route path="/upload" element={<UploadPage />} />
+        <Route exact path="/discovery" element={<DiscoveryPage />} />
+        <Route path="/discovery/:genre" element={<DiscoveryMediaPage />} />
 
         {/* Redirect guest routes to chart page when authenticated */}
-        <Route path="/signup" component={RedirectTo} />
-        <Route path="/signin" component={RedirectTo} />
-        <Route path="/account/recovery" component={RedirectTo} />
+        <Route path="/signup" element={<RedirectTo />} />
+        <Route path="/signin" element={<RedirectTo />} />
+        <Route path="/account/recovery" element={<RedirectTo />} />
 
-        <Route component={NotFoundPage} />
+        <Route element={<NotFoundPage />} />
       </Routes>
     </MainLayout>
   </Router>
@@ -52,9 +56,11 @@ const AuthApp = () => (
 
 const GuestApp = () => (
   <Router>
+    <ScrollToTop />
     <MainLayout>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
+        <Route path="/home" element={<UserHomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/chart" element={<ChartPage />} />

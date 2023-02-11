@@ -1,0 +1,230 @@
+.page-aside {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: column wrap;
+  width: 60px;
+  height: 100vh;
+  flex: 0 0 auto;
+  box-shadow: 3px 2px 25px -8px rgb(195 191 191);
+}
+
+.layout-night .page-aside {
+  box-shadow: none;
+}
+
+.menu {
+  display: flex;
+  position: fixed;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: inherit;
+  z-index: 4;
+  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+  background-color: #ffffff;
+  color: black;
+}
+
+.layout-night .menu {
+  background-color: #1b1730;
+  color: white;
+}
+
+.menu-active {
+  width: 200px;
+}
+
+.menu__heading {
+  height: 68px;
+  margin: 0 0 0 0;
+  text-align: center;
+  font-weight: 600;
+  line-height: 68px;
+  letter-spacing: 4px;
+  white-space: nowrap;
+}
+
+.menu__title {
+  text-decoration: none;
+  color: #000000;
+}
+
+.menu__title:hover {
+  color: #484848;
+}
+
+.layout-night .menu__title {
+  color: #ffffff;
+}
+
+.layout-night .menu__title:hover {
+  color: #efefef;
+}
+
+.menu-active .menu__heading {
+  text-align: center;
+}
+
+.logo {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  top: 12px;
+  left: -5px;
+}
+
+.overlay {
+  opacity: 0;
+}
+
+/* Hamburger style menu */
+.menu__toggle {
+  width: 100%;
+  height: 100%;
+  padding: 8px 0 0 0;
+}
+
+.menu-active .menu__toggle {
+  padding: 10px 0 0 0;
+}
+
+.menu__bar {
+  display: block;
+  width: 35px;
+  height: 3px;
+  background-color: #2e2e2f;
+  margin: 0 auto 6px auto;
+
+  -webkit-transition: -webkit-transform 0.4s ease-in-out,
+    opacity 0.4s ease-in-out;
+  -o-transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  -moz-transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  border-radius: 3px;
+}
+
+.layout-night .menu__bar {
+  background-color: #ffffff;
+}
+
+.menu-active .menu__bar--1 {
+  -webkit-transform: rotate(-45deg) translate(-5px, 4px);
+  transform: rotate(-45deg) translate(-5px, 4px);
+}
+
+.menu-active .menu__bar--2 {
+  opacity: 0;
+}
+
+.menu-active .menu__bar--3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* Flip site logo on collaspe menu */
+@media only screen and (max-width: 600px) {
+  .menu-collapse .menu__heading {
+    display: flex;
+    height: 100px;
+    position: relative;
+    top: 0;
+    left: 0;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    transform-origin: bottom;
+    align-items: center;
+    margin: -60px 0 0 0;
+  }
+
+  .menu .menu__nav {
+    opacity: 0;
+    -webkit-transition: opacity 0.8s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  .menu-collapse .menu__nav {
+    visibility: hidden;
+    -webkit-transition: visibility 0.1s ease-in-out;
+    transition: visibility 0.1s ease-in-out;
+  }
+
+  .menu-active .menu__nav {
+    opacity: 1;
+  }
+
+  .menu-active .menu__heading {
+    margin-top: 0;
+  }
+
+  .overlay--active {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    z-index: 3;
+
+    -webkit-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+    background-color: rgba(36, 39, 59, 0.8);
+  }
+
+  .menu-collapse .logo {
+    display: none;
+  }
+}
+
+.menu__nav {
+  padding: 20px 30px 0 30px;
+  overflow-y: auto;
+}
+
+.menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu__item {
+  margin: 0 0 20px 0;
+  padding: 0;
+  color: #9c9cab;
+}
+
+.menu__icon {
+  margin-right: 15px;
+}
+
+.menu__link {
+  display: block;
+  text-decoration: none;
+  color: #b3b3b3;
+  width: 100%;
+}
+
+.menu__link:hover {
+  color: #2dd760;
+}
+
+.menu__link--sub {
+  font-size: 1em;
+  padding: 5px 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .page-aside {
+    width: 200px;
+  }
+
+  .menu__heading {
+    text-align: center;
+  }
+
+  .menu__btn,
+  .menu__toggle {
+    display: none;
+  }
+}

@@ -178,10 +178,7 @@ const MediaPlayer = (props) => {
         <source src={fileUrl} type="audio/mpeg" />
       </audio>
 
-      <div
-        className={`player ${footer ? 'player--footer' : 'player--full'}`}
-        data-cy="media-player"
-      >
+      <div className="player player--footer" data-cy="media-player">
         <div className="player__info">
           <img className="player__image" alt="Track cover art" src={coverArt} />
 
@@ -198,89 +195,93 @@ const MediaPlayer = (props) => {
               {artist}
             </Link>
           </p>
+
+          {props.user.authenticated ? (
+            <button
+              className="btn btn--inline btn--media"
+              type="button"
+              data-cy="like"
+              onClick={() => props.likeTrack(id, userLikes)}
+            >
+              <i
+                className={`player__control ${
+                  userLikes ? 'fas' : 'far'
+                } fa-heart`}
+              />
+            </button>
+          ) : null}
         </div>
 
         <div className="player__options">
-          <div className="player__stack">
-            <div className="player__controls">
-              <div className="player__control-group">
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  onClick={prevTrack}
-                >
-                  <i className="player__control player__control--medium fa fa-backward" />
-                </button>
+          <div className="player__controls">
+            <div className="player__control-group">
+              <button
+                className="btn btn--inline btn--media"
+                type="button"
+                onClick={prevTrack}
+              >
+                <i className="player__control player__control--medium fa fa-backward" />
+              </button>
 
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  onClick={togglePlay}
-                  data-cy="play"
-                >
-                  <i
-                    className={`player__control player__control--large  fa ${
-                      audioRef.current && !audioRef.current.paused
-                        ? 'fa-pause'
-                        : 'fa-play'
-                    }`}
-                  />
-                </button>
+              <button
+                className="btn btn--inline btn--media btn--play"
+                type="button"
+                onClick={togglePlay}
+                data-cy="play"
+              >
+                <i
+                  className={`player__control player__control--large  fa ${
+                    audioRef.current && !audioRef.current.paused
+                      ? 'fa-pause'
+                      : 'fa-play'
+                  }`}
+                />
+              </button>
 
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  onClick={nextTrack}
-                  data-cy="forward"
-                >
-                  <i className="player__control player__control--medium  fa fa-forward" />
-                </button>
-              </div>
-
-              <div className="player__control-group">
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  onClick={props.toggleRepeat}
-                  data-cy="repeat"
-                >
-                  <i
-                    className={`player__control ${
-                      repeat ? 'player__control--highlight' : ''
-                    } fa fas fa-redo `}
-                  />
-                </button>
-
-                {props.user.authenticated ? (
-                  <button
-                    className="btn btn--inline btn--media"
-                    type="button"
-                    data-cy="like"
-                    onClick={() => props.likeTrack(id, userLikes)}
-                  >
-                    <i
-                      className={`player__control ${
-                        userLikes ? 'fas' : 'far'
-                      } fa-heart`}
-                    />
-                  </button>
-                ) : null}
-
-                <button
-                  className="btn btn--inline btn--media"
-                  type="button"
-                  onClick={props.toggleShuffle}
-                >
-                  <i
-                    className={`player__control ${
-                      shuffle ? 'player__control--highlight' : ''
-                    } fa fa-random`}
-                  />
-                </button>
-              </div>
+              <button
+                className="btn btn--inline btn--media"
+                type="button"
+                onClick={nextTrack}
+                data-cy="forward"
+              >
+                <i className="player__control player__control--medium  fa fa-forward" />
+              </button>
             </div>
 
+            <div className="player__control-group">
+              <button
+                className="btn btn--inline btn--media"
+                type="button"
+                onClick={props.toggleRepeat}
+                data-cy="repeat"
+              >
+                <i
+                  className={`player__control ${
+                    repeat ? 'player__control--highlight' : ''
+                  } fa fas fa-redo `}
+                />
+              </button>
+
+              <button
+                className="btn btn--inline btn--media"
+                type="button"
+                onClick={props.toggleShuffle}
+              >
+                <i
+                  className={`player__control ${
+                    shuffle ? 'player__control--highlight' : ''
+                  } fa fa-random`}
+                />
+              </button>
+            </div>
+          </div>
+
+          <div className="player__stack">
             <div className="player__duration">
+              <span className="player__time-left" data-cy="current-time">
+                {changeToTime(currentTime)}
+              </span>
+
               <input
                 data-cy="timeline"
                 className="player__timeline"
@@ -293,14 +294,9 @@ const MediaPlayer = (props) => {
                 onMouseDown={onSeekingDown}
               />
 
-              <div className="player__time">
-                <span className="player__time-left" data-cy="current-time">
-                  {changeToTime(currentTime)}
-                </span>
-                <span className="player__time-right">
-                  {changeToTime(duration)}
-                </span>
-              </div>
+              <span className="player__time-right">
+                {changeToTime(duration)}
+              </span>
             </div>
           </div>
 
