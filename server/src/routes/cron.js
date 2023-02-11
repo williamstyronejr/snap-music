@@ -33,7 +33,7 @@ router.post('/cron/delete', async (req, res, next) => {
   }
 });
 
-router.get('/cron/expire', async (req, res, next) => {
+router.post('/cron/expire', async (req, res, next) => {
   const { secret } = req.query;
   if (secret !== SERVERLESS_SECRET) {
     logger.warn('Attemptted access to cron with incorrect secret');
