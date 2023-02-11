@@ -27,12 +27,6 @@ const Track = ({
       tabIndex={0}
       role="button"
     >
-      <div className="track__controls">
-        <button className="btn" type="button">
-          <i className="fa fa-play" />
-        </button>
-      </div>
-
       <div className="track__image">
         <img className="track__cover" src={coverArt} alt="Track cover art" />
       </div>
@@ -48,7 +42,13 @@ const Track = ({
         </Link>
       </div>
 
-      {explicit ? <div className="track__explicit">E</div> : null}
+      <div className="track__controls">
+        <button className="btn track__play" type="button">
+          <i className={playing ? 'fa fa-pause' : 'fa fa-play'} />
+        </button>
+      </div>
+
+      {true ? <div className="track__explicit">E</div> : null}
     </div>
   );
 };

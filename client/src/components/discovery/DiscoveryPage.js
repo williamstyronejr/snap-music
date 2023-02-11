@@ -1,21 +1,33 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { genreList } from '../../utils/utils';
+import useGenresData from '../shared/useGenresData';
+import Loading from '../shared/Loading';
 import './styles/discoveryPage.css';
 
 const DiscoveryPage = () => {
-  const genreListItems = genreList.map((genre) => (
-    <div className="grid__item" key={`genre-${genre}`}>
-      <Link to={`/discovery/${genre}`} className="grid__link content-center">
-        <span className="genre">{genre}</span>
-      </Link>
-    </div>
-  ));
+  const { loading, genres } = useGenresData();
 
   return (
     <section className="discovery">
-      <h1 className="discovery__header">Pick a genre to start listening</h1>
-      <div className="discovery__grid">{genreListItems}</div>
+      <h1 className="discovery__header">Discovery by Genre</h1>
+      <div className="discovery__grid">
+        {loading ? <Loading /> : null}
+
+        {genres.map((genre) => (
+          <div className="grid__item" key={`genre-${genre.id}`}>
+            <Link to={`/discovery/${genre.name}`} className="grid__link">
+              <span className="genre">{genre.name}</span>
+              {genre.image ? (
+                <img
+                  className="discovery__genre-img"
+                  src={`/img/${genre.image}`}
+                  alt=""
+                />
+              ) : null}
+            </Link>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };

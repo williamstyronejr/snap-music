@@ -5,6 +5,8 @@ import profile from './profileReducer';
 import notification from './notificationReducer';
 import user from './userReducer';
 import feed from './feedReducer';
+import dashboard from './dashboardReducer';
+import activity from './activityReducer';
 
 const RootReducer = combineReducers({
   mediaPlayer,
@@ -13,6 +15,8 @@ const RootReducer = combineReducers({
   notification,
   user,
   feed,
+  dashboard,
+  activity,
 });
 
 export default RootReducer;

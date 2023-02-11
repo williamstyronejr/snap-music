@@ -12,6 +12,8 @@
     "consistent-return": 0,
     "no-shadow": 0,
     "default-param-last": 0,
+    "no-underscore-dangle": "warn",
+    "array-callback-return": 0,
 
     "react/prop-types": "warn",
     "react/function-component-definition": 0,

@@ -9,7 +9,7 @@
 }
 
 .layout-night .settings {
-  background-color: #151728;
+  background-color: #0d0d0d;
   border: none;
 }
 
@@ -20,7 +20,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: rgba(36, 39, 59, 0.8);
+  background-color: rgba(25, 25, 25, 0.8);
   z-index: 2;
   top: 0;
   left: 0;

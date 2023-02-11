@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import NotificationContainer from './NotificationContainer';
 import MediaPlayer from './MediaPlayer';
 import Header from './Header';
+import Aside from './Aside';
 
 const MainLayout = (props) => {
   return (
@@ -16,11 +16,17 @@ const MainLayout = (props) => {
           : ''
       }`}
     >
-      <Header user={props.user} />
-      <NotificationContainer />
-      <main className="page-main" role="main">
-        {props.children}
-      </main>
+      <div className="layout__wrapper">
+        <Aside user={props.user} />
+
+        <div className="page-content">
+          <Header user={props.user} />
+
+          <main className="page-main" role="main" id="main">
+            {props.children}
+          </main>
+        </div>
+      </div>
       <MediaPlayer />
     </div>
   );

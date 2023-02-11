@@ -11,8 +11,8 @@ const levels = {
 };
 
 const level = () => {
-  const env = process.env.NODE_ENV || 'development';
-  return env === 'development' ? 'warn' : 'warn';
+  const env = process.env.NODE_ENV || 'production';
+  return env === 'production' ? 'warn' : 'debug';
 };
 
 const format = winston.format.combine(
