@@ -47,6 +47,10 @@
   background-color: rgb(0, 0, 0, 0.1);
 }
 
+.layout-night .report__close {
+  color: white;
+}
+
 .layout-night .report__close:hover {
   background-color: rgb(255, 255, 255, 0.1);
 }
