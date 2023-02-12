@@ -6,6 +6,8 @@ const {
 } = require('./track');
 const logger = require('./winston');
 
+const { SERVERLESS } = process.env;
+
 /**
  * Finds and deletes all track that are set as expired.
  */
@@ -43,6 +45,10 @@ async function updateExpiredTracks() {
  * Schedules corn jobs for deleting tracks and removing files form firebase.
  */
 exports.setUpJobs = () => {
+  if (SERVERLESS === 'true') return;
+
+  logger.info('Crons Jobs Scheduled');
+
   schedule.scheduleJob('* */1 * * *', updateExpiredTracks);
 
   // Deletes expired tracks twice a day

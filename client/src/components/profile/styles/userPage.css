@@ -63,6 +63,10 @@
   background-color: rgba(148, 157, 165, 0.15);
 }
 
+.layout-night .user__option {
+  color: white;
+}
+
 .user__header {
   height: 100%;
   text-align: center;
