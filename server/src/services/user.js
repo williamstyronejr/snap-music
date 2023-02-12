@@ -108,3 +108,28 @@ exports.verifyPassword = (userId, password) => {
 exports.authenticateUser = (username, password) => {
   return User.authenticate(username, password);
 };
+
+/**
+ * Gets all users by their ids in an array.
+ * @param {Array<string>} userIds Id of users to search for
+ * @param {Object} projection Fileds to include or exclude
+ * @returns {Promise<Object>} Returns a promise to resolve with user objects
+ */
+exports.getUsersById = (userIds, projection = null) =>
+  User.find({ _id: { $in: userIds } }, projection).exec();
+
+/**
+ * Gets all non-expired tracks from artists in a list.
+ * @param {Array<String>} artists Array of artist id
+ * @param {Number} limit Number of tracks to limit to
+ * @param {Number} page Number of pages to skip (by multiples of limit)
+ * @return {Promise<Array>} Returns a promise to resolve with an array of track
+ *  objects from the artist if found, otherwise an empty list.
+ */
+exports.getTracksByArtists = (artists, limit = 10, page = 0) => {
+  return Track.find({ isExpired: false, artistId: { $in: artists } })
+    .sort({ 'meta.created': -1 })
+    .skip(page * limit)
+    .limit(limit)
+    .exec();
+};

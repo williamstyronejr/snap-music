@@ -10,12 +10,19 @@
 .player--footer {
   display: flex;
   flex-flow: row nowrap;
-  position: fixed;
-  bottom: 0;
   z-index: 8;
   width: 100%;
-  height: 60px;
-  background-color: #282828;
+  height: 80px;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 3px 2px 25px -8px rgb(195 191 191);
+}
+
+.layout-night .player--footer {
+  background-color: #3c3755;
+  box-shadow: none;
 }
 
 .player__info {
@@ -29,6 +36,7 @@
   flex-flow: row nowrap;
   text-align: left;
   width: 100px;
+  margin-right: 20px;
 }
 
 .player__image {
@@ -53,9 +61,6 @@
   text-overflow: ellipsis;
 }
 
-.player--footer .player__track {
-}
-
 .player__title {
   display: block;
   font-size: 1.2em;
@@ -66,7 +71,11 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: white;
+  color: black;
+}
+
+.layout-night .player--footer .player__title {
+  color: #ffffff;
 }
 
 .player__author {
@@ -76,7 +85,7 @@
 }
 
 .player__author:hover {
-  color: #1771d6;
+  color: #2dd760;
 }
 
 .player--footer .player__author {
@@ -98,6 +107,7 @@
   flex: 1 0 auto;
   text-align: left;
   width: auto;
+  align-items: center;
 }
 
 .player--footer .player__stack {
@@ -109,7 +119,7 @@
 
 .player--footer .player__controls {
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .player__control {
@@ -142,6 +152,8 @@
 
 .player--footer .player__duration {
   flex: 1 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .player__timeline {
@@ -179,7 +191,13 @@
 
 .player--footer .player__time-left,
 .player--footer .player__time-right {
-  color: white;
+  color: #303030;
+  margin: 0 10px;
+}
+
+.layout-night .player--footer .player__time-left,
+.layout-night .player--footer .player__time-right {
+  color: #efefef;
 }
 
 .player__volume {
@@ -207,7 +225,14 @@
 }
 
 .player--footer .btn--media {
-  color: white;
+  color: #303030;
+  font-size: 1.2rem;
+  width: 50px;
+  height: 50px;
+}
+
+.layout-night .player--footer .btn--media {
+  color: #ffffff;
 }
 
 @media only screen and (min-width: 600px) {
@@ -240,6 +265,6 @@
   }
 
   .player--footer .player__info {
-    width: 150px;
+    width: 200px;
   }
 }

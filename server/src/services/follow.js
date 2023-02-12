@@ -1,4 +1,5 @@
 const Follow = require('../models/follow');
+const User = require('../models/user');
 
 /**
  * Creates a new follower-following relation.
@@ -50,4 +51,16 @@ exports.getFollowRelation = (followee, follower) => {
  */
 exports.getAllUserFollowing = (userId) => {
   return Follow.distinct('followee', { follower: userId }).exec();
+};
+
+/**
+ * Gets all users followed by a user id.
+ * @param {String} userId Id of user to get following list for
+ * @return {Promise<Array<Object>>} Returns a promise to resolve with an array
+ *  of user objects.
+ */
+exports.getUserFollowingList = (userId) => {
+  return Follow.find({ follower: userId })
+    .populate({ model: User, path: 'followee', select: { hash: false } })
+    .exec();
 };

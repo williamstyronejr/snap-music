@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import { updateUserData, unauthUser } from '../../actions/user';
 import { ajaxRequest } from '../../utils/utils';
@@ -372,39 +372,7 @@ const AccountForm = ({
 };
 
 const SettingsPage = (props) => {
-  const { type } = useSearchParams();
-  let content;
-
-  switch (type) {
-    case 'password':
-      content = (
-        <PasswordForm
-          setNotification={props.setNotification}
-          setNotificationError={props.setNotificationError}
-        />
-      );
-      break;
-
-    case 'account':
-      content = (
-        <AccountForm
-          currentUsername={props.user.username}
-          currentDisplayName={props.user.displayName}
-          currentEmail={props.user.email}
-          currentBio={props.user.bio}
-          currentProfileImage={props.user.profilePicture}
-          updateUser={props.updateUserData}
-          setNotification={props.setNotification}
-          setNotificationError={props.setNotificationError}
-          unauthUser={props.unauthUser}
-        />
-      );
-      break;
-
-    default:
-      // Redirect to account settings on default
-      return <Navigate to="/settings/account" />;
-  }
+  const { type } = useParams();
 
   return (
     <section className="settings">
@@ -413,6 +381,7 @@ const SettingsPage = (props) => {
           <span>Guest user is not allow to make settings changes.</span>
         </div>
       ) : null}
+
       <aside className="settings__aside">
         <ul className="settings__list">
           <li className="settings__item">
@@ -439,7 +408,31 @@ const SettingsPage = (props) => {
         </ul>
       </aside>
 
-      <div className="settings__content">{content}</div>
+      <div className="settings__content">
+        {type === 'password' ? (
+          <PasswordForm
+            setNotification={props.setNotification}
+            setNotificationError={props.setNotificationError}
+          />
+        ) : null}
+        {type === 'account' ? (
+          <AccountForm
+            currentUsername={props.user.username}
+            currentDisplayName={props.user.displayName}
+            currentEmail={props.user.email}
+            currentBio={props.user.bio}
+            currentProfileImage={props.user.profilePicture}
+            updateUser={props.updateUserData}
+            setNotification={props.setNotification}
+            setNotificationError={props.setNotificationError}
+            unauthUser={props.unauthUser}
+          />
+        ) : null}
+      </div>
+
+      {type !== 'account' && type !== 'password' ? (
+        <Navigate to="/settings/account" />
+      ) : null}
     </section>
   );
 };

@@ -12,7 +12,7 @@ const levels = {
 
 const level = () => {
   const env = process.env.NODE_ENV || 'production';
-  return env === 'development' ? 'debug' : 'warn';
+  return env === 'production' ? 'warn' : 'debug';
 };
 
 const format = winston.format.combine(
